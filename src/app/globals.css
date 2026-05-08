@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --color-cream: #f7f4ed;
+  --color-sage: #5c6f5c;
+  --color-forest: #2d3a2d;
+  --color-sky: #6b8f9c;
+  --color-bark: #4a3f35;
+  --color-sand: #e8e0d4;
+  --color-moss: #7a8f6a;
+  --color-terracotta: #b85c38;
+  --color-charcoal: #2a2a28;
+  --color-card: #fdfcfa;
+  --ring: 2px solid #5c6f5c;
+}
+
+@theme inline {
+  --color-cream: var(--color-cream);
+  --color-sage: var(--color-sage);
+  --color-forest: var(--color-forest);
+  --color-sky: var(--color-sky);
+  --color-bark: var(--color-bark);
+  --color-sand: var(--color-sand);
+  --color-moss: var(--color-moss);
+  --color-terracotta: var(--color-terracotta);
+  --color-charcoal: var(--color-charcoal);
+  --color-card: var(--color-card);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-fraunces);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(180deg, #f7f4ed 0%, #eef2ea 100%);
+  color: var(--color-forest);
+  min-height: 100vh;
+}
+
+::selection {
+  background: rgba(92, 111, 92, 0.25);
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #5c6f5c;
+  outline-offset: 2px;
+}

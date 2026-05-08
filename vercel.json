@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/automation",
+      "schedule": "0 13 * * *"
+    },
+    {
+      "path": "/api/cron/process-airtable-sync",
+      "schedule": "0 14 * * *"
+    }
+  ]
+}

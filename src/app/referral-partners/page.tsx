@@ -102,7 +102,7 @@ export default function ReferralPartnersPage() {
           </ul>
           <ComplianceBanner className="mx-auto mt-10 max-w-2xl text-left">
             <p>
-              Partnership inquiries are operational. Protect patient/student privacy—do not send identifiers or records through this marketing form.
+              Protect patient/student privacy—please do not send identifiers or records through this form.
             </p>
           </ComplianceBanner>
         </div>

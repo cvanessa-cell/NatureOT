@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
+import { draftMode } from "next/headers";
+import { VisualEditing } from "next-sanity/visual-editing";
 import "./globals.css";
 import { ConditionalChrome } from "@/components/conditional-chrome";
+import { DisableDraftMode } from "@/components/disable-draft-mode";
+import { MetaPixel } from "@/components/meta-pixel";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -13,15 +17,17 @@ const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
+  axes: ["WONK", "SOFT"],
 });
 
 export const metadata: Metadata = {
-  title: "Nature OT Growth OS | Texas nature-based pediatric OT groups",
+  title:
+    "Nature-Based Occupational Therapy Groups for Kids in Dallas-Fort Worth | TreeTots DFW",
   description:
-    "Growth automation for nature-based pediatric occupational therapy in Texas — educational tools, waitlist, and operational workflows. Not a clinical record system.",
+    "Nature-based occupational therapy groups and services for children in Dallas-Fort Worth. Supporting sensory regulation, motor confidence, emotional regulation, social participation, and everyday skills through outdoor, play-based OT.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -31,7 +37,14 @@ export default function RootLayout({
       <body
         className={`${dmSans.className} min-h-screen flex flex-col antialiased text-[17px] leading-relaxed text-forest`}
       >
+        <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
         <ConditionalChrome>{children}</ConditionalChrome>
+        {(await draftMode()).isEnabled && (
+          <>
+            <VisualEditing />
+            <DisableDraftMode />
+          </>
+        )}
       </body>
     </html>
   );

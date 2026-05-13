@@ -17,6 +17,7 @@ import { queueZapierOutbound } from "@/lib/zapier/outbound-webhooks";
 import { attachAttributionToLead } from "@/lib/marketing/attribution";
 import { recordLifecycleEvent } from "@/lib/marketing/lifecycle";
 import { enrollLeadInSequence } from "@/lib/marketing/sequences";
+import { trySendMetaConversion } from "@/lib/meta/conversions-api";
 
 const leadSchema = z.object({
   parentName: z.string().min(1).max(200),
@@ -38,6 +39,7 @@ const leadSchema = z.object({
   ),
   sessionId: z.string().optional(),
   referralCode: z.string().optional(),
+  meta_event_id: z.string().optional(),
   attribution_first_touch: z.record(z.string(), z.string()).optional(),
   attribution_last_touch: z.record(z.string(), z.string()).optional(),
 });
@@ -222,6 +224,20 @@ export async function POST(req: Request) {
       attribution_first_touch: body.attribution_first_touch ?? {},
       attribution_last_touch: body.attribution_last_touch ?? {},
       form_type: "quiz_lead_form",
+      meta_event_id: body.meta_event_id ?? null,
+    },
+  });
+  await trySendMetaConversion({
+    req,
+    eventName: "Lead",
+    email: body.parentEmail,
+    phone: body.parentPhone,
+    eventId: body.meta_event_id,
+    fbclid: body.attribution_last_touch?.fbclid ?? body.attribution_first_touch?.fbclid,
+    customData: {
+      content_name: "Quiz lead form",
+      content_category: primary,
+      lead_id: leadId,
     },
   });
   await recordLifecycleEvent(leadId, "quiz_completed", { source: "/api/leads" });

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea } from "@/components/ui/input";
 import { captureClientAttributionFromUrl, getClientAttributionPayload } from "@/lib/marketing/client-attribution";
+import { createMetaEventId, trackMetaEvent } from "@/lib/meta/client-events";
 
 const TYPES = [
   "Pediatrician",
@@ -38,6 +39,7 @@ export function ReferralPartnerForm() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
+    const metaEventId = createMetaEventId("referral");
     const res = await fetch("/api/referral-inquiry", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -50,6 +52,7 @@ export function ReferralPartnerForm() {
         city,
         message: message || undefined,
         consentPrivacy: consentP,
+        meta_event_id: metaEventId,
         ...getClientAttributionPayload(),
       }),
     });
@@ -59,6 +62,7 @@ export function ReferralPartnerForm() {
       setMsg(j.error ?? "Unable to submit");
       return;
     }
+    trackMetaEvent("Lead", metaEventId, { content_name: "Referral inquiry" });
     setStatus("done");
   }
 

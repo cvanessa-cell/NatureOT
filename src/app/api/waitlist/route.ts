@@ -12,6 +12,7 @@ import { recordLifecycleEvent } from "@/lib/marketing/lifecycle";
 import { enrollLeadInSequence } from "@/lib/marketing/sequences";
 import { upsertMarketingLead } from "@/lib/leads/marketing-lead-upsert";
 import { parseParentName } from "@/lib/leads/lead-normalizer";
+import { trySendMetaConversion } from "@/lib/meta/conversions-api";
 
 const schema = z.object({
   parentName: z.string().min(1).max(200),
@@ -25,6 +26,7 @@ const schema = z.object({
   consentMarketing: z.boolean(),
   consentWaitlist: z.boolean(),
   consentPrivacy: z.boolean(),
+  meta_event_id: z.string().optional(),
   attribution_first_touch: z.record(z.string(), z.string()).optional(),
   attribution_last_touch: z.record(z.string(), z.string()).optional(),
 });
@@ -174,6 +176,20 @@ export async function POST(req: Request) {
       waitlist_entry_id: row.id,
       attribution_first_touch: b.attribution_first_touch ?? {},
       attribution_last_touch: b.attribution_last_touch ?? {},
+      meta_event_id: b.meta_event_id ?? null,
+    },
+  });
+  await trySendMetaConversion({
+    req,
+    eventName: "Lead",
+    email: b.parentEmail,
+    phone: b.parentPhone,
+    eventId: b.meta_event_id,
+    fbclid: b.attribution_last_touch?.fbclid ?? b.attribution_first_touch?.fbclid,
+    customData: {
+      content_name: "Waitlist",
+      lead_id: leadId,
+      waitlist_entry_id: row.id,
     },
   });
   if (leadId) {

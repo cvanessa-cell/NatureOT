@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { captureClientAttributionFromUrl, getClientAttributionPayload } from "@/lib/marketing/client-attribution";
+import { createMetaEventId, trackMetaEvent } from "@/lib/meta/client-events";
 
 const SCHEDULES = [
   "Weekday mornings",
@@ -73,6 +74,7 @@ export function WaitlistForm() {
     ]
       .filter(Boolean)
       .join("\n");
+    const metaEventId = createMetaEventId("waitlist");
 
     const res = await fetch("/api/waitlist", {
       method: "POST",
@@ -89,6 +91,7 @@ export function WaitlistForm() {
         consentMarketing: consentM,
         consentWaitlist: consentW,
         consentPrivacy: consentP,
+        meta_event_id: metaEventId,
         ...getClientAttributionPayload(),
       }),
     });
@@ -98,6 +101,7 @@ export function WaitlistForm() {
       setMsg(j.error ?? "Unable to save");
       return;
     }
+    trackMetaEvent("Lead", metaEventId, { content_name: "Waitlist" });
     setStatus("done");
   }
 

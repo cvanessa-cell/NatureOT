@@ -1,7 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import Cal from "@calcom/embed-react";
+import type { PrefillAndIframeAttrsConfig } from "@calcom/embed-core";
 import { captureClientAttributionFromUrl, getClientAttributionPayload } from "@/lib/marketing/client-attribution";
+import { createMetaEventId, trackMetaEvent } from "@/lib/meta/client-events";
+
+const CAL_THEME = {
+  cssVarsPerTheme: {
+    light: {
+      "cal-brand": "#163F2A",
+      "cal-brand-emphasis": "#0F2F20",
+      "cal-brand-text": "#FFFFFF",
+      "cal-text": "#163F2A",
+      "cal-text-emphasis": "#182B20",
+      "cal-border": "#e8e0d4",
+      "cal-bg": "#FFFCF4",
+      "cal-bg-emphasis": "#F7F3E8",
+    },
+  },
+  theme: "light" as const,
+  hideEventTypeDetails: false,
+  layout: "month_view" as const,
+};
+
+function parseCalLink(raw: string): string | null {
+  try {
+    const u = new URL(raw);
+    return u.pathname.replace(/^\//, "");
+  } catch {
+    return raw.replace(/^\//, "") || null;
+  }
+}
 
 export function BookingEmbed() {
   useEffect(() => {
@@ -9,19 +39,27 @@ export function BookingEmbed() {
   }, []);
   const [email, setEmail] = useState("");
   const [note, setNote] = useState<string | null>(null);
-  const url = process.env.NEXT_PUBLIC_BOOKING_EMBED_URL;
+  const rawUrl = process.env.NEXT_PUBLIC_BOOKING_EMBED_URL;
+  const calLink = useMemo(() => (rawUrl ? parseCalLink(rawUrl) : null), [rawUrl]);
 
   async function confirmBooking() {
     if (!email.trim()) {
       setNote("Add the email you used on the form so we can pause reminders.");
       return;
     }
+    const metaEventId = createMetaEventId("booking");
     const res = await fetch("/api/bookings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, provider: "manual", ...getClientAttributionPayload() }),
+      body: JSON.stringify({
+        email,
+        provider: "manual",
+        meta_event_id: metaEventId,
+        ...getClientAttributionPayload(),
+      }),
     });
     if (res.ok) {
+      trackMetaEvent("Schedule", metaEventId, { content_name: "Parent call" });
       setNote("Thank you — we will align this with your intake email.");
     } else {
       setNote("We could not match that email yet. You can still email us directly.");
@@ -30,13 +68,13 @@ export function BookingEmbed() {
 
   return (
     <div className="space-y-6">
-      {url ? (
-        <div className="overflow-hidden rounded-2xl border border-sage/20 bg-white shadow-sm">
-          <iframe
-            title="Schedule a call"
-            src={url}
-            className="h-[720px] w-full"
-            loading="lazy"
+      {calLink ? (
+        <div className="overflow-hidden rounded-2xl border border-sage/20 bg-card/95 shadow-sm">
+          <Cal
+            namespace="book-call"
+            calLink={calLink}
+            config={CAL_THEME as unknown as PrefillAndIframeAttrsConfig}
+            style={{ width: "100%", height: "100%", overflow: "scroll", minHeight: "720px" }}
           />
         </div>
       ) : (

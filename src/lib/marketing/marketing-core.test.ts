@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { hashIp, parseAttributionFromRequest } from "@/lib/marketing/attribution";
 import { renderMarketingTemplate, shouldSkipMarketingSend } from "@/lib/marketing/sequences";
+import {
+  buildMetaConversionPayload,
+  fbcFromFbclid,
+  sha256Hash,
+} from "@/lib/meta/conversions-api";
 
 describe("marketing attribution", () => {
   it("parses UTM params correctly", () => {
@@ -19,6 +24,46 @@ describe("marketing attribution", () => {
     const hashed = hashIp("127.0.0.1");
     expect(hashed).toBeTruthy();
     expect(hashed).not.toContain("127.0.0.1");
+  });
+});
+
+describe("meta conversions api payloads", () => {
+  it("normalizes and hashes user data", () => {
+    expect(sha256Hash(" Taylor@Example.COM ")).toBe(
+      "6f666aedca03c6514c6fea1701241e1db06bdfe964b8ee1ae08a6d47cdf8fa56"
+    );
+  });
+
+  it("formats fbc from fbclid", () => {
+    expect(fbcFromFbclid("fb-click-123", 1770000000)).toBe(
+      "fb.1.1770000000.fb-click-123"
+    );
+  });
+
+  it("builds a website event payload with hashed identifiers", () => {
+    const req = new Request("http://localhost/waitlist?fbclid=abc", {
+      headers: {
+        "user-agent": "vitest-agent",
+        "x-forwarded-for": "203.0.113.10",
+      },
+    });
+    const { payload } = buildMetaConversionPayload({
+      req,
+      eventName: "Lead",
+      email: "Taylor@Example.com",
+      phone: "(214) 555-0101",
+      eventId: "lead_123",
+      fbclid: "abc",
+    });
+
+    expect(payload.event_name).toBe("Lead");
+    expect(payload.event_id).toBe("lead_123");
+    expect(payload.action_source).toBe("website");
+    expect(payload.user_data.em?.[0]).toHaveLength(64);
+    expect(payload.user_data.ph?.[0]).toHaveLength(64);
+    expect(payload.user_data.fbc).toMatch(/^fb\.1\.\d+\.abc$/);
+    expect(payload.user_data.client_ip_address).toBe("203.0.113.10");
+    expect(payload.user_data.client_user_agent).toBe("vitest-agent");
   });
 });
 

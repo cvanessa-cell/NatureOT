@@ -7,12 +7,14 @@ import { mapBookingCreatedPayload } from "@/lib/zapier/zapier-payload-mapper";
 import { queueZapierOutbound } from "@/lib/zapier/outbound-webhooks";
 import { recordLifecycleEvent } from "@/lib/marketing/lifecycle";
 import { attachAttributionToLead } from "@/lib/marketing/attribution";
+import { trySendMetaConversion } from "@/lib/meta/conversions-api";
 
 const schema = z.object({
   leadId: z.string().uuid().optional(),
   email: z.string().email().optional(),
   provider: z.enum(["calcom", "calendly", "manual"]).default("manual"),
   externalId: z.string().optional(),
+  meta_event_id: z.string().optional(),
   attribution_first_touch: z.record(z.string(), z.string()).optional(),
   attribution_last_touch: z.record(z.string(), z.string()).optional(),
 });
@@ -80,6 +82,19 @@ export async function POST(req: Request) {
     metadata: {
       attribution_first_touch: body.attribution_first_touch ?? {},
       attribution_last_touch: body.attribution_last_touch ?? {},
+      meta_event_id: body.meta_event_id ?? null,
+    },
+  });
+  await trySendMetaConversion({
+    req,
+    eventName: "Schedule",
+    email: (leadSnap?.parent_email as string | null) ?? body.email ?? null,
+    eventId: body.meta_event_id,
+    fbclid: body.attribution_last_touch?.fbclid ?? body.attribution_first_touch?.fbclid,
+    customData: {
+      content_name: "Parent call",
+      lead_id: leadId,
+      provider: body.provider,
     },
   });
 

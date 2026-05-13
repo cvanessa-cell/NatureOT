@@ -263,6 +263,14 @@ const store = vi.hoisted(() => {
   };
 });
 
+const metaEnv = vi.hoisted(() => ({
+  NEXT_PUBLIC_META_PIXEL_ID: undefined as string | undefined,
+  META_ACCESS_TOKEN: undefined as string | undefined,
+  META_TEST_EVENT_CODE: undefined as string | undefined,
+  META_CAPI_ENABLED: undefined as string | undefined,
+  META_CAPI_DRY_RUN: undefined as string | undefined,
+}));
+
 const queuedZaps: SendZapierOutboundInput[] = [];
 
 vi.mock("@/lib/supabase/admin", () => ({
@@ -290,6 +298,11 @@ vi.mock("@/lib/env", () => ({
     RESEND_API_KEY: undefined,
     EMAIL_FROM: undefined,
     EMAIL_DRY_RUN: undefined,
+    NEXT_PUBLIC_META_PIXEL_ID: metaEnv.NEXT_PUBLIC_META_PIXEL_ID,
+    META_ACCESS_TOKEN: metaEnv.META_ACCESS_TOKEN,
+    META_TEST_EVENT_CODE: metaEnv.META_TEST_EVENT_CODE,
+    META_CAPI_ENABLED: metaEnv.META_CAPI_ENABLED,
+    META_CAPI_DRY_RUN: metaEnv.META_CAPI_DRY_RUN,
     ZAPIER_ENABLED: "true",
     ZAPIER_DRY_RUN: "true",
   }),
@@ -310,7 +323,13 @@ describe("public lead APIs", () => {
   beforeEach(() => {
     store.reset();
     queuedZaps.length = 0;
+    metaEnv.NEXT_PUBLIC_META_PIXEL_ID = undefined;
+    metaEnv.META_ACCESS_TOKEN = undefined;
+    metaEnv.META_TEST_EVENT_CODE = undefined;
+    metaEnv.META_CAPI_ENABLED = undefined;
+    metaEnv.META_CAPI_DRY_RUN = undefined;
     vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   it("workshop-registration creates lead + registration + ops rows + zap audit", async () => {
@@ -413,6 +432,66 @@ describe("public lead APIs", () => {
 
     const zap = queuedZaps.find((z) => z.auditEventType === "parent_guide_lead_created");
     expect(zap?.zapKey).toBe("parent_guide_lead");
+  });
+
+  it("skips Meta CAPI network calls in dry-run mode", async () => {
+    metaEnv.NEXT_PUBLIC_META_PIXEL_ID = "123456789";
+    metaEnv.META_ACCESS_TOKEN = "test-token";
+    metaEnv.META_CAPI_ENABLED = "true";
+    metaEnv.META_CAPI_DRY_RUN = "true";
+    const fetchSpy = vi.spyOn(globalThis, "fetch");
+
+    const res = await postParentGuide(
+      new Request("http://localhost/api/parent-guide-lead?fbclid=fb-click", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          parentName: "Taylor Quinn",
+          parentEmail: "taylor@example.com",
+          city: "Dallas",
+          consentPrivacy: true,
+          consentGuide: true,
+          meta_event_id: "lead_test_123",
+          attribution_last_touch: { fbclid: "fb-click" },
+        }),
+      })
+    );
+
+    expect(res.status).toBe(200);
+    expect(fetchSpy).not.toHaveBeenCalled();
+    const attribution = store.log.find((x) => x.table === "lead_attribution_events");
+    expect(
+      (attribution?.payload as { metadata?: { meta_event_id?: string | null } }).metadata
+        ?.meta_event_id
+    ).toBe("lead_test_123");
+  });
+
+  it("keeps lead creation successful when live Meta CAPI returns an error", async () => {
+    metaEnv.NEXT_PUBLIC_META_PIXEL_ID = "123456789";
+    metaEnv.META_ACCESS_TOKEN = "test-token";
+    metaEnv.META_CAPI_ENABLED = "true";
+    metaEnv.META_CAPI_DRY_RUN = "false";
+    const fetchSpy = vi
+      .spyOn(globalThis, "fetch")
+      .mockResolvedValue(new Response("bad gateway", { status: 502 }));
+
+    const res = await postParentGuide(
+      new Request("http://localhost/api/parent-guide-lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          parentName: "Taylor Quinn",
+          parentEmail: "taylor@example.com",
+          city: "Dallas",
+          consentPrivacy: true,
+          consentGuide: true,
+          meta_event_id: "lead_test_456",
+        }),
+      })
+    );
+
+    expect(res.status).toBe(200);
+    expect(fetchSpy).toHaveBeenCalledOnce();
   });
 
   it("duplicate workshop emails update the same lead instead of inserting twice", async () => {

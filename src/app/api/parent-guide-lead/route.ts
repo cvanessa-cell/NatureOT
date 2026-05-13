@@ -14,6 +14,7 @@ import { clientIpFromHeaders } from "@/lib/http/client-ip";
 import { attachAttributionToLead } from "@/lib/marketing/attribution";
 import { recordLifecycleEvent } from "@/lib/marketing/lifecycle";
 import { enrollLeadInSequence } from "@/lib/marketing/sequences";
+import { trySendMetaConversion } from "@/lib/meta/conversions-api";
 
 const GUIDE_NAME = "10 Outdoor Sensory Activities for Texas Kids";
 
@@ -23,6 +24,7 @@ const schema = z.object({
   city: z.string().min(1).max(120),
   consentPrivacy: z.boolean(),
   consentGuide: z.boolean(),
+  meta_event_id: z.string().optional(),
   attribution_first_touch: z.record(z.string(), z.string()).optional(),
   attribution_last_touch: z.record(z.string(), z.string()).optional(),
 });
@@ -181,6 +183,19 @@ export async function POST(req: Request) {
       parent_guide_lead_id: guideLeadId,
       attribution_first_touch: b.attribution_first_touch ?? {},
       attribution_last_touch: b.attribution_last_touch ?? {},
+      meta_event_id: b.meta_event_id ?? null,
+    },
+  });
+  await trySendMetaConversion({
+    req,
+    eventName: "Lead",
+    email: b.parentEmail,
+    eventId: b.meta_event_id,
+    fbclid: b.attribution_last_touch?.fbclid ?? b.attribution_first_touch?.fbclid,
+    customData: {
+      content_name: "Parent guide",
+      lead_id: leadId,
+      parent_guide_lead_id: guideLeadId,
     },
   });
   await recordLifecycleEvent(leadId, "guide_downloaded", { source: "/api/parent-guide-lead" });

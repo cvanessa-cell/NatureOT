@@ -17,6 +17,7 @@ import { workshopTitleFromSlug } from "@/lib/workshops/workshop-catalog";
 import { attachAttributionToLead } from "@/lib/marketing/attribution";
 import { recordLifecycleEvent } from "@/lib/marketing/lifecycle";
 import { enrollLeadInSequence } from "@/lib/marketing/sequences";
+import { trySendMetaConversion } from "@/lib/meta/conversions-api";
 
 const schema = z.object({
   parentName: z.string().min(1).max(200),
@@ -28,6 +29,7 @@ const schema = z.object({
   city: z.string().max(120).optional(),
   consentPrivacy: z.boolean(),
   consentReminders: z.boolean().optional(),
+  meta_event_id: z.string().optional(),
   attribution_first_touch: z.record(z.string(), z.string()).optional(),
   attribution_last_touch: z.record(z.string(), z.string()).optional(),
 });
@@ -209,6 +211,21 @@ export async function POST(req: Request) {
       workshop_slug: b.workshopId,
       attribution_first_touch: b.attribution_first_touch ?? {},
       attribution_last_touch: b.attribution_last_touch ?? {},
+      meta_event_id: b.meta_event_id ?? null,
+    },
+  });
+  await trySendMetaConversion({
+    req,
+    eventName: "CompleteRegistration",
+    email: b.parentEmail,
+    phone: b.phone,
+    eventId: b.meta_event_id,
+    fbclid: b.attribution_last_touch?.fbclid ?? b.attribution_first_touch?.fbclid,
+    customData: {
+      content_name: "Workshop registration",
+      content_category: b.workshopId,
+      lead_id: leadId,
+      workshop_registration_id: registrationId,
     },
   });
   await recordLifecycleEvent(leadId, "workshop_registered", { source: "/api/workshop-registration" });

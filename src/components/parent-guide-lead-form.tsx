@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { captureClientAttributionFromUrl, getClientAttributionPayload } from "@/lib/marketing/client-attribution";
+import { createMetaEventId, trackMetaEvent } from "@/lib/meta/client-events";
 
 export function ParentGuideLeadForm() {
   const [name, setName] = useState("");
@@ -22,6 +23,7 @@ export function ParentGuideLeadForm() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
+    const metaEventId = createMetaEventId("lead");
     const res = await fetch("/api/parent-guide-lead", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31,6 +33,7 @@ export function ParentGuideLeadForm() {
         city,
         consentPrivacy: consentP,
         consentGuide: consentG,
+        meta_event_id: metaEventId,
         ...getClientAttributionPayload(),
       }),
     });
@@ -40,6 +43,7 @@ export function ParentGuideLeadForm() {
       setMsg(j.error ?? "Unable to submit");
       return;
     }
+    trackMetaEvent("Lead", metaEventId, { content_name: "Parent guide" });
     setStatus("done");
   }
 

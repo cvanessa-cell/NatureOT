@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { captureClientAttributionFromUrl, getClientAttributionPayload } from "@/lib/marketing/client-attribution";
+import { createMetaEventId, trackMetaEvent } from "@/lib/meta/client-events";
 
 const workshops = [
   { id: "sensory-seekers", title: "Helping Sensory-Seeking Kids Thrive Outdoors" },
@@ -31,6 +32,7 @@ export function WorkshopRegistrationSection() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setStatus("loading");
+    const metaEventId = createMetaEventId("workshop");
     const res = await fetch("/api/workshop-registration", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -42,6 +44,7 @@ export function WorkshopRegistrationSection() {
         city: city || undefined,
         consentPrivacy: consentP,
         consentReminders: consentR,
+        meta_event_id: metaEventId,
         ...getClientAttributionPayload(),
       }),
     });
@@ -51,6 +54,10 @@ export function WorkshopRegistrationSection() {
       setMsg(j.error ?? "Unable to submit");
       return;
     }
+    trackMetaEvent("CompleteRegistration", metaEventId, {
+      content_name: "Workshop registration",
+      content_category: workshopId,
+    });
     setStatus("done");
   }
 

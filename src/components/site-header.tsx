@@ -3,16 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Leaf } from "lucide-react";
 import { cn } from "@/lib/cn";
 
 const links = [
-  { href: "/groups", label: "Groups" },
-  { href: "/workshops", label: "Workshops" },
-  { href: "/parent-guide", label: "Parent Guide" },
-  { href: "/referral-partners", label: "Referral Partners" },
   { href: "/about", label: "About" },
-  { href: "/faq", label: "FAQ" },
+  { href: "/groups", label: "Services" },
+  { href: "/groups", label: "Groups" },
+  { href: "/parent-guide", label: "For Parents" },
+  { href: "/referral-partners", label: "For Providers" },
+  { href: "/faq", label: "Resources" },
+  { href: "/get-started", label: "Contact" },
 ];
 
 export function SiteHeader() {
@@ -29,26 +30,25 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-sand/80 bg-cream/95 backdrop-blur supports-[backdrop-filter]:bg-cream/85">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link
-          href="/"
-          className="font-[family-name:var(--font-fraunces)] text-lg font-semibold text-forest sm:text-xl"
-        >
-          Nature OT Growth OS
+    <header className="sticky top-0 z-50 border-b border-sand/60 bg-ivory/95 backdrop-blur supports-[backdrop-filter]:bg-ivory/85">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 lg:px-6">
+        <Link href="/" className="flex items-center gap-2.5">
+          <span className="flex size-10 items-center justify-center rounded-full bg-forest text-cream">
+            <Leaf className="size-5" />
+          </span>
+          <span className="font-[family-name:var(--font-fraunces)] text-xl font-semibold tracking-tight text-forest">
+            TreeTots <span className="text-moss">DFW</span>
+          </span>
         </Link>
 
-        <nav
-          className="hidden items-center gap-1 lg:flex"
-          aria-label="Main"
-        >
+        <nav className="hidden items-center gap-0.5 lg:flex" aria-label="Main">
           {links.map((n) => (
             <Link
-              key={n.href}
+              key={n.label}
               href={n.href}
               className={cn(
-                "rounded-full px-3 py-2 text-sm font-medium text-bark/90 transition hover:bg-sand/60 hover:text-forest",
-                pathname === n.href && "bg-sand/70 text-forest"
+                "rounded-full px-3 py-2 text-[0.9rem] font-medium text-forest/80 transition hover:bg-sage/40 hover:text-forest",
+                pathname === n.href && "bg-sage/30 text-forest",
               )}
             >
               {n.label}
@@ -59,15 +59,9 @@ export function SiteHeader() {
         <div className="hidden items-center gap-2 md:flex">
           <Link
             href="/waitlist"
-            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-sage/40 bg-white/80 px-4 text-sm font-medium text-forest transition hover:border-sage hover:bg-cream/60"
+            className="inline-flex min-h-11 items-center justify-center rounded-full bg-forest px-5 text-sm font-semibold text-cream shadow-sm transition hover:bg-forest/90"
           >
             Join the Waitlist
-          </Link>
-          <Link
-            href="/book-call"
-            className="inline-flex min-h-11 items-center justify-center rounded-full bg-forest px-4 text-sm font-medium text-cream shadow-sm transition hover:bg-sage"
-          >
-            Book a Parent Call
           </Link>
         </div>
 
@@ -86,38 +80,31 @@ export function SiteHeader() {
       {open && (
         <div
           id="mobile-nav"
-          className="border-t border-sand/80 bg-cream/98 px-4 py-4 lg:hidden"
+          className="border-t border-sand/60 bg-ivory px-4 py-4 lg:hidden"
         >
           <nav className="flex flex-col gap-1" aria-label="Mobile">
             {links.map((n) => (
               <Link
-                key={n.href}
+                key={n.label}
                 href={n.href}
                 onClick={() => setOpen(false)}
-                className="rounded-xl px-3 py-3 text-base font-medium text-forest hover:bg-sand/60"
+                className="rounded-xl px-3 py-3 text-base font-medium text-forest hover:bg-sage/30"
               >
                 {n.label}
               </Link>
             ))}
-            <Link
-              href="/quiz"
-              onClick={() => setOpen(false)}
-              className="rounded-xl px-3 py-3 text-base font-medium text-forest hover:bg-sand/60"
-            >
-              Interactive parent guide (quiz)
-            </Link>
             <div className="mt-4 flex flex-col gap-2 border-t border-sand pt-4">
               <Link
                 href="/waitlist"
                 onClick={() => setOpen(false)}
-                className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-sage/40 bg-white/80 px-4 text-center font-medium text-forest"
+                className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 text-center font-semibold text-cream"
               >
                 Join the Waitlist
               </Link>
               <Link
                 href="/book-call"
                 onClick={() => setOpen(false)}
-                className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-4 text-center font-medium text-cream"
+                className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-forest/30 bg-white px-6 text-center font-semibold text-forest"
               >
                 Book a Parent Call
               </Link>

@@ -46,7 +46,7 @@ export function ResultsContent() {
   return (
     <div className="space-y-6">
       <div className="rounded-2xl border border-moss/30 bg-white/80 p-8 shadow-sm">
-        <p className="text-sm font-medium text-sage">Your educational theme</p>
+        <p className="text-sm font-medium text-moss">Your educational theme</p>
         <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-2xl text-forest sm:text-3xl">
           {summary.title}
         </h1>

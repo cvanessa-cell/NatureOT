@@ -64,7 +64,7 @@ export function AirtableQueueActions({
             <code>/api/cron/process-airtable-sync</code>.
           </p>
           {failedFilterActive && (
-            <p className="mt-2 text-[11px] font-medium text-sage">
+            <p className="mt-2 text-[11px] font-medium text-moss">
               Viewing failed rows only — Retry actions below operate on earliest failed jobs globally.
             </p>
           )}

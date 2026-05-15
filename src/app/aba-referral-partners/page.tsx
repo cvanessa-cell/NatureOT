@@ -15,7 +15,7 @@ export default function AbaReferralPartnersPage() {
     <div>
       <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Referral partners
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
@@ -64,10 +64,10 @@ export default function AbaReferralPartnersPage() {
               Share your organization info and preferred contact method. We’ll reply with printable summaries and a simple referral pathway.
             </p>
             <div className="mt-8 space-y-3 text-sm">
-              <Link href="/provider-referral" className="block font-semibold text-sage underline">
+              <Link href="/provider-referral" className="block font-semibold text-moss underline">
                 Provider referral form
               </Link>
-              <Link href="/referral-partners" className="block font-semibold text-sage underline">
+              <Link href="/referral-partners" className="block font-semibold text-moss underline">
                 General partners page
               </Link>
             </div>

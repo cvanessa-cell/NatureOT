@@ -97,11 +97,11 @@ export default async function MarketingDashboardPage() {
                 <p className="text-xs font-medium uppercase tracking-wide text-bark/60">{m.label}</p>
                 <p className="mt-2 text-3xl font-semibold tabular-nums text-forest">{m.value}</p>
               </div>
-              <m.icon className="size-8 text-sage/90" aria-hidden />
+              <m.icon className="size-8 text-moss/90" aria-hidden />
             </div>
             <Link
               href={m.href}
-              className="mt-4 inline-flex text-sm font-semibold text-sage underline-offset-4 hover:underline"
+              className="mt-4 inline-flex text-sm font-semibold text-moss underline-offset-4 hover:underline"
             >
               Open <ArrowUpRight className="ml-1 size-4" aria-hidden />
             </Link>
@@ -154,10 +154,10 @@ export default async function MarketingDashboardPage() {
           </div>
         </dl>
         <div className="mt-6 flex flex-wrap gap-4 text-sm font-semibold">
-          <Link href="/admin/zapier" className="text-sage underline underline-offset-4 hover:opacity-90">
+          <Link href="/admin/zapier" className="text-moss underline underline-offset-4 hover:opacity-90">
             Open Zapier diagnostics
           </Link>
-          <Link href="/admin/airtable" className="text-sage underline underline-offset-4 hover:opacity-90">
+          <Link href="/admin/airtable" className="text-moss underline underline-offset-4 hover:opacity-90">
             Review Airtable queue
           </Link>
         </div>
@@ -177,7 +177,7 @@ export default async function MarketingDashboardPage() {
             <ListChecks className="mt-1 size-7 text-moss" aria-hidden />
           </div>
           <p className="mt-4 text-2xl font-semibold text-forest tabular-nums">{dueCount || 0}</p>
-          <Link href="/admin/marketing/accountability" className="mt-4 inline-flex text-sm font-semibold text-sage underline">
+          <Link href="/admin/marketing/accountability" className="mt-4 inline-flex text-sm font-semibold text-moss underline">
             Review accountability
           </Link>
         </Card>

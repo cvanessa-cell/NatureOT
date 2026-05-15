@@ -2,7 +2,9 @@
 
 :root {
   --color-cream: #F7F3E8;
+  /* Pale sage: borders, fills, accents on light backgrounds; footer/announcement text on forest */
   --color-sage: #DDE8CF;
+  --color-sage-light: #DDE8CF;
   --color-forest: #163F2A;
   --color-evergreen: #0F2F20;
   --color-sky: #6b8f9c;
@@ -20,6 +22,7 @@
 @theme inline {
   --color-cream: var(--color-cream);
   --color-sage: var(--color-sage);
+  --color-sage-light: var(--color-sage-light);
   --color-forest: var(--color-forest);
   --color-evergreen: var(--color-evergreen);
   --color-sky: var(--color-sky);
@@ -44,7 +47,17 @@ body {
   color: var(--color-forest);
   min-height: 100vh;
   font-variant-ligatures: no-common-ligatures;
-  font-variation-settings: "WONK" 0;
+  /* DM Sans ignores unknown tags; Fraunces children inherit stable axes */
+  font-variation-settings: "WONK" 0, "SOFT" 0;
+}
+
+/* Fraunces is intentionally quirky; without pinned axes, hooks (J, f) can look wavy at display sizes.
+   WONK=0 disables wonky alternates. SOFT=0 is the sharp “ink” pole. opsz ties outline to body-text-scale
+   instead of zooming the display master. Matches any Tailwind class that references --font-fraunces. */
+[class*="fraunces"] {
+  font-optical-sizing: none;
+  font-variation-settings: "WONK" 0, "SOFT" 0, "opsz" 36;
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {

@@ -180,7 +180,7 @@ export default async function AirtableSyncPage({
           </div>
           {!failedOnly && (
             <Link
-              className="text-xs font-semibold uppercase tracking-wide text-sage underline-offset-4 hover:underline"
+              className="text-xs font-semibold uppercase tracking-wide text-moss underline-offset-4 hover:underline"
               href="/admin/airtable?failed=1"
             >
               View failed only
@@ -188,7 +188,7 @@ export default async function AirtableSyncPage({
           )}
           {failedOnly && (
             <Link
-              className="text-xs font-semibold uppercase tracking-wide text-sage underline-offset-4 hover:underline"
+              className="text-xs font-semibold uppercase tracking-wide text-moss underline-offset-4 hover:underline"
               href="/admin/airtable"
             >
               Show all statuses

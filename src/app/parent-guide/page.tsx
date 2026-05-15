@@ -14,7 +14,7 @@ export default function ParentGuidePage() {
     <div className="mx-auto max-w-5xl px-4 py-14">
       <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Lead magnet
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold leading-tight text-forest sm:text-5xl">

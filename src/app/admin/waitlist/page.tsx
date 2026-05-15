@@ -61,7 +61,7 @@ export default async function AdminWaitlistPage() {
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-bark/80">
             Operational overview — no clinical PHI. Sync to Airtable from{" "}
-            <Link className="font-medium text-sage underline" href="/admin/airtable">
+            <Link className="font-medium text-moss underline" href="/admin/airtable">
               Airtable sync
             </Link>
             .

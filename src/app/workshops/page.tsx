@@ -18,7 +18,7 @@ export default function WorkshopsPage() {
     <div>
       <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Events
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
@@ -59,10 +59,10 @@ export default function WorkshopsPage() {
               </p>
             </ComplianceBanner>
             <div className="mt-8 space-y-3">
-              <Link href="/waitlist" className="block font-semibold text-sage underline">
+              <Link href="/waitlist" className="block font-semibold text-moss underline">
                 Prefer ongoing updates? Join the waitlist
               </Link>
-              <Link href="/book-call" className="block font-semibold text-sage underline">
+              <Link href="/book-call" className="block font-semibold text-moss underline">
                 Book a short parent call
               </Link>
             </div>

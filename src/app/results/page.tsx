@@ -12,7 +12,7 @@ export default function ResultsPage() {
     <div className="mx-auto max-w-3xl px-4 py-12">
       <ResultsContent />
       <p className="mt-8 text-center text-sm text-bark/80">
-        <Link href="/get-started" className="font-medium text-sage underline">
+        <Link href="/get-started" className="font-medium text-moss underline">
           Share your contact information
         </Link>{" "}
         to receive a copy by email and optional follow-up (you may unsubscribe

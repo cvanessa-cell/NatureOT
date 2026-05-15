@@ -14,7 +14,7 @@ export default function ProviderReferralPage() {
     <div className="mx-auto max-w-6xl px-4 py-14">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.05fr]">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">Providers</p>
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">Providers</p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
             Refer a family to TreeTotsNatureOT
           </h1>
@@ -28,13 +28,13 @@ export default function ProviderReferralPage() {
             </p>
           </ComplianceBanner>
           <div className="mt-8 space-y-3 text-sm">
-            <Link href="/book-call" className="block font-semibold text-sage underline">
+            <Link href="/book-call" className="block font-semibold text-moss underline">
               Prefer a quick provider call? Book a call
             </Link>
-            <Link href="/aba-referral-partners" className="block font-semibold text-sage underline">
+            <Link href="/aba-referral-partners" className="block font-semibold text-moss underline">
               ABA partner packet
             </Link>
-            <Link href="/referral-partners" className="block font-semibold text-sage underline">
+            <Link href="/referral-partners" className="block font-semibold text-moss underline">
               General partner page
             </Link>
           </div>

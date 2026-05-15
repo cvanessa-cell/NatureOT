@@ -16,7 +16,7 @@ export function ComplianceBanner({
       )}
       role="note"
     >
-      <ShieldAlert className="mt-0.5 size-5 shrink-0 text-sage" aria-hidden />
+      <ShieldAlert className="mt-0.5 size-5 shrink-0 text-moss" aria-hidden />
       <div className="space-y-1 leading-relaxed">{children}</div>
     </div>
   );

@@ -110,7 +110,7 @@ export function BookingEmbed() {
             I booked — update my reminders
           </button>
         </div>
-        {note && <p className="mt-3 text-sm text-sage">{note}</p>}
+        {note && <p className="mt-3 text-sm text-moss">{note}</p>}
       </div>
     </div>
   );

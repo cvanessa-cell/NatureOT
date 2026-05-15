@@ -15,7 +15,7 @@ export default function BookCallPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       <div className="text-center">
-        <p className="text-sm font-medium uppercase tracking-wide text-sage">
+        <p className="text-sm font-medium uppercase tracking-wide text-moss">
           Scheduling
         </p>
         <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
@@ -52,7 +52,7 @@ export default function BookCallPage() {
               "No diagnosis or evaluation during the call",
             ].map((x) => (
               <li key={x} className="flex gap-2">
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-sage" aria-hidden />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-moss" aria-hidden />
                 {x}
               </li>
             ))}
@@ -64,11 +64,11 @@ export default function BookCallPage() {
           </h2>
           <p className="mt-4 text-sm text-bark/90">
             Want context first? Explore the{" "}
-            <Link href="/parent-guide" className="font-semibold text-sage underline">
+            <Link href="/parent-guide" className="font-semibold text-moss underline">
               printable parent guide
             </Link>{" "}
             or the{" "}
-            <Link href="/quiz" className="font-semibold text-sage underline">
+            <Link href="/quiz" className="font-semibold text-moss underline">
               interactive guide
             </Link>
             —both are educational, not clinical assessments.

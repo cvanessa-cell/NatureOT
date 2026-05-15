@@ -38,10 +38,10 @@ export function SiteFooter() {
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="inline-flex items-center gap-2.5">
               <span className="flex size-9 items-center justify-center rounded-full bg-cream/15">
-                <Leaf className="size-4 text-sage" />
+                <Leaf className="size-4 text-sage-light" />
               </span>
               <span className="font-[family-name:var(--font-fraunces)] text-lg font-semibold">
-                TreeTots <span className="text-sage">DFW</span>
+                TreeTots <span className="text-sage-light">DFW</span>
               </span>
             </Link>
             <p className="max-w-sm text-sm leading-relaxed text-cream/75">

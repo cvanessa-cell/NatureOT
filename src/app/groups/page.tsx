@@ -100,7 +100,7 @@ export default function GroupsPage() {
     <div>
       <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Programs
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
@@ -132,7 +132,7 @@ export default function GroupsPage() {
         <div className="grid gap-6 md:grid-cols-2">
           {groups.map((g) => (
             <Card key={g.title}>
-              <p className="text-xs font-semibold uppercase tracking-wide text-sage">
+              <p className="text-xs font-semibold uppercase tracking-wide text-moss">
                 Ages {g.age}
               </p>
               <h2 className="mt-2 font-[family-name:var(--font-fraunces)] text-2xl text-forest">

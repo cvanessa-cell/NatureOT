@@ -22,7 +22,7 @@ export default async function MarketingCommunityEventsPage() {
             {event.event_type} · {event.city ?? "TX"} · {event.start_at ? new Date(event.start_at).toLocaleString() : "TBD"} · {event.status}
           </p>
           {event.registration_url ? (
-            <a href={event.registration_url} className="mt-2 inline-flex text-sm text-sage underline">
+            <a href={event.registration_url} className="mt-2 inline-flex text-sm text-moss underline">
               Registration link
             </a>
           ) : null}

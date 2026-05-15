@@ -30,7 +30,7 @@ export default function ReferralPartnersPage() {
     <div>
       <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Partnerships
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
@@ -56,7 +56,7 @@ export default function ReferralPartnersPage() {
             </p>
           </Card>
           <Card>
-            <Trees className="size-10 text-sage" aria-hidden />
+            <Trees className="size-10 text-moss" aria-hidden />
             <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-2xl text-forest">
               Outdoor strengths
             </h2>
@@ -117,7 +117,7 @@ export default function ReferralPartnersPage() {
             <p className="mt-4 text-bark/90">
               Tell us about your organization and how families find you. We&rsquo;ll follow up with printable summaries appropriate for front-desk or community boards.
             </p>
-            <Link href="/faq" className="mt-8 inline-block text-sm font-semibold text-sage underline">
+            <Link href="/faq" className="mt-8 inline-block text-sm font-semibold text-moss underline">
               Read FAQs
             </Link>
           </div>

@@ -73,7 +73,7 @@ export function ParentGuideLeadForm() {
         </div>
         <p className="mt-6 text-center text-sm text-bark/80">
           Want a deeper reflection?{" "}
-          <Link href="/quiz" className="font-semibold text-sage underline">
+          <Link href="/quiz" className="font-semibold text-moss underline">
             Take the interactive parent guide
           </Link>
         </p>

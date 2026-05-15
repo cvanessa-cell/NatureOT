@@ -98,7 +98,7 @@ export function SequenceEditor({ initialSequences }: { initialSequences: Seq[] }
       >
         Save sequence
       </button>
-      {status && <p className="text-sm text-sage">{status}</p>}
+      {status && <p className="text-sm text-moss">{status}</p>}
     </div>
   );
 }

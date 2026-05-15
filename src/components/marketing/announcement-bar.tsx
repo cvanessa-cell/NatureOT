@@ -5,7 +5,7 @@ export function AnnouncementBar() {
     <div className="bg-forest text-cream">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-2 text-center text-sm">
         <span className="inline-flex items-center gap-1.5">
-          <Leaf className="size-3.5 text-sage" aria-hidden />
+          <Leaf className="size-3.5 text-sage-light" aria-hidden />
           <span className="font-medium">
             Nature-Based Occupational Therapy Groups in Dallas–Fort Worth
           </span>

@@ -56,7 +56,7 @@ export default async function PartnerDetailPage({
   return (
     <div className="space-y-8">
       <div>
-        <p className="text-sm font-medium uppercase tracking-wide text-sage">Organization</p>
+        <p className="text-sm font-medium uppercase tracking-wide text-moss">Organization</p>
         <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-3xl text-forest">
           {org.name}
         </h1>

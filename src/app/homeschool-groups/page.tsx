@@ -14,7 +14,7 @@ export default function HomeschoolGroupsPage() {
     <div>
       <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
         <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">Homeschool</p>
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">Homeschool</p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
             Nature-Based OT and Developmental Groups for Homeschool Families in DFW
           </h1>
@@ -40,10 +40,10 @@ export default function HomeschoolGroupsPage() {
               </p>
             </ComplianceBanner>
             <div className="mt-8 space-y-3 text-sm">
-              <Link href="/parent-guide" className="block font-semibold text-sage underline">
+              <Link href="/parent-guide" className="block font-semibold text-moss underline">
                 Download the parent guide
               </Link>
-              <Link href="/book-call" className="block font-semibold text-sage underline">
+              <Link href="/book-call" className="block font-semibold text-moss underline">
                 Book a parent call
               </Link>
             </div>

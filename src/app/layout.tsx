@@ -17,7 +17,8 @@ const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],
   display: "swap",
-  axes: ["WONK", "SOFT"],
+  /* Include opsz so we can pin optical size in CSS (avoids “display” extremes at large sizes). */
+  axes: ["WONK", "SOFT", "opsz"],
 });
 
 export const metadata: Metadata = {

@@ -138,11 +138,11 @@ export default async function AdminDashboardPage() {
                   {m.value}
                 </p>
               </div>
-              <m.icon className="size-8 text-sage/90" aria-hidden />
+              <m.icon className="size-8 text-moss/90" aria-hidden />
             </div>
             <Link
               href={m.href}
-              className="mt-4 inline-flex text-sm font-semibold text-sage underline-offset-4 hover:underline"
+              className="mt-4 inline-flex text-sm font-semibold text-moss underline-offset-4 hover:underline"
             >
               Open
             </Link>

@@ -34,7 +34,7 @@ export function Testimonials({ data }: { data?: TestimonialData[] | null }) {
                   <Star key={i} className="size-4 fill-gold text-gold" aria-hidden />
                 ))}
               </div>
-              <Quote className="mt-5 size-7 text-sage/70" aria-hidden />
+              <Quote className="mt-5 size-7 text-moss/70" aria-hidden />
               <blockquote className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-forest/80">
                 &ldquo;{t.quote}&rdquo;
               </blockquote>

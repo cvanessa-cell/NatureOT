@@ -20,7 +20,7 @@ export function ConversionCTA({ data }: { data?: CtaProps | null }) {
       </div>
 
       <div className="relative mx-auto max-w-3xl px-4 text-center lg:px-6">
-        <p className="text-sm font-semibold uppercase tracking-wider text-sage/70">Take the First Step</p>
+        <p className="text-sm font-semibold uppercase tracking-wider text-moss/70">Take the First Step</p>
         <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-3xl font-semibold sm:text-4xl lg:text-5xl">
           {headline}
         </h2>

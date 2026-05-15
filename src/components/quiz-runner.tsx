@@ -60,7 +60,7 @@ export function QuizRunner() {
         {QUIZ_DISCLAIMER_SHORT}
       </p>
       <div>
-        <p className="text-sm font-medium text-sage" aria-live="polite">
+        <p className="text-sm font-medium text-moss" aria-live="polite">
           Question {idx + 1} of {QUIZ_QUESTIONS.length} · {progress}%
         </p>
         <div
@@ -100,7 +100,7 @@ export function QuizRunner() {
           type="button"
           onClick={back}
           disabled={idx === 0}
-          className="min-h-12 min-w-[8rem] rounded-full border border-sage/40 px-6 text-sage disabled:opacity-40"
+          className="min-h-12 min-w-[8rem] rounded-full border border-sage/40 px-6 text-moss disabled:opacity-40"
         >
           Back
         </button>

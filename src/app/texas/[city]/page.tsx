@@ -46,7 +46,7 @@ export default async function TexasCityPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
-      <p className="text-sm font-medium uppercase tracking-wide text-sage">Texas · local page</p>
+      <p className="text-sm font-medium uppercase tracking-wide text-moss">Texas · local page</p>
       <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
         Nature-Based Occupational Therapy Groups for Kids in {row.displayName}, Texas
       </h1>

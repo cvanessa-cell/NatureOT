@@ -14,7 +14,7 @@ export default function WaitlistPage() {
     <div>
       <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-12">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-sage">
+          <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Waitlist
           </p>
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
@@ -25,7 +25,7 @@ export default function WaitlistPage() {
             details on this form.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm">
-            <Link href="/book-call" className="font-semibold text-sage underline underline-offset-4">
+            <Link href="/book-call" className="font-semibold text-moss underline underline-offset-4">
               Prefer to talk first? Book a parent call
             </Link>
           </div>

@@ -95,7 +95,7 @@ export function CampaignAuthenticityRulesFull() {
               <span className="font-medium text-forest">{g.label}</span>
               <Link
                 href={g.adminRoute}
-                className="text-sage hover:underline"
+                className="text-moss hover:underline"
               >
                 Open module
               </Link>

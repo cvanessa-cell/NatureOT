@@ -13,30 +13,37 @@ export function AgentCommandCenter() {
   const [commandKey, setCommandKey] = useState(COMMANDS[0].key);
   const [preview, setPreview] = useState<string | null>(null);
   const [actionId, setActionId] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [previewBusy, setPreviewBusy] = useState(false);
+  const [approveBusy, setApproveBusy] = useState(false);
 
   async function previewCmd() {
-    setLoading(true);
-    const res = await fetch("/api/admin/agent-commands", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ commandKey }),
-    });
-    const j = await res.json().catch(() => ({}));
-    setLoading(false);
-    setPreview(JSON.stringify(j, null, 2));
-    setActionId((j as { actionId?: string }).actionId ?? null);
+    setPreviewBusy(true);
+    try {
+      const res = await fetch("/api/admin/agent-commands", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ commandKey }),
+      });
+      const j = await res.json().catch(() => ({}));
+      setPreview(JSON.stringify(j, null, 2));
+      setActionId((j as { actionId?: string }).actionId ?? null);
+    } finally {
+      setPreviewBusy(false);
+    }
   }
 
-  async function approve(approve: boolean) {
+  async function approve(approveAction: boolean) {
     if (!actionId) return;
-    setLoading(true);
-    await fetch("/api/admin/agent-commands", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ actionId, approve }),
-    });
-    setLoading(false);
+    setApproveBusy(true);
+    try {
+      await fetch("/api/admin/agent-commands", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ actionId, approve: approveAction }),
+      });
+    } finally {
+      setApproveBusy(false);
+    }
   }
 
   return (
@@ -57,7 +64,7 @@ export function AgentCommandCenter() {
       </label>
       <button
         type="button"
-        disabled={loading}
+        disabled={previewBusy}
         onClick={() => void previewCmd()}
         className="min-h-12 rounded-full bg-sage px-8 text-cream"
       >
@@ -72,7 +79,7 @@ export function AgentCommandCenter() {
         <div className="flex flex-wrap gap-3 border-t border-sand pt-4">
           <button
             type="button"
-            disabled={loading}
+            disabled={approveBusy}
             className="min-h-12 rounded-full bg-forest px-6 text-cream"
             onClick={() => void approve(true)}
           >
@@ -80,7 +87,7 @@ export function AgentCommandCenter() {
           </button>
           <button
             type="button"
-            disabled={loading}
+            disabled={approveBusy}
             className="min-h-12 rounded-full border border-sage px-6"
             onClick={() => void approve(false)}
           >

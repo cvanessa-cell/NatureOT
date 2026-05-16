@@ -36,7 +36,7 @@ export default function ReferralPartnersPage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
             Partner With a Nature-Based Pediatric OT Program
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-bark/90">
+          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
             We collaborate with community professionals who want structured outdoor OT groups,
             workshops, and parent education that supports functional participation through movement,
             sensory-rich play, and guided peer interaction.

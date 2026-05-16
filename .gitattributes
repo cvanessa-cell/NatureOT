@@ -1,0 +1,4 @@
+# Supabase SQL is executed on Linux (hosted branching, CI). Force LF so CRLF from
+# Windows checkouts cannot break migration parsing or seed loads.
+supabase/migrations/** text eol=lf
+supabase/seed.sql text eol=lf

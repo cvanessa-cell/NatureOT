@@ -106,7 +106,7 @@ export default function GroupsPage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
             Small-Group Nature-Based OT Programs
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-bark/90">
+          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
             Age-banded cohorts with transparent focus areas. Groups are not
             appropriate for every child; fit is determined through your intake
             conversation and clinical judgment—not by browsing alone.

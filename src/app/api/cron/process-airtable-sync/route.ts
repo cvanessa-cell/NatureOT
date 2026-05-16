@@ -28,6 +28,7 @@ async function handle(req: Request) {
     failed: result.failed,
     dryRun: result.dryRun,
     skippedSyncDisabled: result.skippedSyncDisabled,
+    concurrency: result.concurrency,
   });
 }
 

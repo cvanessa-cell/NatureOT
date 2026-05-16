@@ -9,6 +9,7 @@ const processorMock = vi.hoisted(() =>
     failed: 0,
     skippedSyncDisabled: 0,
     dryRun: true,
+    concurrency: 1,
   }))
 );
 

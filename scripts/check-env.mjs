@@ -112,6 +112,12 @@ const metaCapiOk = Boolean(
     !isTrue("META_CAPI_DRY_RUN")
 );
 
+const sanityCore = Boolean(
+  process.env.NEXT_PUBLIC_SANITY_PROJECT_ID?.trim() &&
+    process.env.NEXT_PUBLIC_SANITY_DATASET?.trim()
+);
+const sanityPreviewOk = sanityCore && boolOk("SANITY_API_READ_TOKEN");
+
 const rows = [
   {
     name: "Supabase (URL + anon + service role)",
@@ -173,6 +179,22 @@ const rows = [
     hint: metaPixelOk ? null : "Set NEXT_PUBLIC_META_PIXEL_ID from Meta Events Manager",
   },
   {
+    name: "Sanity CMS (project + dataset)",
+    ok: sanityCore,
+    hint: sanityCore
+      ? null
+      : "Set NEXT_PUBLIC_SANITY_PROJECT_ID and NEXT_PUBLIC_SANITY_DATASET in .env.local",
+  },
+  {
+    name: "Sanity read token (drafts / previews)",
+    ok: sanityPreviewOk,
+    hint: sanityCore
+      ? sanityPreviewOk
+        ? null
+        : "SANITY_API_READ_TOKEN — https://www.sanity.io/manage → Project → API → Tokens"
+      : "Set Sanity project first",
+  },
+  {
     name: "Meta Conversions API",
     ok: metaCapiOk,
     hint: !metaPixelOk
@@ -205,6 +227,8 @@ for (const key of [
   "NEXT_PUBLIC_META_PIXEL_ID",
   "META_CAPI_ENABLED",
   "META_CAPI_DRY_RUN",
+  "NEXT_PUBLIC_SANITY_PROJECT_ID",
+  "SANITY_API_READ_TOKEN",
   "ZAPIER_ENABLED",
 ]) {
   console.log(`  ${key}=${mask(key, process.env[key])}`);

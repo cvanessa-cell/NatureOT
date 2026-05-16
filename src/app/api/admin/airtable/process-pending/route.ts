@@ -15,6 +15,11 @@ export async function POST(req: Request) {
   const body = await req.json().catch(() => ({}));
   const limit = Math.min(Math.max(Number(body.limit) || 10, 1), 75);
   const dryRun = Boolean(body.dryRun);
+  const concurrencyRaw = body.concurrency;
+  const concurrency =
+    concurrencyRaw === undefined || concurrencyRaw === null || concurrencyRaw === ""
+      ? undefined
+      : Number(concurrencyRaw);
 
   try {
     const supabase = createAdminClient();
@@ -22,6 +27,7 @@ export async function POST(req: Request) {
       supabase,
       limit,
       requestDryRun: dryRun,
+      ...(Number.isFinite(concurrency) ? { concurrency } : {}),
     });
     return NextResponse.json({
       ok: true,
@@ -30,6 +36,7 @@ export async function POST(req: Request) {
       failed: result.failed,
       dryRun: result.dryRun,
       skippedSyncDisabled: result.skippedSyncDisabled,
+      concurrency: result.concurrency,
     });
   } catch (e) {
     const msg = e instanceof Error ? e.message : "error";

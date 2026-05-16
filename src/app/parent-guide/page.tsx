@@ -20,7 +20,7 @@ export default function ParentGuidePage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold leading-tight text-forest sm:text-5xl">
             Download the Free Parent Guide: 10 Outdoor Sensory Activities for Texas Kids
           </h1>
-          <p className="mt-6 text-lg text-bark/90">
+          <p className="font-lead mt-6 text-lg text-bark/90">
             Practical starting ideas families can try outdoors—with pacing notes and safety reminders.
             This resource supports curiosity and routine-building; it does not replace individualized OT care.
           </p>

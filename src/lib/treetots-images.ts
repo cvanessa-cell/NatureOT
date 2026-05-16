@@ -4,6 +4,7 @@ export const treetotsImages = {
   heroWide: "/images/treetots/02_hero_child_in_nature_crop.png",
   heroCenter: "/images/treetots/03_hero_child_center_crop.png",
   trustBandChildren: "/images/treetots/04_trust_band_children_circle_crop.png",
+  servicesCardLeft: "/images/treetots/11_services_ot_swing.png",
   servicesArea: "/images/treetots/05_services_cards_area_crop.png",
   upcomingGroupsArea: "/images/treetots/06_upcoming_groups_area_crop.png",
   whyFamiliesChooseArea: "/images/treetots/07_why_families_choose_area_crop.png",
@@ -20,6 +21,8 @@ export const treetotsImageAlt = {
   heroCenter: "Child crouching in a natural outdoor setting",
   trustBandChildren:
     "Children standing together outdoors in a nature-based therapy setting",
+  servicesCardLeft:
+    "Child smiling while playing upside down on a rope swing during outdoor occupational therapy",
   servicesArea:
     "Nature-based occupational therapy service cards with children outdoors",
   upcomingGroupsArea:

@@ -83,6 +83,8 @@ const envSchema = z.object({
   PARENT_GUIDE_SIGNED_URL_EXPIRES_SECONDS: z.string().optional(),
   /** Max rows each Airtable sync cron invocation may dequeue. */
   AIRTABLE_CRON_PROCESS_LIMIT: z.string().optional(),
+  /** Parallel Airtable sync workers per batch (1–25); admin API can override. */
+  AIRTABLE_SYNC_CONCURRENCY: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -155,6 +157,7 @@ export function getEnv(): Env {
     PARENT_GUIDE_SIGNED_URL_EXPIRES_SECONDS:
       process.env.PARENT_GUIDE_SIGNED_URL_EXPIRES_SECONDS,
     AIRTABLE_CRON_PROCESS_LIMIT: process.env.AIRTABLE_CRON_PROCESS_LIMIT,
+    AIRTABLE_SYNC_CONCURRENCY: process.env.AIRTABLE_SYNC_CONCURRENCY,
   });
 }
 

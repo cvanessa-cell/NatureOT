@@ -15,7 +15,7 @@ export default function AboutPage() {
       <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
         A growth platform built for real-world outdoor OT
       </h1>
-      <p className="mt-6 text-lg text-bark/90">
+      <p className="font-lead mt-6 text-lg text-bark/90">
         Nature OT Growth OS exists to help families discover whether small-group,
         nature-based pediatric occupational therapy may be a supportive next step—
         without overpromising outcomes or replacing individualized evaluation when

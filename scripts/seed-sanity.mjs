@@ -2,38 +2,66 @@
  * Seed script for Sanity CMS.
  *
  * Usage:
- *   SANITY_API_WRITE_TOKEN=<your-editor-token> \
- *   NEXT_PUBLIC_SANITY_PROJECT_ID=<project-id> \
- *   node scripts/seed-sanity.mjs
+ *   npm run sanity:seed
+ * Loads `.env.local` via Node (--env-file). Requires Node 20.6+.
  *
- * Requires an API token with Editor or higher permissions.
- * Run once to populate initial content, then manage in /studio.
+ * Tokens: prefers SANITY_API_WRITE_TOKEN (Editor+). If unset, falls back to
+ * SANITY_API_READ_TOKEN only when it has mutate permissions (Editor/Admin)—
+ * Viewer tokens cannot seed. Best practice: use a dedicated write token.
  */
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const token = process.env.SANITY_API_WRITE_TOKEN;
+const token =
+  process.env.SANITY_API_WRITE_TOKEN?.trim() ||
+  process.env.SANITY_API_READ_TOKEN?.trim();
 
 if (!projectId || !token) {
   console.error(
-    "Missing NEXT_PUBLIC_SANITY_PROJECT_ID or SANITY_API_WRITE_TOKEN"
+    "Missing NEXT_PUBLIC_SANITY_PROJECT_ID and a mutate-capable token (SANITY_API_WRITE_TOKEN or SANITY_API_READ_TOKEN with Editor)."
   );
   process.exit(1);
 }
 
 const API = `https://${projectId}.api.sanity.io/v2026-02-01/data/mutate/${dataset}`;
 
-async function createOrReplace(doc) {
+async function mutate(mutations) {
   const res = await fetch(API, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-    body: JSON.stringify({ mutations: [{ createOrReplace: doc }] }),
+    body: JSON.stringify({ mutations }),
   });
   const json = await res.json();
   if (!res.ok) throw new Error(JSON.stringify(json));
+  return json;
+}
+
+async function deleteIfExists(id) {
+  const res = await fetch(API, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({
+      mutations: [{ delete: { id } }],
+    }),
+  });
+  const json = await res.json();
+  if (res.ok) {
+    console.log(`✓ removed legacy: ${id}`);
+    return;
+  }
+  const raw = JSON.stringify(json);
+  if (/does not exist|not found/i.test(raw)) return;
+  throw new Error(raw);
+}
+
+async function createOrReplace(doc) {
+  await mutate([{ createOrReplace: doc }]);
   console.log(`✓ ${doc._type}: ${doc._id}`);
 }
 
@@ -42,7 +70,7 @@ async function main() {
   await createOrReplace({
     _id: "siteSettings",
     _type: "siteSettings",
-    brandName: "TreeTots DFW",
+    brandName: "TreeTots Nature OT",
     announcementText:
       "Nature-Based Occupational Therapy Groups in Dallas–Fort Worth",
     announcementSecondary:
@@ -129,24 +157,47 @@ async function main() {
     ],
   });
 
-  // Services
+  // Remove previous 4-service seed ids so the homepage only sees the two slots
+  for (const id of ["svc-groups", "svc-individual", "svc-camps", "svc-workshops"]) {
+    await deleteIfExists(id);
+  }
+
+  // Services (two slots — add titles, copy, optional Link URL in /studio when ready)
   const services = [
-    { id: "svc-groups", title: "Nature OT Groups", description: "Weekly small-group occupational therapy sessions that support regulation, motor confidence, social participation, and everyday skills through guided nature-based play.", iconName: "Leaf", href: "/groups", order: 0 },
-    { id: "svc-individual", title: "Individual OT", description: "Personalized sessions designed around your child\u2019s goals, strengths, sensory needs, and daily routines.", iconName: "CircleUserRound", href: "/about", order: 1 },
-    { id: "svc-camps", title: "Summer Camps", description: "Fun, outdoor camps that build confidence, friendships, resilience, and independence.", iconName: "Sun", href: "/groups", order: 2 },
-    { id: "svc-workshops", title: "Parent Workshops", description: "Practical strategies to support your child at home, outdoors, and beyond.", iconName: "GraduationCap", href: "/workshops", order: 3 },
+    {
+      id: "svc-slot-1",
+      slug: "service-1",
+      title: "Service title",
+      description:
+        "Add a short description of this offering when you\u2019re ready.",
+      iconName: "Leaf",
+      href: "",
+      order: 0,
+    },
+    {
+      id: "svc-slot-2",
+      slug: "service-2",
+      title: "Service title",
+      description:
+        "Add a short description of this offering when you\u2019re ready.",
+      iconName: "CircleUserRound",
+      href: "",
+      order: 1,
+    },
   ];
   for (const s of services) {
-    await createOrReplace({
+    const doc = {
       _id: s.id,
       _type: "service",
       title: s.title,
-      slug: { _type: "slug", current: s.id },
+      slug: { _type: "slug", current: s.slug },
       description: s.description,
       iconName: s.iconName,
-      href: s.href,
       order: s.order,
-    });
+    };
+    const href = s.href?.trim();
+    if (href) doc.href = href;
+    await createOrReplace(doc);
   }
 
   // Groups

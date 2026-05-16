@@ -73,7 +73,7 @@ export default function FaqPage() {
       <h1 className="font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
         Frequently asked questions
       </h1>
-      <p className="mt-4 text-lg text-bark/90">
+      <p className="font-lead mt-4 text-lg text-bark/90">
         Straightforward answers in plain language—still educational, not individualized clinical advice.
       </p>
       <ComplianceBanner className="mt-8">

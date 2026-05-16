@@ -21,7 +21,7 @@ export default function BookCallPage() {
         <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
           Book a Parent Call
         </h1>
-        <p className="mx-auto mt-4 max-w-2xl text-lg text-bark/90">
+        <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
           A short parent call helps us understand general needs, answer questions,
           and discuss whether a group, workshop, or individual support may be the
           best next step.

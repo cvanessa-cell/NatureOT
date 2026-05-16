@@ -3,6 +3,12 @@
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
 project_id = "texas-nature-ot-leads"
+#
+# GitHub "Supabase Preview" (branching): Dashboard → Project Settings → Integrations → GitHub —
+# set Working directory to "." when `supabase/` lives at the repo root. If checks fail, open
+# Branches → your Git branch → View logs.
+# - https://supabase.com/docs/guides/deployment/branching/github-integration
+# - https://supabase.com/docs/guides/deployment/branching/troubleshooting
 
 [api]
 enabled = true
@@ -32,7 +38,8 @@ shadow_port = 54320
 # Maximum amount of time to wait for health check when starting the local database.
 health_timeout = "2m"
 # The database major version to use. This has to be the same as your remote database's. Run `SHOW
-# server_version;` on the remote database to check.
+# server_version;` on the remote database to check. A mismatch can fail hosted preview branches
+# during provisioning or migrations.
 major_version = 17
 
 [db.pooler]

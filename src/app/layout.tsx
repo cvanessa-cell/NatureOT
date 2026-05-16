@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Fraunces } from "next/font/google";
+import { DM_Sans, Fraunces, Inter } from "next/font/google";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import "./globals.css";
@@ -21,6 +21,13 @@ const fraunces = Fraunces({
   axes: ["WONK", "SOFT", "opsz"],
 });
 
+/** Inter for large subheads (better f/J at display sizes than body DM Sans). */
+const interLead = Inter({
+  variable: "--font-lead",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title:
     "Nature-Based Occupational Therapy Groups for Kids in Dallas-Fort Worth | TreeTots DFW",
@@ -34,7 +41,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${fraunces.variable}`}>
+    <html
+      lang="en"
+      className={`${dmSans.variable} ${fraunces.variable} ${interLead.variable}`}
+    >
       <body
         className={`${dmSans.className} min-h-screen flex flex-col antialiased text-[17px] leading-relaxed text-forest`}
       >

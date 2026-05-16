@@ -8,6 +8,7 @@ const proc = vi.hoisted(() =>
     failed: 0,
     skippedSyncDisabled: 0,
     dryRun: false,
+    concurrency: 1,
   }))
 );
 
@@ -65,6 +66,7 @@ describe("/api/cron/process-airtable-sync", () => {
     const body = (await res.json()) as Record<string, unknown>;
     expect(body.ok).toBe(true);
     expect(body.processed).toBe(1);
+    expect(body.concurrency).toBe(1);
     expect(proc).toHaveBeenCalledWith(
       expect.objectContaining({
         limit: 7,

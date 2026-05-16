@@ -18,7 +18,7 @@ export default function ProviderReferralPage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
             Refer a family to TreeTotsNatureOT
           </h1>
-          <p className="mt-4 text-bark/90">
+          <p className="font-lead mt-4 text-bark/90">
             TreeTotsNatureOT offers nature-based pediatric occupational therapy groups and parent education in the Fort Worth / Dallas area.
             Outreach and referrals here are operational and minimum-necessary.
           </p>

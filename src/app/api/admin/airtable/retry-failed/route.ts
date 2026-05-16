@@ -14,10 +14,21 @@ export async function POST(req: Request) {
   const limit = Math.min(Math.max(Number(body.limit) || 10, 1), 75);
   const dryRun = Boolean(body.dryRun);
   const mode = body.mode === "process_now" ? "process_now" : "reset_only";
+  const concurrencyRaw = body.concurrency;
+  const concurrency =
+    concurrencyRaw === undefined || concurrencyRaw === null || concurrencyRaw === ""
+      ? undefined
+      : Number(concurrencyRaw);
 
   try {
     const supabase = createAdminClient();
-    const result = await retryFailedAirtableJobs({ supabase, limit, dryRun, mode });
+    const result = await retryFailedAirtableJobs({
+      supabase,
+      limit,
+      dryRun,
+      mode,
+      ...(Number.isFinite(concurrency) ? { concurrency } : {}),
+    });
     return NextResponse.json(result);
   } catch (e) {
     const msg = e instanceof Error ? e.message : "error";

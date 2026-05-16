@@ -12,22 +12,48 @@ interface ServiceData {
   href?: string;
 }
 
-const serviceImagePositions: Record<string, string> = {
-  "Nature OT Groups": "15% 50%",
-  "Individual OT": "40% 50%",
-  "Summer Camps": "65% 50%",
-  "Parent Workshops": "85% 50%",
-};
+const SERVICE_CARD_MEDIA = [
+  {
+    src: treetotsImages.servicesCardLeft,
+    alt: treetotsImageAlt.servicesCardLeft,
+    objectPosition: "50% 35%" as const,
+  },
+  {
+    src: treetotsImages.servicesArea,
+    alt: treetotsImageAlt.servicesArea,
+    objectPosition: "62% 50%" as const,
+  },
+] as const;
 
-const defaultServices: ServiceData[] = [
-  { title: "Nature OT Groups", description: "Weekly small-group sessions supporting regulation, motor confidence, social skills, and everyday independence through guided nature-based play.", iconName: "Leaf", href: "/groups" },
-  { title: "Individual OT", description: "One-on-one sessions designed around your child\u2019s unique goals, strengths, sensory needs, and daily routines.", iconName: "CircleUserRound", href: "/about" },
-  { title: "Summer Camps", description: "Fun, structured outdoor camps that build confidence, friendships, resilience, and independence over the summer.", iconName: "Sun", href: "/groups" },
-  { title: "Parent Workshops", description: "Practical strategies and tools to support your child at home, outdoors, and in the community.", iconName: "GraduationCap", href: "/workshops" },
+const PLACEHOLDER_SLOTS: ServiceData[] = [
+  {
+    _id: "service-slot-1",
+    title: "Service title",
+    description: "Add a short description of this offering when you\u2019re ready.",
+    iconName: "Leaf",
+  },
+  {
+    _id: "service-slot-2",
+    title: "Service title",
+    description: "Add a short description of this offering when you\u2019re ready.",
+    iconName: "CircleUserRound",
+  },
 ];
 
+function servicesForGrid(data?: ServiceData[] | null): ServiceData[] {
+  const fromCms =
+    data?.filter((s) => (s.title?.trim()?.length ?? 0) > 0).slice(0, 2) ?? [];
+  const out = [...fromCms];
+  let p = 0;
+  while (out.length < 2) {
+    out.push({ ...PLACEHOLDER_SLOTS[p], _id: `${PLACEHOLDER_SLOTS[p]._id}-pad-${fromCms.length}` });
+    p += 1;
+  }
+  return out.slice(0, 2);
+}
+
 export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
-  const services = data?.length ? data : defaultServices;
+  const services = servicesForGrid(data);
 
   return (
     <section className="bg-ivory py-16 lg:py-24">
@@ -42,23 +68,24 @@ export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((s) => {
+        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+          {services.map((s, index) => {
             const Icon = resolveIcon(s.iconName);
-            return (
-              <Link
-                key={s.title}
-                href={s.href || "/groups"}
-                className="group flex flex-col overflow-hidden rounded-2xl border border-sand/70 bg-card shadow-sm transition hover:shadow-lg hover:-translate-y-0.5"
-              >
+            const isLinked = Boolean(s.href?.trim());
+            const outerClassName =
+              "group flex flex-col overflow-hidden rounded-2xl border border-sand/70 bg-card shadow-sm transition hover:shadow-lg hover:-translate-y-0.5";
+            const media = SERVICE_CARD_MEDIA[index] ?? SERVICE_CARD_MEDIA[0];
+
+            const inner = (
+              <>
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <Image
-                    src={treetotsImages.servicesArea}
-                    alt={treetotsImageAlt.servicesArea}
+                    src={media.src}
+                    alt={media.alt}
                     fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    sizes="(min-width: 640px) 50vw, 100vw"
                     className="object-cover transition duration-500 group-hover:scale-105"
-                    style={{ objectPosition: serviceImagePositions[s.title ?? ""] ?? "50% 50%" }}
+                    style={{ objectPosition: media.objectPosition }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-forest/25 to-transparent" />
                   <span className="absolute bottom-3 left-3 flex size-10 items-center justify-center rounded-full bg-cream/95 shadow-md">
@@ -69,15 +96,29 @@ export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
                   <h3 className="font-[family-name:var(--font-fraunces)] text-lg font-semibold text-forest">
                     {s.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-forest/65">
-                    {s.description}
-                  </p>
-                  <span className="mt-4 inline-flex items-center text-sm font-semibold text-moss transition group-hover:text-forest">
-                    Learn More
-                    <ArrowRight className="ml-1 size-3.5 transition group-hover:translate-x-0.5" aria-hidden />
-                  </span>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-forest/65">{s.description}</p>
+                  {isLinked ? (
+                    <span className="mt-4 inline-flex items-center text-sm font-semibold text-moss transition group-hover:text-forest">
+                      Learn More
+                      <ArrowRight className="ml-1 size-3.5 transition group-hover:translate-x-0.5" aria-hidden />
+                    </span>
+                  ) : (
+                    <span className="mt-4 text-sm font-medium text-forest/40">Coming soon</span>
+                  )}
                 </div>
+              </>
+            );
+
+            const key = s._id ?? s.title ?? `service-${index}`;
+
+            return isLinked ? (
+              <Link key={key} href={s.href!} className={outerClassName}>
+                {inner}
               </Link>
+            ) : (
+              <div key={key} className={`${outerClassName} cursor-default hover:shadow-sm hover:translate-y-0`}>
+                {inner}
+              </div>
             );
           })}
         </div>

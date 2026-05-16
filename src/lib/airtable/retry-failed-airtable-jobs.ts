@@ -48,6 +48,8 @@ export async function retryFailedAirtableJobs(options: {
   limit: number;
   dryRun: boolean;
   mode: RetryFailedJobsMode;
+  /** Passed through to the pending-job processor when mode is process_now. */
+  concurrency?: number;
 }): Promise<RetryFailedAirtableJobsResult> {
   const mode = options.mode ?? "reset_only";
   const dryRun = Boolean(options.dryRun);
@@ -129,6 +131,7 @@ export async function retryFailedAirtableJobs(options: {
     limit: Math.max(ids.length, 1),
     requestDryRun: dryRun,
     jobIds: ids,
+    concurrency: options.concurrency,
   });
 
   return {

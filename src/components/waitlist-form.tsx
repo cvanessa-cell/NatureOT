@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { captureClientAttributionFromUrl, getClientAttributionPayload } from "@/lib/marketing/client-attribution";
 import { createMetaEventId, trackMetaEvent } from "@/lib/meta/client-events";
+import { selectableChoiceClass } from "@/lib/selectable-choice";
 
 const SCHEDULES = [
   "Weekday mornings",
@@ -249,12 +250,9 @@ export function WaitlistForm() {
             <button
               key={i}
               type="button"
+              aria-pressed={interests.includes(i)}
               onClick={() => toggleInterest(i)}
-              className={`min-h-11 rounded-full border px-4 text-sm ${
-                interests.includes(i)
-                  ? "border-sage bg-white shadow"
-                  : "border-transparent bg-cream/60"
-              }`}
+              className={selectableChoiceClass(interests.includes(i), "chip")}
             >
               {i}
             </button>

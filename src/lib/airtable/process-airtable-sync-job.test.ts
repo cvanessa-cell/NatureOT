@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { processPendingAirtableSyncJobs } from "./process-airtable-sync-job";
+import { processPendingAirtableSyncJobs, resolveAirtableSyncConcurrency } from "./process-airtable-sync-job";
 
 const airtableMock = vi.hoisted(() => vi.fn());
 
@@ -83,6 +83,28 @@ function mockSupabase(
   return supabase as unknown as SupabaseClient & { updates: unknown[] };
 }
 
+describe("resolveAirtableSyncConcurrency", () => {
+  it("prefers explicit option over env", () => {
+    expect(resolveAirtableSyncConcurrency(8, "2", 10)).toBe(8);
+  });
+
+  it("uses env when option omitted", () => {
+    expect(resolveAirtableSyncConcurrency(undefined, "4", 10)).toBe(4);
+  });
+
+  it("defaults to serial when env unset", () => {
+    expect(resolveAirtableSyncConcurrency(undefined, undefined, 10)).toBe(1);
+  });
+
+  it("caps by batch size", () => {
+    expect(resolveAirtableSyncConcurrency(10, undefined, 3)).toBe(3);
+  });
+
+  it("treats invalid env as serial", () => {
+    expect(resolveAirtableSyncConcurrency(undefined, "nope", 5)).toBe(1);
+  });
+});
+
 describe("processPendingAirtableSyncJobs", () => {
   const prevEnv = { ...process.env };
 
@@ -115,6 +137,7 @@ describe("processPendingAirtableSyncJobs", () => {
 
     expect(res.dryRun).toBe(true);
     expect(res.succeeded).toBe(1);
+    expect(res.concurrency).toBe(1);
     expect(airtableMock).not.toHaveBeenCalled();
     const completion = sb.updates.find(
       (u) =>
@@ -142,11 +165,34 @@ describe("processPendingAirtableSyncJobs", () => {
     });
 
     expect(summary.failed).toBe(0);
+    expect(summary.concurrency).toBe(1);
     expect(airtableMock).toHaveBeenCalledTimes(1);
     const fields = airtableMock.mock.calls[0][1] as Record<string, unknown>;
     expect(fields["Growth OS Lead ID"]).toBe("lead-q1");
     expect(fields.Email).toBe("parent@example.com");
     expect((fields as { diagnosis?: string }).diagnosis).toBeUndefined();
+  });
+
+  it("processes multiple live jobs with concurrency above one", async () => {
+    const jobs = [1, 2, 3].map((n) => ({
+      ...LEAD_JOB,
+      id: `job-par-${n}`,
+      payload: {
+        ...LEAD_JOB.payload,
+        lead_id: `lead-par-${n}`,
+      },
+    }));
+    const sb = mockSupabase(jobs);
+    const summary = await processPendingAirtableSyncJobs({
+      supabase: sb,
+      limit: 10,
+      requestDryRun: false,
+      concurrency: 3,
+    });
+
+    expect(summary.succeeded).toBe(3);
+    expect(summary.concurrency).toBe(3);
+    expect(airtableMock).toHaveBeenCalledTimes(3);
   });
 
   it("marks jobs failed when Airtable returns an error envelope", async () => {
@@ -242,5 +288,27 @@ describe("processPendingAirtableSyncJobs", () => {
     expect(airtableMock).toHaveBeenCalledTimes(1);
     const fields = airtableMock.mock.calls[0][1] as Record<string, unknown>;
     expect(fields["Growth OS Lead ID"]).toBe("lead-q1");
+  });
+
+  it("processes multiple live jobs with concurrency above one", async () => {
+    const jobs = [1, 2, 3].map((n) => ({
+      ...LEAD_JOB,
+      id: `job-par-${n}`,
+      payload: {
+        ...LEAD_JOB.payload,
+        lead_id: `lead-par-${n}`,
+      },
+    }));
+    const sb = mockSupabase(jobs);
+    const summary = await processPendingAirtableSyncJobs({
+      supabase: sb,
+      limit: 10,
+      requestDryRun: false,
+      concurrency: 3,
+    });
+
+    expect(summary.succeeded).toBe(3);
+    expect(summary.concurrency).toBe(3);
+    expect(airtableMock).toHaveBeenCalledTimes(3);
   });
 });

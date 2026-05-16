@@ -31,7 +31,7 @@ export function SectionHeading({
         {title}
       </h2>
       {description && (
-        <div className="text-lg text-bark/90">{description}</div>
+        <div className="font-lead text-lg text-bark/90">{description}</div>
       )}
     </div>
   );

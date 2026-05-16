@@ -11,8 +11,8 @@ const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "placeholder";
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
 
 export default defineConfig({
-  name: "treetots-dfw",
-  title: "TreeTots DFW",
+  name: "treetots-nature-ot",
+  title: "TreeTotsNatureOT",
   projectId,
   dataset,
   basePath: "/studio",

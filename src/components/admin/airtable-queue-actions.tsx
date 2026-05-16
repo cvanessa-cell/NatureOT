@@ -16,15 +16,20 @@ export function AirtableQueueActions({
 }) {
   const [log, setLog] = useState<string>("");
   const [loading, setLoading] = useState(false);
+  const [parallelWorkers, setParallelWorkers] = useState<string>("");
 
   async function runProcessPending(limit: number, dryRun: boolean) {
     setLoading(true);
     setLog("");
     try {
+      const w = parallelWorkers.trim() === "" ? undefined : Number(parallelWorkers);
+      const body: Record<string, unknown> = { limit, dryRun };
+      if (w !== undefined && Number.isFinite(w)) body.concurrency = w;
+
       const res = await fetch("/api/admin/airtable/process-pending", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ limit, dryRun }),
+        body: JSON.stringify(body),
       });
       const j = (await res.json().catch(() => ({}))) as Record<string, unknown>;
       setLog(JSON.stringify({ action: "process-pending", status: res.status, body: j }, null, 2));
@@ -39,10 +44,14 @@ export function AirtableQueueActions({
     setLoading(true);
     setLog("");
     try {
+      const w = parallelWorkers.trim() === "" ? undefined : Number(parallelWorkers);
+      const body: Record<string, unknown> = { limit, dryRun, mode };
+      if (w !== undefined && Number.isFinite(w)) body.concurrency = w;
+
       const res = await fetch("/api/admin/airtable/retry-failed", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ limit, dryRun, mode }),
+        body: JSON.stringify(body),
       });
       const j = (await res.json().catch(() => ({}))) as Record<string, unknown>;
       setLog(JSON.stringify({ action: "retry-failed", status: res.status, body: j }, null, 2));
@@ -63,6 +72,22 @@ export function AirtableQueueActions({
             <code>AIRTABLE_DRY_RUN</code> ({envDryHint}). Buttons are explicit — cron is optional behind{" "}
             <code>/api/cron/process-airtable-sync</code>.
           </p>
+          <p className="text-xs text-bark/70">
+            Leave blank to use <code>AIRTABLE_SYNC_CONCURRENCY</code> when set, otherwise one job at a time. Enter 2–25 to
+            dequeue that many pending rows in parallel for this button click (respects Airtable rate limits).
+          </p>
+          <label className="flex flex-wrap items-center gap-2 text-xs font-medium text-forest">
+            <span className="whitespace-nowrap">Parallel workers</span>
+            <input
+              type="number"
+              min={1}
+              max={25}
+              placeholder="env / 1"
+              value={parallelWorkers}
+              onChange={(e) => setParallelWorkers(e.target.value)}
+              className="h-9 w-28 rounded-lg border border-sand px-2 text-sm"
+            />
+          </label>
           {failedFilterActive && (
             <p className="mt-2 text-[11px] font-medium text-moss">
               Viewing failed rows only — Retry actions below operate on earliest failed jobs globally.

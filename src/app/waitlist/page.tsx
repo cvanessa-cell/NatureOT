@@ -20,7 +20,7 @@ export default function WaitlistPage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
             Join the interest list
           </h1>
-          <p className="mt-4 text-lg text-bark/90">
+          <p className="font-lead mt-4 text-lg text-bark/90">
             Share preferences so we can suggest cohorts that may fit—without collecting sensitive clinical
             details on this form.
           </p>

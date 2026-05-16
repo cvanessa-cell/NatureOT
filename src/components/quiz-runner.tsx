@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { nanoid } from "nanoid";
 import { QUIZ_DISCLAIMER_SHORT, QUIZ_QUESTIONS } from "@/lib/quiz-data";
 import { scoreQuiz } from "@/lib/scoring";
+import { selectableChoiceClass } from "@/lib/selectable-choice";
 
 const STORAGE_KEY = "tnq_quiz_v1";
 
@@ -84,12 +85,9 @@ export function QuizRunner() {
           <button
             key={opt.value}
             type="button"
+            aria-pressed={current === opt.value}
             onClick={() => select(opt.value)}
-            className={`min-h-14 rounded-2xl border-2 px-4 py-3 text-left text-lg transition ${
-              current === opt.value
-                ? "border-sage bg-white shadow-md"
-                : "border-transparent bg-white/50 hover:border-sage/40"
-            }`}
+            className={selectableChoiceClass(current === opt.value, "card")}
           >
             {opt.label}
           </button>

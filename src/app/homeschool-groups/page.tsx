@@ -18,7 +18,7 @@ export default function HomeschoolGroupsPage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
             Nature-Based OT and Developmental Groups for Homeschool Families in DFW
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-bark/90">
+          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
             Weekday outdoor groups designed to support movement, regulation, confidence, social participation, and everyday functional skills
             through child-centered nature play.
           </p>

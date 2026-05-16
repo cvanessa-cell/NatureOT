@@ -21,7 +21,7 @@ export default function AbaReferralPartnersPage() {
           <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
             Nature-Based OT Resource for DFW ABA Providers and Families
           </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-bark/90">
+          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
             Programs are designed to complement a child’s broader support team by supporting regulation, motor confidence,
             social participation, outdoor confidence, and everyday functional skills through child-centered nature play.
           </p>

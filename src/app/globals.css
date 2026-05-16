@@ -10,7 +10,7 @@
   --color-sky: #6b8f9c;
   --color-bark: #182B20;
   --color-sand: #e8e0d4;
-  --color-moss: #5F7F4A;
+  --color-moss: #1f4d3a;
   --color-terracotta: #D98D6A;
   --color-charcoal: #182B20;
   --color-card: #FFFCF4;
@@ -40,6 +40,11 @@
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Lead lines: Inter */
+.font-lead {
+  font-family: var(--font-lead), system-ui, sans-serif;
 }
 
 body {

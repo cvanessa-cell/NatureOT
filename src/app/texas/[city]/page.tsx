@@ -50,7 +50,7 @@ export default async function TexasCityPage({ params }: Props) {
       <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
         Nature-Based Occupational Therapy Groups for Kids in {row.displayName}, Texas
       </h1>
-      <p className="mt-6 text-lg text-bark/90">
+      <p className="font-lead mt-6 text-lg text-bark/90">
         Small-group outdoor occupational therapy can support regulation, motor confidence, peer
         participation, and functional skills through guided nature play—when the fit is right for
         your family.

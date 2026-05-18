@@ -4,11 +4,12 @@ import { SectionHeading } from "@/components/marketing/section-heading";
 import { FaqAccordion, type FaqItem } from "@/components/marketing/faq-accordion";
 import { Card } from "@/components/ui/card";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
+import { PageHero } from "@/components/marketing/page-hero";
 
 export const metadata: Metadata = {
-  title: "Small-Group Nature-Based OT Programs | Nature OT Growth OS",
+  title: "Small-Group Nature-Based OT Programs | TreeTots DFW",
   description:
-    "Explore age-banded outdoor OT groups in Texas—structure, focus areas, and how we match families.",
+    "Explore age-banded outdoor OT groups in Dallas-Fort Worth: structure, focus areas, and how TreeTots DFW matches families.",
 };
 
 const groups = [
@@ -98,35 +99,17 @@ const faq: FaqItem[] = [
 export default function GroupsPage() {
   return (
     <div>
-      <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-moss">
-            Programs
-          </p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
-            Small-Group Nature-Based OT Programs
-          </h1>
-          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
-            Age-banded cohorts with transparent focus areas. Groups are not
-            appropriate for every child; fit is determined through your intake
-            conversation and clinical judgment—not by browsing alone.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
-              href="/waitlist"
-              className="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-8 font-medium text-cream"
-            >
-              Join Interest List
-            </Link>
-            <Link
-              href="/book-call"
-              className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-sage/40 px-8 font-medium text-forest"
-            >
-              Book a Parent Call
-            </Link>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Programs"
+        title="Small-group nature-based OT programs"
+        description="Age-banded cohorts with transparent focus areas. Groups are not appropriate for every child; fit is determined through your intake conversation and clinical judgment, not by browsing alone."
+        imageKey="otGroupHammockPlay"
+        imagePosition="55% 45%"
+        actions={[
+          { href: "/waitlist", label: "Join interest list" },
+          { href: "/book-call", label: "Book a parent call", variant: "secondary" },
+        ]}
+      />
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <div className="grid gap-6 md:grid-cols-2">
@@ -135,7 +118,7 @@ export default function GroupsPage() {
               <p className="text-xs font-semibold uppercase tracking-wide text-moss">
                 Ages {g.age}
               </p>
-              <h2 className="mt-2 font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+              <h2 className="mt-2 font-display text-2xl text-forest">
                 {g.title}
               </h2>
               <dl className="mt-4 space-y-2 text-sm text-bark/90">

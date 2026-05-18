@@ -2,14 +2,14 @@ import { LeadForm } from "@/components/lead-form";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Connect | Texas Nature OT",
-  description: "Share your contact information to receive your guide summary.",
+  title: "Connect | TreeTots DFW",
+  description: "Share your contact information to receive your TreeTots DFW guide summary.",
 };
 
 export default function GetStartedPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-12">
-      <h1 className="text-center font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest">
+      <h1 className="text-center font-display text-3xl font-semibold text-forest">
         Let us send your summary
       </h1>
       <p className="mt-3 text-center text-bark/90">

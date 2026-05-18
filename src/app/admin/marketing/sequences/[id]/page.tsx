@@ -16,7 +16,7 @@ export default async function MarketingSequenceDetailPage({ params }: { params: 
 
   return (
     <div className="space-y-6">
-      <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">{sequence.name}</h1>
+      <h1 className="font-display text-3xl text-forest">{sequence.name}</h1>
       <Card><p className="text-sm text-bark/80">Trigger: {sequence.trigger_type} · Status: {sequence.status}</p></Card>
       {(steps ?? []).map((step) => (
         <Card key={step.id}>

@@ -22,7 +22,7 @@ export function LocalSEOSection({ data }: { data?: LocalSeoProps | null }) {
     <section className="bg-cream py-16 lg:py-20">
       <div className="mx-auto max-w-4xl px-4 text-center lg:px-6">
         <MapPin className="mx-auto size-8 text-moss/60" aria-hidden />
-        <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+        <h2 className="mt-4 font-display text-3xl font-semibold text-forest sm:text-4xl">
           {headline}
         </h2>
         <p className="mt-3 text-forest/65">{body}</p>

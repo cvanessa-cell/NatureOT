@@ -10,7 +10,7 @@ export default async function MarketingSegmentsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">Lead segments</h1>
+      <h1 className="font-display text-3xl text-forest">Lead segments</h1>
       {(segments ?? []).map((segment) => (
         <Card key={segment.id}>
           <p className="font-medium text-forest">{segment.name}</p>

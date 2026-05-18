@@ -16,7 +16,7 @@ export default async function PartnerImportPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="font-display text-3xl text-forest">
           Import partners from CSV
         </h1>
         <p className="mt-2 max-w-3xl text-sm text-bark/80">

@@ -46,7 +46,7 @@ export default async function AdminLeadsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="font-display text-3xl text-forest">
           Leads
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-bark/80">

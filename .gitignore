@@ -44,4 +44,7 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# automation run logs
+/automations/daily-nature-ot-ui-functionality-polish/logs/
+
 .vercel

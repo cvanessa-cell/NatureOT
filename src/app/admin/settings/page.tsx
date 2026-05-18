@@ -15,7 +15,7 @@ export default async function AdminSettingsPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="font-display text-3xl text-forest">
           Settings
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-bark/80">
@@ -33,7 +33,7 @@ export default async function AdminSettingsPage() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Practice information
           </h2>
           <div className="mt-4 space-y-3">
@@ -48,7 +48,7 @@ export default async function AdminSettingsPage() {
           </div>
         </Card>
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             CTAs & booking
           </h2>
           <div className="mt-4 space-y-3">
@@ -63,7 +63,7 @@ export default async function AdminSettingsPage() {
           </div>
         </Card>
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Email & SMS
           </h2>
           <p className="mt-2 text-sm text-bark/80">
@@ -72,7 +72,7 @@ export default async function AdminSettingsPage() {
           </p>
         </Card>
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Integrations
           </h2>
           <p className="mt-2 text-sm text-bark/80">
@@ -99,7 +99,7 @@ export default async function AdminSettingsPage() {
           </label>
         </Card>
         <Card className="lg:col-span-2">
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Compliance language
           </h2>
           <label className="mt-4 grid gap-1 text-sm font-medium text-forest">

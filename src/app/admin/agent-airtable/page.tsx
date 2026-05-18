@@ -15,7 +15,7 @@ export default async function AgentAirtablePage() {
 
   return (
     <div>
-      <h1 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+      <h1 className="font-display text-2xl text-forest">
         Agent_Airtable command center
       </h1>
       <p className="mt-2 max-w-2xl text-sm text-bark/80">
@@ -26,7 +26,7 @@ export default async function AgentAirtablePage() {
         filtered).
       </p>
       <Card className="mt-8 border-sky/25 bg-white/90">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+        <h2 className="font-display text-xl text-forest">
           Suggested commands
         </h2>
         <p className="mt-2 text-sm text-bark/80">

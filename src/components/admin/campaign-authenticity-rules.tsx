@@ -36,7 +36,7 @@ export function CampaignAuthenticityRulesFull() {
 
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="p-6">
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Must not create
           </h2>
           <ul className="mt-3 list-inside list-disc space-y-1.5 text-sm text-bark/90">
@@ -46,7 +46,7 @@ export function CampaignAuthenticityRulesFull() {
           </ul>
         </Card>
         <Card className="p-6">
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             May create
           </h2>
           <ul className="mt-3 list-inside list-disc space-y-1.5 text-sm text-bark/90">
@@ -58,7 +58,7 @@ export function CampaignAuthenticityRulesFull() {
       </div>
 
       <Card className="p-6">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+        <h2 className="font-display text-xl text-forest">
           Public-facing attribution
         </h2>
         <p className="mt-2 text-sm text-bark/80">
@@ -72,7 +72,7 @@ export function CampaignAuthenticityRulesFull() {
       </Card>
 
       <Card className="p-6">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+        <h2 className="font-display text-xl text-forest">
           System must block
         </h2>
         <ul className="mt-3 list-inside list-disc space-y-1.5 text-sm text-bark/90">
@@ -83,7 +83,7 @@ export function CampaignAuthenticityRulesFull() {
       </Card>
 
       <Card className="p-6">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+        <h2 className="font-display text-xl text-forest">
           Admin approval gates
         </h2>
         <p className="mt-2 text-sm text-bark/80">

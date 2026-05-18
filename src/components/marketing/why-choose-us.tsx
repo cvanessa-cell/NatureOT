@@ -17,17 +17,18 @@ export function WhyChooseUs() {
     <div className="overflow-hidden rounded-2xl border border-sand/70 bg-card shadow-sm">
       <div className="relative h-36">
         <Image
-          src={treetotsImages.whyFamiliesChooseArea}
-          alt={treetotsImageAlt.whyFamiliesChooseArea}
+          src={treetotsImages.naturePlayChildOnLog}
+          alt={treetotsImageAlt.naturePlayChildOnLog}
           fill
           sizes="(min-width: 1024px) 35vw, 100vw"
           className="object-cover"
+          style={{ objectPosition: "50% 40%" }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-card via-card/70 to-transparent" />
       </div>
 
       <div className="px-6 pb-6 lg:px-7 lg:pb-7">
-        <h3 className="font-[family-name:var(--font-fraunces)] text-xl font-semibold text-forest">
+        <h3 className="font-display text-xl font-semibold text-forest">
           Why Families Choose Us
         </h3>
 

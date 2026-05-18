@@ -8,7 +8,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-sand/90 bg-card/95 p-6 shadow-sm",
+        "rounded-[1.75rem] border border-sand/70 bg-card/95 p-6 shadow-sm shadow-forest/10",
         className
       )}
       {...props}
@@ -30,7 +30,7 @@ export function CardTitle({
   return (
     <h3
       className={cn(
-        "font-[family-name:var(--font-fraunces)] text-lg font-semibold text-forest",
+        "font-display text-lg font-semibold text-forest",
         className
       )}
       {...props}

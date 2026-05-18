@@ -64,7 +64,7 @@ export function WorkshopRegistrationSection() {
   if (status === "done") {
     return (
       <div className="rounded-2xl border border-moss/30 bg-white/90 p-8 shadow-sm">
-        <p className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <p className="font-display text-2xl text-forest">
           You&rsquo;re registered
         </p>
         <p className="mt-3 text-bark/90">
@@ -95,7 +95,7 @@ export function WorkshopRegistrationSection() {
       className="space-y-5 rounded-2xl border border-sage/20 bg-card/95 p-6 shadow-sm"
       noValidate
     >
-      <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+      <h2 className="font-display text-2xl text-forest">
         Workshop registration
       </h2>
       <p className="text-sm text-bark/85">
@@ -200,7 +200,7 @@ export function WorkshopCards() {
           key={w.title}
           className="rounded-2xl border border-sand bg-card/95 p-6 shadow-sm"
         >
-          <h3 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h3 className="font-display text-xl text-forest">
             {w.title}
           </h3>
           <p className="mt-2 text-sm text-bark/80">{w.when}</p>

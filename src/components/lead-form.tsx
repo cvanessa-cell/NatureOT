@@ -99,7 +99,7 @@ export function LeadForm() {
   if (status === "done") {
     return (
       <div className="rounded-2xl border border-moss/30 bg-white/80 p-8 text-center">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <h2 className="font-display text-2xl text-forest">
           Thank you
         </h2>
         <p className="mt-3 text-bark">

@@ -2,35 +2,32 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
+import { PageHero } from "@/components/marketing/page-hero";
 import {
   WorkshopCards,
   WorkshopRegistrationSection,
 } from "@/components/workshop-registration-form";
 
 export const metadata: Metadata = {
-  title: "Parent Workshops | Nature OT Growth OS",
+  title: "Parent Workshops | TreeTots DFW",
   description:
-    "Outdoor-forward parent workshops led with pediatric OT expertise—education, not diagnosis.",
+    "Outdoor-forward parent workshops from TreeTots DFW, led with pediatric OT expertise and designed for education.",
 };
 
 export default function WorkshopsPage() {
   return (
     <div>
-      <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-moss">
-            Events
-          </p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
-            Parent Workshops
-          </h1>
-          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
-            Workshops are lead-generation and education events—helpful context for
-            families exploring outdoor OT supports. They do not replace individual
-            evaluation or clinical care.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Events"
+        title="Parent workshops built around real outdoor routines"
+        description="Helpful education for families exploring outdoor OT supports. Workshops offer practical context and do not replace individual evaluation or clinical care."
+        imageKey="workshopFamilies"
+        imagePosition="50% 45%"
+        actions={[
+          { href: "#register", label: "Save your seat" },
+          { href: "/waitlist", label: "Get updates", variant: "secondary" },
+        ]}
+      />
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <SectionHeading
@@ -46,7 +43,7 @@ export default function WorkshopsPage() {
       <section id="register" className="border-t border-sand/80 bg-white/60 py-14">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 lg:grid-cols-[1fr_1.1fr]">
           <div>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+            <h2 className="font-display text-3xl text-forest">
               Save your seat
             </h2>
             <p className="mt-4 text-bark/90">
@@ -55,7 +52,8 @@ export default function WorkshopsPage() {
             </p>
             <ComplianceBanner className="mt-8">
               <p>
-                Dates and venues here are placeholders—swap with your operational calendar when ready.
+                Workshop dates and venues are announced through the interest list as the
+                operational calendar is confirmed.
               </p>
             </ComplianceBanner>
             <div className="mt-8 space-y-3">

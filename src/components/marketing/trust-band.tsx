@@ -9,8 +9,8 @@ interface TrustBandProps {
 }
 
 const defaultStats = [
-  { iconName: "Calendar", value: "12+", label: "Years of Experience" },
-  { iconName: "Heart", value: "100+", label: "Families Served" },
+  { iconName: "ShieldCheck", value: "OT", label: "Therapist-Led Support" },
+  { iconName: "Heart", value: "Warm", label: "Parent-Friendly Guidance" },
   { iconName: "Users", value: "Small", label: "Groups for Big Impact" },
   { iconName: "MapPin", value: "DFW", label: "Local & Community Focused" },
 ];
@@ -36,7 +36,7 @@ export function TrustBand({ data }: { data?: TrustBandProps | null }) {
                 className="object-cover"
               />
             </div>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-3xl font-semibold leading-tight sm:text-4xl">
+            <h2 className="font-display text-3xl font-semibold leading-tight sm:text-4xl">
               {headline}
             </h2>
             <p className="mt-4 max-w-md text-[1.05rem] leading-relaxed text-cream/75">
@@ -50,7 +50,7 @@ export function TrustBand({ data }: { data?: TrustBandProps | null }) {
               return (
                 <div key={s.label} className="rounded-2xl border border-cream/8 bg-cream/6 px-5 py-6 text-center">
                   <Icon className="mx-auto size-6 text-gold" aria-hidden />
-                  <p className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-bold leading-none">
+                  <p className="mt-3 font-display text-3xl font-bold leading-none">
                     {s.value}
                   </p>
                   <p className="mt-2 text-sm text-cream/65">{s.label}</p>

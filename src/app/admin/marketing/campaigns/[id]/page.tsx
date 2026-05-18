@@ -67,7 +67,7 @@ export default async function CampaignDetailPage({
     <div className="space-y-8">
       <div>
         <p className="text-sm font-medium uppercase tracking-wide text-moss">Campaign</p>
-        <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="mt-2 font-display text-3xl text-forest">
           {c.name}
         </h1>
         <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-bark/80">

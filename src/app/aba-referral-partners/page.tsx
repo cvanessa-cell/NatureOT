@@ -5,7 +5,7 @@ import { ComplianceBanner } from "@/components/marketing/compliance-banner";
 import { Card } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "ABA Referral Partners | TreeTotsNatureOT",
+  title: "ABA Referral Partners | TreeTots DFW",
   description:
     "Nature-based pediatric OT groups and parent education in DFW designed to complement broader support teams.",
 };
@@ -18,7 +18,7 @@ export default function AbaReferralPartnersPage() {
           <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Referral partners
           </p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
+          <h1 className="mt-2 font-display text-4xl font-semibold text-forest sm:text-5xl">
             Nature-Based OT Resource for DFW ABA Providers and Families
           </h1>
           <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
@@ -31,16 +31,16 @@ export default function AbaReferralPartnersPage() {
       <section className="mx-auto max-w-6xl px-4 py-14">
         <div className="grid gap-6 md:grid-cols-2">
           <Card>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+            <h2 className="font-display text-2xl text-forest">
               Complementary support
             </h2>
             <p className="mt-3 text-bark/90">
-              TreeTotsNatureOT is not a replacement for medical care, school services, or other therapies. We aim for clear role boundaries
+              TreeTots DFW is not a replacement for medical care, school services, or other therapies. We aim for clear role boundaries
               and operational communication.
             </p>
           </Card>
           <Card>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+            <h2 className="font-display text-2xl text-forest">
               Referral-friendly materials
             </h2>
             <p className="mt-3 text-bark/90">
@@ -57,7 +57,7 @@ export default function AbaReferralPartnersPage() {
 
         <div className="mt-10 grid gap-10 lg:grid-cols-[1fr_1.05fr]">
           <div>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+            <h2 className="font-display text-3xl text-forest">
               Request an ABA referral packet
             </h2>
             <p className="mt-4 text-bark/90">

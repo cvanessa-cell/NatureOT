@@ -104,7 +104,7 @@ export default async function AirtableSyncPage({
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <h1 className="font-display text-2xl text-forest">
           Airtable sync
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-bark/80">
@@ -156,7 +156,7 @@ export default async function AirtableSyncPage({
       />
 
       <div>
-        <h2 className="font-[family-name:var(--font-fraunces)] text-lg text-forest">
+        <h2 className="font-display text-lg text-forest">
           Legacy waitlist sync tool
         </h2>
         <p className="mt-1 text-xs text-bark/70">
@@ -171,7 +171,7 @@ export default async function AirtableSyncPage({
       <section className="rounded-2xl border border-sand bg-white/90 p-4 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-lg text-forest">
+            <h2 className="font-display text-lg text-forest">
               Sync queue {failedOnly ? "(failed rows only)" : ""}
             </h2>
             <p className="mt-1 text-xs text-bark/75">

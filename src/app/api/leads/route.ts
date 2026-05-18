@@ -12,6 +12,8 @@ import {
 } from "@/lib/nurture";
 import { sendSmsIfConfigured } from "@/lib/sms";
 import type { ResultCategory } from "@/types/database";
+import { enqueueAirtablePush } from "@/lib/airtable/airtable-sync-queue";
+import { parseParentName } from "@/lib/leads/lead-normalizer";
 import { mapLeadCreatedPayload } from "@/lib/zapier/zapier-payload-mapper";
 import { queueZapierOutbound } from "@/lib/zapier/outbound-webhooks";
 import { attachAttributionToLead } from "@/lib/marketing/attribution";
@@ -193,6 +195,27 @@ export async function POST(req: Request) {
     ip,
   });
 
+  const parsedName = parseParentName(body.parentName);
+
+  await enqueueAirtablePush({
+    sourceTable: "leads",
+    sourceRecordId: leadId,
+    targetAirtableTable: "Leads",
+    safePayloadSummary: {
+      lead_id: leadId,
+      parent_name: parsedName.parent_name,
+      parent_first_name: parsedName.parent_first_name,
+      parent_email: body.parentEmail.trim().toLowerCase(),
+      parent_phone: body.parentPhone ?? undefined,
+      child_age_range: body.childAgeRange,
+      city_or_zip: body.cityOrZip,
+      primary_result_category: primary,
+      lead_source: "lead_form",
+      consent_marketing: body.consentMarketing,
+    },
+    dryRun: false,
+  });
+
   const mappedLead = mapLeadCreatedPayload({
     id: leadId,
     parent_email: body.parentEmail,
@@ -202,6 +225,7 @@ export async function POST(req: Request) {
     city_or_zip: body.cityOrZip,
     primary_result_category: primary,
     lead_source: "lead_form",
+    consent_marketing: body.consentMarketing,
   });
 
   queueZapierOutbound({

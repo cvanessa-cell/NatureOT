@@ -8,11 +8,11 @@ import { cn } from "@/lib/cn";
 
 const links = [
   { href: "/about", label: "About" },
-  { href: "/groups", label: "Services" },
+  { href: "/services", label: "Services" },
   { href: "/groups", label: "Groups" },
   { href: "/parent-guide", label: "For Parents" },
   { href: "/referral-partners", label: "For Providers" },
-  { href: "/faq", label: "Resources" },
+  { href: "/faq", label: "FAQ" },
   { href: "/get-started", label: "Contact" },
 ];
 
@@ -36,7 +36,7 @@ export function SiteHeader() {
           <span className="flex size-10 items-center justify-center rounded-full bg-forest text-cream">
             <Leaf className="size-5" />
           </span>
-          <span className="font-[family-name:var(--font-fraunces)] text-xl font-semibold tracking-tight text-forest">
+          <span className="font-display text-xl font-semibold tracking-tight text-forest">
             TreeTots <span className="text-moss">DFW</span>
           </span>
         </Link>
@@ -57,6 +57,12 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-2 md:flex">
+          <Link
+            href="/book-call"
+            className="inline-flex min-h-11 items-center justify-center rounded-full border-2 border-forest/20 bg-white/80 px-5 text-sm font-semibold text-forest transition hover:border-forest/35 hover:bg-white"
+          >
+            Book a Call
+          </Link>
           <Link
             href="/waitlist"
             className="inline-flex min-h-11 items-center justify-center rounded-full bg-forest px-5 text-sm font-semibold text-cream shadow-sm transition hover:bg-forest/90"

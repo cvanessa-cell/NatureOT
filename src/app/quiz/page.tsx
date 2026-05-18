@@ -11,7 +11,7 @@ export default function QuizPage() {
   return (
     <div>
       <div className="mx-auto max-w-3xl px-4 pt-10 text-center">
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+        <h1 className="font-display text-3xl font-semibold text-forest sm:text-4xl">
           A short parent guide
         </h1>
         <p className="mt-3 text-bark/90">

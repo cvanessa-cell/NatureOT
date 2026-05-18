@@ -4,9 +4,9 @@ import { FaqAccordion, type FaqItem } from "@/components/marketing/faq-accordion
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
 
 export const metadata: Metadata = {
-  title: "FAQ | Nature OT Growth OS",
+  title: "FAQ | TreeTots DFW",
   description:
-    "Answers about nature-based pediatric occupational therapy groups in Texas—education only.",
+    "Answers about TreeTots DFW nature-based pediatric occupational therapy groups in Dallas-Fort Worth.",
 };
 
 const items: FaqItem[] = [
@@ -70,7 +70,7 @@ const items: FaqItem[] = [
 export default function FaqPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-14">
-      <h1 className="font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
+      <h1 className="font-display text-4xl font-semibold text-forest">
         Frequently asked questions
       </h1>
       <p className="font-lead mt-4 text-lg text-bark/90">

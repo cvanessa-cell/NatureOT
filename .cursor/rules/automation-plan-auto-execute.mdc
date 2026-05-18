@@ -1,0 +1,32 @@
+---
+description: When an automation plan is complete, implement it locally immediately without asking for approval
+alwaysApply: true
+---
+
+# Automation plan → auto-execute locally
+
+When work comes from a repo automation or its plan, **do not stop after planning**. Execute locally as soon as the plan is ready.
+
+## Triggers (any of these)
+
+- Context under `automations/**` (e.g. `PROMPT.md`, `README.md`, worktree prep scripts).
+- User message to implement an attached plan, or plan todos already exist from a prior planning step.
+- Phrases like "Implement the plan", "run the automation", or a plan title copied from an automation workflow.
+
+## When the plan is complete
+
+1. **Do not ask** whether to implement, run locally, switch to Agent mode, or "proceed" — approval is already granted.
+2. **Start implementation in the same turn** if you just finished planning; do not wait for another user message.
+3. **Run everything you can locally**: dependency install (if needed), lint, test, build, scripts, worktree prep, browser checks — via tools/shell, not user instructions.
+4. **Follow automation conventions**:
+   - Do **not** edit the plan file itself.
+   - Use existing plan todos only (do not recreate them); mark `in_progress` then `completed` as you work.
+   - Prefer the dedicated automation worktree when `automations/**` or prep scripts specify it.
+5. **Stop only for real blockers**: missing secrets/credentials, explicit "plan only" / "don't implement", user rejection, or actions you cannot perform (login, captcha, paid console access).
+
+## Does not apply when
+
+- User explicitly asked for **plan only** ("just plan", "don't implement yet", "review the plan first").
+- There is no implementation plan and the task is Q&A or exploration only.
+
+Planning is a checkpoint, not the end state, for automation-driven work.

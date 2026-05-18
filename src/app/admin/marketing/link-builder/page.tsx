@@ -11,7 +11,7 @@ export default async function MarketingLinkBuilderPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">Campaign link builder</h1>
+      <h1 className="font-display text-3xl text-forest">Campaign link builder</h1>
       <Card>
         <p className="text-sm text-bark/80">Create trackable UTM links for campaigns and copy the generated URL.</p>
       </Card>

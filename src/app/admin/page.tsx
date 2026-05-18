@@ -111,7 +111,7 @@ export default async function AdminDashboardPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="font-display text-3xl text-forest">
           Operations dashboard
         </h1>
         <p className="mt-2 max-w-2xl text-sm text-bark/80">
@@ -166,7 +166,7 @@ export default async function AdminDashboardPage() {
 
       <div className="grid gap-8 lg:grid-cols-2">
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Leads by source (sample)
           </h2>
           <ul className="mt-4 space-y-2 text-sm text-bark/90">
@@ -189,7 +189,7 @@ export default async function AdminDashboardPage() {
           </ul>
         </Card>
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Waitlist demand (sample)
           </h2>
           <p className="mt-2 text-sm text-bark/80">
@@ -213,7 +213,7 @@ export default async function AdminDashboardPage() {
       </div>
 
       <Card>
-        <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+        <h2 className="font-display text-xl text-forest">
           Recent activity
         </h2>
         <ul className="mt-4 space-y-3 text-sm text-bark/90">

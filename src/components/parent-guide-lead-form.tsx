@@ -50,7 +50,7 @@ export function ParentGuideLeadForm() {
   if (status === "done") {
     return (
       <div className="rounded-2xl border border-moss/30 bg-white/90 p-8 shadow-sm">
-        <p className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <p className="font-display text-2xl text-forest">
           Check your inbox for the guide
         </p>
         <p className="mt-3 text-bark/90">

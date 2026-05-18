@@ -10,46 +10,81 @@ interface ServiceData {
   description?: string;
   iconName?: string;
   href?: string;
+  ctaLabel?: string;
 }
 
 const SERVICE_CARD_MEDIA = [
   {
-    src: treetotsImages.servicesCardLeft,
-    alt: treetotsImageAlt.servicesCardLeft,
-    objectPosition: "50% 35%" as const,
+    src: treetotsImages.otGroupHammockPlay,
+    alt: treetotsImageAlt.otGroupHammockPlay,
+    objectPosition: "55% 45%" as const,
   },
   {
-    src: treetotsImages.servicesArea,
-    alt: treetotsImageAlt.servicesArea,
-    objectPosition: "62% 50%" as const,
+    src: treetotsImages.homeschoolNature,
+    alt: treetotsImageAlt.homeschoolNature,
+    objectPosition: "50% 40%" as const,
+  },
+  {
+    src: treetotsImages.workshopFamilies,
+    alt: treetotsImageAlt.workshopFamilies,
+    objectPosition: "50% 45%" as const,
+  },
+  {
+    src: treetotsImages.providerSection,
+    alt: treetotsImageAlt.providerSection,
+    objectPosition: "50% 48%" as const,
   },
 ] as const;
 
-const PLACEHOLDER_SLOTS: ServiceData[] = [
+const FALLBACK_SERVICES: ServiceData[] = [
   {
-    _id: "service-slot-1",
-    title: "Service title",
-    description: "Add a short description of this offering when you\u2019re ready.",
+    _id: "service-slot-groups",
+    title: "Nature OT Groups",
+    description:
+      "Therapist-led small groups that help children practice regulation, motor planning, social participation, and outdoor confidence in a supportive setting.",
     iconName: "Leaf",
+    href: "/groups",
+    ctaLabel: "Explore groups",
   },
   {
-    _id: "service-slot-2",
-    title: "Service title",
-    description: "Add a short description of this offering when you\u2019re ready.",
-    iconName: "CircleUserRound",
+    _id: "service-slot-homeschool",
+    title: "Homeschool + After-School Options",
+    description:
+      "Flexible outdoor group options for families who want structured OT support woven into the school week or afternoon routine.",
+    iconName: "Compass",
+    href: "/homeschool-groups",
+    ctaLabel: "See family options",
+  },
+  {
+    _id: "service-slot-workshops",
+    title: "Parent Workshops",
+    description:
+      "Parent-friendly education events that explain how outdoor, goal-directed OT supports participation without overwhelming families with clinical jargon.",
+    iconName: "GraduationCap",
+    href: "/workshops",
+    ctaLabel: "View workshops",
+  },
+  {
+    _id: "service-slot-referral",
+    title: "Provider Referrals",
+    description:
+      "A simple referral path for pediatricians, counselors, schools, therapists, and community partners who want a clear next step for families.",
+    iconName: "HandHeart",
+    href: "/provider-referral",
+    ctaLabel: "Refer a family",
   },
 ];
 
 function servicesForGrid(data?: ServiceData[] | null): ServiceData[] {
   const fromCms =
-    data?.filter((s) => (s.title?.trim()?.length ?? 0) > 0).slice(0, 2) ?? [];
+    data?.filter((s) => (s.title?.trim()?.length ?? 0) > 0).slice(0, 4) ?? [];
   const out = [...fromCms];
   let p = 0;
-  while (out.length < 2) {
-    out.push({ ...PLACEHOLDER_SLOTS[p], _id: `${PLACEHOLDER_SLOTS[p]._id}-pad-${fromCms.length}` });
+  while (out.length < 4) {
+    out.push({ ...FALLBACK_SERVICES[p], _id: `${FALLBACK_SERVICES[p]._id}-pad-${out.length}` });
     p += 1;
   }
-  return out.slice(0, 2);
+  return out.slice(0, 4);
 }
 
 export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
@@ -60,20 +95,22 @@ export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-moss">What We Offer</p>
-          <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+          <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
             Our Nature-Based OT Services
           </h2>
-          <p className="mx-auto mt-3 max-w-lg text-forest/65">
-            Meaningful support. Real-world skills. Lasting impact.
+          <p className="mx-auto mt-3 max-w-2xl text-forest/65">
+            Clear next steps for families, homeschool groups, and referral partners who want
+            therapist-led outdoor support that feels warm, practical, and easy to understand.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:gap-7">
           {services.map((s, index) => {
             const Icon = resolveIcon(s.iconName);
             const isLinked = Boolean(s.href?.trim());
+            const ctaLabel = s.ctaLabel?.trim() || "Learn more";
             const outerClassName =
-              "group flex flex-col overflow-hidden rounded-2xl border border-sand/70 bg-card shadow-sm transition hover:shadow-lg hover:-translate-y-0.5";
+              "group flex h-full flex-col overflow-hidden rounded-[1.75rem] border border-sand/70 bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg";
             const media = SERVICE_CARD_MEDIA[index] ?? SERVICE_CARD_MEDIA[0];
 
             const inner = (
@@ -92,18 +129,20 @@ export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
                     <Icon className="size-5 text-moss" aria-hidden />
                   </span>
                 </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-[family-name:var(--font-fraunces)] text-lg font-semibold text-forest">
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <h3 className="font-display text-xl font-semibold text-forest">
                     {s.title}
                   </h3>
-                  <p className="mt-2 flex-1 text-sm leading-relaxed text-forest/65">{s.description}</p>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-forest/68 sm:text-[0.96rem]">
+                    {s.description}
+                  </p>
                   {isLinked ? (
-                    <span className="mt-4 inline-flex items-center text-sm font-semibold text-moss transition group-hover:text-forest">
-                      Learn More
+                    <span className="mt-5 inline-flex items-center text-sm font-semibold text-moss transition group-hover:text-forest">
+                      {ctaLabel}
                       <ArrowRight className="ml-1 size-3.5 transition group-hover:translate-x-0.5" aria-hidden />
                     </span>
                   ) : (
-                    <span className="mt-4 text-sm font-medium text-forest/40">Coming soon</span>
+                    <span className="mt-5 text-sm font-medium text-forest/50">Details coming soon</span>
                   )}
                 </div>
               </>
@@ -121,6 +160,20 @@ export function ServicesGrid({ data }: { data?: ServiceData[] | null }) {
               </div>
             );
           })}
+        </div>
+
+        <div className="mt-8 rounded-[1.75rem] border border-sage/45 bg-white/80 px-5 py-4 text-center shadow-sm shadow-forest/5 sm:px-6">
+          <p className="text-sm leading-relaxed text-forest/70">
+            <Link href="/services" className="font-semibold text-moss underline underline-offset-4">
+              View all services &amp; pricing
+            </Link>
+            {" · "}
+            Not sure which option fits?
+            <Link href="/book-call" className="ml-1 font-semibold text-moss underline underline-offset-4">
+              Book a parent call
+            </Link>
+            {" "}for a gentle next step.
+          </p>
         </div>
       </div>
     </section>

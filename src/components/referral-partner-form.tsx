@@ -69,7 +69,7 @@ export function ReferralPartnerForm() {
   if (status === "done") {
     return (
       <div className="rounded-2xl border border-moss/30 bg-white/90 p-8 shadow-sm">
-        <p className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <p className="font-display text-2xl text-forest">
           Thank you—your request is in our outreach queue
         </p>
         <p className="mt-3 text-bark/90">
@@ -85,7 +85,7 @@ export function ReferralPartnerForm() {
       onSubmit={submit}
       className="space-y-4 rounded-2xl border border-sage/20 bg-card/95 p-6 shadow-sm"
     >
-      <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+      <h2 className="font-display text-2xl text-forest">
         Request referral packet
       </h2>
       <p className="text-sm text-bark/85">

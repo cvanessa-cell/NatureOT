@@ -77,7 +77,7 @@ export function QuizRunner() {
           />
         </div>
       </div>
-      <h1 className="font-[family-name:var(--font-fraunces)] text-2xl font-semibold text-forest sm:text-3xl">
+      <h1 className="font-display text-2xl font-semibold text-forest sm:text-3xl">
         {q.prompt}
       </h1>
       <div className="grid gap-3">

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaqAccordion, type FaqItem } from "@/components/marketing/faq-accordion";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
+import { PageHero } from "@/components/marketing/page-hero";
 import { TEXAS_SEO_CITIES, getTexasCity } from "@/lib/texas-seo";
 
 type Props = { params: Promise<{ city: string }> };
@@ -14,10 +15,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { city } = await params;
   const row = getTexasCity(city);
-  if (!row) return { title: "City page | Nature OT Growth OS" };
+  if (!row) return { title: "City page | TreeTots DFW" };
   return {
-    title: `Nature-Based OT Groups for Kids in ${row.displayName}, Texas`,
-    description: `Educational overview of outdoor pediatric occupational therapy groups serving families near ${row.displayName}. Not a substitute for individualized evaluation.`,
+    title: `Nature-Based OT Groups for Kids in ${row.displayName}, TX | TreeTots DFW`,
+    description: `Educational overview of TreeTots DFW outdoor pediatric occupational therapy groups serving families near ${row.displayName}.`,
   };
 }
 
@@ -45,19 +46,22 @@ export default async function TexasCityPage({ params }: Props) {
   if (!row) notFound();
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-14">
-      <p className="text-sm font-medium uppercase tracking-wide text-moss">Texas · local page</p>
-      <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
-        Nature-Based Occupational Therapy Groups for Kids in {row.displayName}, Texas
-      </h1>
-      <p className="font-lead mt-6 text-lg text-bark/90">
-        Small-group outdoor occupational therapy can support regulation, motor confidence, peer
-        participation, and functional skills through guided nature play—when the fit is right for
-        your family.
-      </p>
+    <div>
+      <PageHero
+        eyebrow={`${row.displayName}, Texas`}
+        title={`Nature-based occupational therapy groups for kids near ${row.displayName}`}
+        description="Small-group outdoor occupational therapy can support regulation, motor confidence, peer participation, and functional skills through guided nature play when the fit is right for your family."
+        imageKey="groupTrailHero"
+        imagePosition="50% 48%"
+        actions={[
+          { href: "/waitlist", label: "Join the waitlist" },
+          { href: "/book-call", label: "Book a parent call", variant: "secondary" },
+        ]}
+      />
 
-      <section className="mt-10 rounded-2xl border border-sand bg-card/95 p-6">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+      <div className="mx-auto max-w-4xl px-4 py-14">
+      <section className="rounded-[1.75rem] border border-sand bg-card/95 p-6">
+        <h2 className="font-display text-2xl text-forest">
           Nearby areas families often mention
         </h2>
         <ul className="mt-4 flex flex-wrap gap-2">
@@ -71,13 +75,13 @@ export default async function TexasCityPage({ params }: Props) {
           ))}
         </ul>
         <p className="mt-4 text-sm text-bark/80">
-          Primary keyword placeholder for editors:{" "}
-          <span className="font-medium text-forest">{row.keyword}</span>
+          TreeTots DFW uses local pages to help families understand service areas, seasonal cohort
+          planning, and whether a nearby parent call or waitlist is the right next step.
         </p>
       </section>
 
       <section className="mt-10 space-y-4 text-bark/90">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <h2 className="font-display text-2xl text-forest">
           Program options
         </h2>
         <p>
@@ -87,7 +91,7 @@ export default async function TexasCityPage({ params }: Props) {
       </section>
 
       <section className="mt-10 space-y-4 text-bark/90">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <h2 className="font-display text-2xl text-forest">
           What families often notice at home
         </h2>
         <ul className="list-inside list-disc space-y-2">
@@ -121,11 +125,12 @@ export default async function TexasCityPage({ params }: Props) {
       </div>
 
       <section className="mt-14">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <h2 className="font-display text-2xl text-forest">
           FAQ
         </h2>
         <FaqAccordion className="mt-6" items={faqForCity(row.displayName)} />
       </section>
+      </div>
     </div>
   );
 }

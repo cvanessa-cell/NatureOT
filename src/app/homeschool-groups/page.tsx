@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { WaitlistForm } from "@/components/waitlist-form";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
+import { PageHero } from "@/components/marketing/page-hero";
 
 export const metadata: Metadata = {
-  title: "Homeschool Groups | TreeTotsNatureOT",
+  title: "Homeschool Groups | TreeTots DFW",
   description:
     "Nature-based OT and developmental groups for homeschool families in DFW. Educational and supportive—no diagnosis-targeting language.",
 };
@@ -12,23 +13,22 @@ export const metadata: Metadata = {
 export default function HomeschoolGroupsPage() {
   return (
     <div>
-      <section className="border-b border-sand/80 bg-gradient-to-b from-cream to-white/50 px-4 py-14">
-        <div className="mx-auto max-w-4xl text-center">
-          <p className="text-sm font-medium uppercase tracking-wide text-moss">Homeschool</p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
-            Nature-Based OT and Developmental Groups for Homeschool Families in DFW
-          </h1>
-          <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
-            Weekday outdoor groups designed to support movement, regulation, confidence, social participation, and everyday functional skills
-            through child-centered nature play.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Homeschool"
+        title="Nature-based OT and developmental groups for homeschool families"
+        description="Weekday outdoor groups designed to support movement, regulation, confidence, social participation, and everyday functional skills through child-centered nature play."
+        imageKey="homeschoolNature"
+        imagePosition="50% 40%"
+        actions={[
+          { href: "#homeschool-interest", label: "Join the homeschool list" },
+          { href: "/book-call", label: "Book a parent call", variant: "secondary" },
+        ]}
+      />
 
-      <section className="mx-auto max-w-6xl px-4 py-14">
+      <section id="homeschool-interest" className="mx-auto max-w-6xl px-4 py-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.05fr]">
           <div>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+            <h2 className="font-display text-3xl text-forest">
               Join the homeschool interest list
             </h2>
             <p className="mt-4 text-bark/90">

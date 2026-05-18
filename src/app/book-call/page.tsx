@@ -6,9 +6,9 @@ import { Card } from "@/components/ui/card";
 import { CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Book a Parent Call | Nature OT Growth OS",
+  title: "Book a Parent Call | TreeTots DFW",
   description:
-    "Schedule a short informational call about nature-based pediatric OT groups in Texas.",
+    "Schedule a short informational call about TreeTots DFW nature-based pediatric OT groups.",
 };
 
 export default function BookCallPage() {
@@ -18,7 +18,7 @@ export default function BookCallPage() {
         <p className="text-sm font-medium uppercase tracking-wide text-moss">
           Scheduling
         </p>
-        <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest">
+        <h1 className="mt-2 font-display text-4xl font-semibold text-forest">
           Book a Parent Call
         </h1>
         <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
@@ -41,7 +41,7 @@ export default function BookCallPage() {
 
       <div className="mt-12 grid gap-4 md:grid-cols-2">
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             What to expect
           </h2>
           <ul className="mt-4 space-y-3 text-sm text-bark/90">
@@ -59,7 +59,7 @@ export default function BookCallPage() {
           </ul>
         </Card>
         <Card>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+          <h2 className="font-display text-xl text-forest">
             Before you go
           </h2>
           <p className="mt-4 text-sm text-bark/90">

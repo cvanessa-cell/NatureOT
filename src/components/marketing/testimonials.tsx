@@ -22,9 +22,13 @@ export function Testimonials({ data }: { data?: TestimonialData[] | null }) {
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-moss">Parent Voices</p>
-          <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+          <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
             What Families Are Saying
           </h2>
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-forest/55">
+            Parent feedback is shared in a privacy-conscious format and never replaces individualized
+            clinical guidance.
+          </p>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {items.map((t) => (

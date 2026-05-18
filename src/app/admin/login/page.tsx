@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="mx-auto max-w-md rounded-2xl border border-sand bg-white/80 p-8 shadow-sm">
-      <h1 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+      <h1 className="font-display text-2xl text-forest">
         Admin sign in
       </h1>
       <p className="mt-2 text-sm text-bark/80">

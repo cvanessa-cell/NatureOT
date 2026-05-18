@@ -14,7 +14,7 @@ export default async function MarketingCommunityEventsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">Community events</h1>
+      <h1 className="font-display text-3xl text-forest">Community events</h1>
       {(events ?? []).map((event) => (
         <Card key={event.id}>
           <p className="font-medium text-forest">{event.title}</p>

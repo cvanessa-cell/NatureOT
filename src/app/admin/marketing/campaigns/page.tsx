@@ -42,7 +42,7 @@ export default async function MarketingCampaignsPage() {
     <div className="space-y-8">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+          <h1 className="font-display text-3xl text-forest">
             Campaign planner
           </h1>
           <p className="mt-2 max-w-3xl text-sm text-bark/80">

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
   HOMEPAGE_QUERY,
-  SERVICES_QUERY,
   GROUPS_QUERY,
   TESTIMONIALS_QUERY,
   FAQ_QUERY,
@@ -11,14 +10,12 @@ import {
 import { HeroSection } from "@/components/marketing/hero-section";
 import { TrustBand } from "@/components/marketing/trust-band";
 import { ConcernCards } from "@/components/marketing/concern-cards";
-import { ValuePillars } from "@/components/marketing/value-pillars";
-import { ServicesGrid } from "@/components/marketing/services-grid";
+import { ServicesCatalogSection } from "@/components/marketing/services-catalog-section";
+import { NatureOtFitSection } from "@/components/marketing/nature-ot-fit-section";
 import { UpcomingGroups } from "@/components/marketing/upcoming-groups";
 import { WhyChooseUs } from "@/components/marketing/why-choose-us";
 import { NatureOTExplainer } from "@/components/marketing/nature-ot-explainer";
 import { Testimonials } from "@/components/marketing/testimonials";
-import { WhyNature } from "@/components/marketing/why-nature";
-import { ConversionCTA } from "@/components/marketing/conversion-cta";
 import { ProviderReferralSection } from "@/components/marketing/provider-referral-section";
 import { LocalSEOSection } from "@/components/marketing/local-seo-section";
 import { FaqAccordion } from "@/components/marketing/faq-accordion";
@@ -35,14 +32,12 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   const [
     { data: hp },
-    { data: services },
     { data: groups },
     { data: testimonials },
     { data: faq },
     { data: provider },
   ] = await Promise.all([
     sanityFetch<Record<string, unknown> | null>({ query: HOMEPAGE_QUERY, tags: ["homepage"] }),
-    sanityFetch<Record<string, unknown>[] | null>({ query: SERVICES_QUERY, tags: ["service"] }),
     sanityFetch<Record<string, unknown>[] | null>({ query: GROUPS_QUERY, tags: ["groupOffering"] }),
     sanityFetch<Record<string, unknown>[] | null>({ query: TESTIMONIALS_QUERY, tags: ["testimonial"] }),
     sanityFetch<{ _id: string; question: string; answer: string }[] | null>({ query: FAQ_QUERY, tags: ["faqItem"] }),
@@ -81,18 +76,14 @@ export default async function HomePage() {
           supportText: hp.concernsSupportText as string,
         } : null}
       />
-      <ValuePillars
-        data={hp ? {
-          items: hp.valuePillars as { iconName?: string; label?: string }[],
-        } : null}
-      />
-      <ServicesGrid data={services as { _id?: string; title?: string; description?: string; iconName?: string; href?: string }[] | null} />
+      <ServicesCatalogSection />
+      <NatureOtFitSection />
 
       <section className="bg-cream py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-moss">Enroll Today</p>
-            <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
               Find the Right Group for Your Child
             </h2>
           </div>
@@ -112,19 +103,6 @@ export default async function HomePage() {
         } : null}
       />
       <Testimonials data={testimonials as { _id?: string; quote?: string; author?: string; location?: string; rating?: number }[] | null} />
-      <WhyNature
-        data={hp ? {
-          headline: hp.whyNatureHeadline as string,
-          body: hp.whyNatureBody as string,
-          items: hp.whyNatureItems as { iconName?: string; label?: string }[],
-        } : null}
-      />
-      <ConversionCTA
-        data={hp ? {
-          headline: hp.ctaHeadline as string,
-          body: hp.ctaBody as string,
-        } : null}
-      />
       <ProviderReferralSection data={provider as { heading?: string; subheading?: string; body?: string; bullets?: string[] } | null} />
       <LocalSEOSection
         data={hp ? {
@@ -138,7 +116,7 @@ export default async function HomePage() {
         <div className="mx-auto max-w-3xl px-4 lg:px-6">
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-moss">Common Questions</p>
-            <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
               Frequently Asked Questions
             </h2>
           </div>

@@ -111,7 +111,7 @@ export function AdminSidebar({ activePath }: { activePath: string }) {
       <div className="border-b border-white/10 px-4 py-4">
         <Link
           href="/admin/marketing/dashboard"
-          className="font-[family-name:var(--font-fraunces)] text-lg font-semibold text-cream"
+          className="font-display text-lg font-semibold text-cream"
         >
           TreeTots Growth Engine
         </Link>

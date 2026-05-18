@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Leaf, ArrowRight } from "lucide-react";
+import { ArrowRight, Leaf } from "lucide-react";
+import { treetotsImageAlt, treetotsImages } from "@/lib/treetots-images";
 import { resolveIcon } from "@/sanity/lib/icon-map";
-import { treetotsImages, treetotsImageAlt } from "@/lib/treetots-images";
 
 interface HeroProps {
   headline?: string | null;
@@ -15,24 +15,28 @@ interface HeroProps {
 }
 
 const defaultBenefits = [
-  { iconName: "ShieldCheck", label: "Build Confidence" },
-  { iconName: "Brain", label: "Improve Regulation" },
-  { iconName: "Activity", label: "Strengthen Skills" },
-  { iconName: "Users", label: "Create Connection" },
+  { iconName: "ShieldCheck", label: "Supports regulation" },
+  { iconName: "Brain", label: "Builds everyday skills" },
+  { iconName: "Activity", label: "Encourages motor confidence" },
+  { iconName: "Users", label: "Creates connection" },
 ];
 
 export function HeroSection({ data }: { data?: HeroProps | null }) {
-  const headline = data?.headline || "Helping Kids Grow, Connect & Thrive";
-  const highlight = data?.highlight || "Through Nature";
+  const headline =
+    data?.headline || "Outdoor occupational therapy that helps kids feel more confident, regulated, and ready";
+  const highlight = data?.highlight || "in everyday life";
   const body =
     data?.body ||
-    "Nature-based occupational therapy groups and services that help children build the skills they need for confidence, connection, and everyday life.";
+    "TreeTots offers therapist-led, goal-directed, play-based occupational therapy in outdoor and natural environments for children and families across Dallas-Fort Worth.";
   const benefits = data?.benefits?.length ? data.benefits : defaultBenefits;
-  const trustText = data?.trustText || "Trusted by families and providers across DFW";
+  const trustText =
+    data?.trustText || "A warm, structured next step for families exploring support outdoors";
   const trustCardItems = data?.trustCardItems?.length
     ? data.trustCardItems
-    : ["Evidence-Based", "Play-Based", "Child-Led", "Nature-Focused"];
-  const trustSubtext = data?.trustSubtext || "Real therapy.\nReal nature.\nReal impact.";
+    : ["Therapist-Led", "Goal-Directed", "Play-Based", "Nature-Rooted"];
+  const trustSubtext =
+    data?.trustSubtext ||
+    "Clear service options, gentle guidance, and parent-friendly next steps.";
 
   return (
     <section className="relative overflow-hidden bg-cream">
@@ -43,57 +47,58 @@ export function HeroSection({ data }: { data?: HeroProps | null }) {
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-sage/50 bg-sage/20 px-4 py-1.5">
             <Leaf className="size-3.5 text-moss" aria-hidden />
             <span className="text-xs font-semibold tracking-wide text-forest/80">
-              Nature-Based OT in Dallas–Fort Worth
+              Pediatric Nature-Based OT in Dallas-Fort Worth
             </span>
           </div>
 
-          <h1 className="font-[family-name:var(--font-fraunces)] text-4xl font-semibold leading-[1.12] tracking-tight text-forest sm:text-5xl lg:text-[3.5rem]">
-            {headline}{" "}
-            <span className="italic text-moss">{highlight}</span>
+          <h1 className="font-display text-4xl font-semibold leading-[1.12] tracking-tight text-forest sm:text-5xl lg:text-[3.5rem]">
+            {headline} <span className="italic text-moss">{highlight}</span>
           </h1>
 
-          <p className="mt-5 text-lg leading-relaxed text-forest/75">
-            {body}
-          </p>
+          <p className="mt-5 text-lg leading-relaxed text-forest/75">{body}</p>
 
-          <div className="mt-8 flex flex-wrap gap-5">
+          <ul className="mt-8 grid gap-3 text-left sm:grid-cols-2">
             {benefits.map((b) => {
               const Icon = resolveIcon(b.iconName);
               return (
-                <div key={b.label} className="flex items-center gap-2">
+                <li
+                  key={b.label}
+                  className="flex items-center gap-3 rounded-2xl border border-sage/50 bg-white/55 px-3.5 py-3 shadow-sm shadow-forest/5 backdrop-blur-sm"
+                >
                   <span className="flex size-9 items-center justify-center rounded-full bg-sage/40 text-forest">
                     <Icon className="size-4" aria-hidden />
                   </span>
                   <span className="text-sm font-medium text-forest/70">{b.label}</span>
-                </div>
+                </li>
               );
             })}
-          </div>
+          </ul>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-            <Link href="/waitlist" className="group inline-flex min-h-14 min-w-[12rem] items-center justify-center gap-2 rounded-full bg-forest px-8 text-center text-lg font-semibold text-cream shadow-lg shadow-forest/20 transition hover:bg-forest/90 hover:shadow-xl hover:shadow-forest/25">
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row" aria-label="Primary actions">
+            <Link
+              href="/waitlist"
+              className="group inline-flex min-h-14 min-w-[12rem] items-center justify-center gap-2 rounded-full bg-forest px-8 text-center text-lg font-semibold text-cream shadow-lg shadow-forest/20 transition hover:bg-forest/90 hover:shadow-xl hover:shadow-forest/25"
+            >
               Join the Waitlist
               <ArrowRight className="size-4 transition group-hover:translate-x-0.5" aria-hidden />
             </Link>
-            <Link href="/book-call" className="inline-flex min-h-14 min-w-[12rem] items-center justify-center rounded-full border-2 border-forest/20 bg-white/80 px-8 text-center text-lg font-semibold text-forest transition hover:border-forest/35 hover:bg-white">
+            <Link
+              href="/book-call"
+              className="inline-flex min-h-14 min-w-[12rem] items-center justify-center rounded-full border-2 border-forest/20 bg-white/80 px-8 text-center text-lg font-semibold text-forest transition hover:border-forest/35 hover:bg-white"
+            >
               Book a Free Parent Call
             </Link>
           </div>
-          <p className="mt-3 text-xs text-forest/50">No commitment required — let&rsquo;s find the right fit together.</p>
+          <p className="mt-3 text-xs text-forest/50">
+            No commitment required. We&apos;ll help you decide whether this feels like the right fit.
+          </p>
 
-          <div className="mt-7 flex items-center gap-3">
-            <div className="flex -space-x-2.5">
-              {["AP", "MK", "JT", "LR"].map((initials) => (
-                <span key={initials} className="inline-flex size-9 items-center justify-center rounded-full border-[2.5px] border-cream bg-sage/60 text-[0.6rem] font-bold text-forest shadow-sm">
-                  {initials}
-                </span>
-              ))}
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-forest/70">{trustText}</span>
-              <span className="flex items-center gap-1 text-xs text-gold">
-                {"★★★★★"} <span className="text-forest/45">5.0 from parent reviews</span>
-              </span>
+          <div className="mt-7 rounded-[1.75rem] border border-sage/50 bg-white/70 p-4 shadow-lg shadow-forest/5 backdrop-blur-sm">
+            <p className="text-sm font-semibold text-forest">{trustText}</p>
+            <div className="mt-3 grid gap-2 text-sm text-forest/65 sm:grid-cols-3">
+              <p className="rounded-2xl bg-cream/90 px-3 py-2">Outdoor sessions with therapeutic intention</p>
+              <p className="rounded-2xl bg-cream/90 px-3 py-2">Clear options for groups, calls, and referrals</p>
+              <p className="rounded-2xl bg-cream/90 px-3 py-2">Parent-friendly language with privacy in mind</p>
             </div>
           </div>
         </div>
@@ -120,10 +125,7 @@ export function HeroSection({ data }: { data?: HeroProps | null }) {
             <path d="M32,360 Q46,347 40,337 Q34,345 32,360Z" fill="currentColor" opacity="0.3" />
           </svg>
 
-          <div
-            className="relative"
-            style={{ filter: "drop-shadow(0 20px 40px rgba(22,63,42,0.12))" }}
-          >
+          <div className="relative" style={{ filter: "drop-shadow(0 20px 40px rgba(22,63,42,0.12))" }}>
             <div className="hero-organic-mask relative aspect-[4/5] w-full overflow-hidden lg:aspect-[3/4]">
               <Image
                 src={treetotsImages.heroCenter}
@@ -137,16 +139,16 @@ export function HeroSection({ data }: { data?: HeroProps | null }) {
 
               <div className="absolute bottom-4 right-4 z-20 rounded-2xl border border-sage/30 bg-ivory/97 px-5 py-4 shadow-xl backdrop-blur sm:bottom-6 sm:right-6">
                 <span className="flex size-9 items-center justify-center rounded-full bg-sage/30 text-forest">
-                  <Leaf className="size-4" />
+                  <Leaf className="size-4" aria-hidden />
                 </span>
                 <ul className="mt-3 space-y-1">
                   {trustCardItems.map((t) => (
-                    <li key={t} className="text-[0.8rem] font-semibold uppercase tracking-wide text-forest">{t}</li>
+                    <li key={t} className="text-[0.8rem] font-semibold uppercase tracking-wide text-forest">
+                      {t}
+                    </li>
                   ))}
                 </ul>
-                <p className="mt-3 whitespace-pre-line text-xs leading-snug text-forest/55">
-                  {trustSubtext}
-                </p>
+                <p className="mt-3 text-xs leading-snug text-forest/55">{trustSubtext}</p>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, Heart, FileText, Globe, Share2 } from "lucide-react";
+import { Phone, Heart, FileText } from "lucide-react";
 
 export function StickyCTABar() {
   return (
@@ -30,21 +30,15 @@ export function StickyCTABar() {
             Refer a Child
           </Link>
           <Link
-            href="/referral-partners"
+            href="/referral-partners#request-packet"
             className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-cream/30 px-5 text-sm font-semibold text-cream transition hover:bg-cream/10"
           >
             <FileText className="size-3.5" aria-hidden />
-            Download Referral Sheet
+            Request Partner Packet
           </Link>
         </div>
-        <div className="flex items-center gap-3 text-cream/60">
-          <span className="text-xs font-medium uppercase tracking-wide">Follow Us</span>
-          <a href="#" aria-label="Social media" className="text-cream/60 hover:text-cream">
-            <Globe className="size-4" />
-          </a>
-          <a href="#" aria-label="Share" className="text-cream/60 hover:text-cream">
-            <Share2 className="size-4" />
-          </a>
+        <div className="text-xs font-medium uppercase tracking-wide text-cream/60">
+          TreeTots DFW
         </div>
       </div>
 

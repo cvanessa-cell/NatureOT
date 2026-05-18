@@ -31,15 +31,16 @@ export function UpcomingGroups({ data }: { data?: GroupData[] | null }) {
     <div className="overflow-hidden rounded-2xl border border-sage/40 bg-sage/10 shadow-sm">
       <div className="relative h-40 sm:h-48">
         <Image
-          src={treetotsImages.upcomingGroupsArea}
-          alt={treetotsImageAlt.upcomingGroupsArea}
+          src={treetotsImages.otGroupHammockPlay}
+          alt={treetotsImageAlt.otGroupHammockPlay}
           fill
           sizes="(min-width: 1024px) 60vw, 100vw"
           className="object-cover"
+          style={{ objectPosition: "55% 45%" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-sage/80 via-sage/35 to-forest/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-forest/25 to-transparent" />
         <div className="absolute bottom-5 left-6">
-          <h3 className="font-[family-name:var(--font-fraunces)] text-2xl font-semibold text-white drop-shadow-md">
+          <h3 className="font-display text-2xl font-semibold text-white drop-shadow-md">
             Upcoming Groups
           </h3>
           <p className="mt-1 text-sm font-medium text-white/85 drop-shadow-sm">Now enrolling for Spring &amp; Summer!</p>

@@ -2,28 +2,31 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ParentGuideLeadForm } from "@/components/parent-guide-lead-form";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
+import { PageHero } from "@/components/marketing/page-hero";
 
 export const metadata: Metadata = {
-  title: "Free Parent Guide | Nature OT Growth OS",
+  title: "Free Parent Guide | TreeTots DFW",
   description:
-    "Download a practical starting guide with outdoor sensory activity ideas for Texas families—educational only.",
+    "Download a practical TreeTots DFW guide with outdoor sensory activity ideas for Dallas-Fort Worth families.",
 };
 
 export default function ParentGuidePage() {
   return (
-    <div className="mx-auto max-w-5xl px-4 py-14">
-      <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr] lg:items-start">
+    <div>
+      <PageHero
+        eyebrow="For Parents"
+        title="Download the free outdoor sensory activity guide"
+        description="Practical starting ideas families can try outdoors, with pacing notes and safety reminders that support curiosity without replacing individualized OT care."
+        imageKey="parentGuideOutdoor"
+        imagePosition="60% 40%"
+        actions={[
+          { href: "#parent-guide-form", label: "Get the guide" },
+          { href: "/quiz", label: "Try the interactive guide", variant: "secondary" },
+        ]}
+      />
+
+      <div className="mx-auto grid max-w-5xl gap-10 px-4 py-14 lg:grid-cols-[1.2fr_1fr] lg:items-start">
         <div>
-          <p className="text-sm font-medium uppercase tracking-wide text-moss">
-            Lead magnet
-          </p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold leading-tight text-forest sm:text-5xl">
-            Download the Free Parent Guide: 10 Outdoor Sensory Activities for Texas Kids
-          </h1>
-          <p className="font-lead mt-6 text-lg text-bark/90">
-            Practical starting ideas families can try outdoors—with pacing notes and safety reminders.
-            This resource supports curiosity and routine-building; it does not replace individualized OT care.
-          </p>
           <ul className="mt-8 space-y-3 text-bark/90">
             <li>Movement-forward prompts rooted in everyday outdoor settings</li>
             <li>Gentle regulation cues parents can adapt</li>
@@ -43,7 +46,7 @@ export default function ParentGuidePage() {
             </p>
           </ComplianceBanner>
         </div>
-        <div>
+        <div id="parent-guide-form">
           <ParentGuideLeadForm />
         </div>
       </div>

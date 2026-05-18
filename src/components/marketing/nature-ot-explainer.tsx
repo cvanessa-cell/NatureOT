@@ -32,10 +32,10 @@ export function NatureOTExplainer({ data }: { data?: ExplainerProps | null }) {
       <div className="mx-auto max-w-7xl px-4 lg:px-6">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.15fr] lg:items-center lg:gap-16">
           <div className="relative">
-            <div className="relative aspect-square w-full max-w-md overflow-hidden rounded-3xl shadow-xl lg:mx-auto">
+            <div className="relative aspect-[4/3] w-full max-w-lg overflow-hidden rounded-3xl shadow-xl lg:mx-auto">
               <Image
                 src={treetotsImages.heroWide}
-                alt="Children engaged in guided nature-based occupational therapy outdoors"
+                alt={treetotsImageAlt.heroWide}
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
                 className="object-cover"
@@ -46,7 +46,7 @@ export function NatureOTExplainer({ data }: { data?: ExplainerProps | null }) {
           </div>
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-moss">Our Approach</p>
-            <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold leading-tight text-forest sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-forest sm:text-4xl">
               {headline}
             </h2>
             <p className="mt-2 text-lg italic text-moss/80">{subtitle}</p>

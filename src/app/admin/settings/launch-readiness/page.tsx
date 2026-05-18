@@ -52,7 +52,7 @@ export default async function LaunchReadinessPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="font-display text-3xl text-forest">
           Launch readiness checklist
         </h1>
         <p className="mt-2 max-w-3xl text-sm text-bark/80">
@@ -68,7 +68,7 @@ export default async function LaunchReadinessPage() {
       <div className="space-y-8">
         {Object.entries(sections).map(([key, rows]) => (
           <section key={key} className="rounded-2xl border border-sand bg-white/92 p-4 shadow-sm">
-            <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+            <h2 className="font-display text-xl text-forest">
               {SECTION_TITLES[key] ?? key}
             </h2>
             <ul className="mt-4 divide-y divide-sand/80">

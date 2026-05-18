@@ -75,7 +75,7 @@ export default async function MarketingDashboardPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+        <h1 className="font-display text-3xl text-forest">
           TreeTots Growth Engine
         </h1>
         <p className="mt-2 max-w-3xl text-sm text-bark/80">
@@ -126,7 +126,7 @@ export default async function MarketingDashboardPage() {
       </div>
 
       <Card className="border-sage/35">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-lg text-forest">Integration sync health</h2>
+        <h2 className="font-display text-lg text-forest">Integration sync health</h2>
         <p className="mt-2 text-sm text-bark/80">
           Latest Zapier webhook attempts and queued Airtable jobs (operational integrations only — no PHI in these counts).
         </p>
@@ -167,7 +167,7 @@ export default async function MarketingDashboardPage() {
         <Card>
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+              <h2 className="font-display text-xl text-forest">
                 This week’s priority
               </h2>
               <p className="mt-2 text-sm text-bark/85">

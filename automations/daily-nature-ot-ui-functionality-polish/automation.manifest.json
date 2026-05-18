@@ -1,0 +1,18 @@
+{
+  "id": "daily-nature-ot-ui-functionality-polish",
+  "name": "Daily Nature OT UI + Functionality Polish",
+  "schedule": {
+    "frequency": "daily",
+    "time": "06:00",
+    "timezone": "America/Los_Angeles"
+  },
+  "workingDirectory": "C:\\Users\\cvane\\.cursor\\projects\\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\\texas-nature-ot-leads--polish-ui",
+  "instructionsFile": "automations/daily-nature-ot-ui-functionality-polish/PROMPT.md",
+  "worktree": {
+    "branch": "automation/polish-ui",
+    "prepareScript": "scripts/prepare-polish-ui-worktree.ps1"
+  },
+  "runScript": "scripts/run-daily-polish-ui-automation.ps1",
+  "registerTaskScript": "scripts/register-daily-polish-ui-scheduled-task.ps1",
+  "windowsScheduledTaskName": "NatureOT-Daily-Polish-UI"
+}

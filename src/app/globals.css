@@ -34,35 +34,25 @@
   --color-card: var(--color-card);
   --color-gold: var(--color-gold);
   --color-ivory: var(--color-ivory);
-  --font-sans: var(--font-dm-sans);
-  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* Lead lines: Inter */
+.font-display {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+}
+
 .font-lead {
-  font-family: var(--font-lead), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 body {
   background: linear-gradient(180deg, var(--color-cream) 0%, #eef2ea 100%);
   color: var(--color-forest);
   min-height: 100vh;
-  font-variant-ligatures: no-common-ligatures;
-  /* DM Sans ignores unknown tags; Fraunces children inherit stable axes */
-  font-variation-settings: "WONK" 0, "SOFT" 0;
-}
-
-/* Fraunces is intentionally quirky; without pinned axes, hooks (J, f) can look wavy at display sizes.
-   WONK=0 disables wonky alternates. SOFT=0 is the sharp “ink” pole. opsz ties outline to body-text-scale
-   instead of zooming the display master. Matches any Tailwind class that references --font-fraunces. */
-[class*="fraunces"] {
-  font-optical-sizing: none;
-  font-variation-settings: "WONK" 0, "SOFT" 0, "opsz" 36;
-  text-rendering: optimizeLegibility;
 }
 
 ::selection {

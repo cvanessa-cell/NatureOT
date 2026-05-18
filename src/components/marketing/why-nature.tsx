@@ -26,7 +26,7 @@ export function WhyNature({ data }: { data?: WhyNatureProps | null }) {
     <section className="bg-cream py-16 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 text-center lg:px-6">
         <p className="text-sm font-semibold uppercase tracking-wider text-moss">The Science Behind It</p>
-        <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+        <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
           {headline}
         </h2>
         <p className="mx-auto mt-3 max-w-2xl text-forest/65">{body}</p>

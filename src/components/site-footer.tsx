@@ -1,19 +1,22 @@
 import Link from "next/link";
-import { Leaf, Mail, Globe, Share2 } from "lucide-react";
+import { Leaf, Mail } from "lucide-react";
 
 const explore = [
   { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
   { href: "/groups", label: "Groups" },
   { href: "/workshops", label: "Workshops" },
+  { href: "/homeschool-groups", label: "Homeschool Groups" },
   { href: "/parent-guide", label: "For Parents" },
   { href: "/referral-partners", label: "For Providers" },
+  { href: "/book-call", label: "Book a Call" },
   { href: "/faq", label: "FAQ" },
 ];
 
 const services = [
-  { href: "/groups", label: "Nature OT Groups" },
-  { href: "/groups", label: "Individual OT" },
-  { href: "/groups", label: "Summer Camps" },
+  { href: "/services#nature-play", label: "Nature Play Groups" },
+  { href: "/services#ot-group", label: "Nature-Based OT Groups" },
+  { href: "/services#reflex-intensive", label: "Reflex Integration Intensive" },
   { href: "/workshops", label: "Parent Workshops" },
 ];
 
@@ -40,7 +43,7 @@ export function SiteFooter() {
               <span className="flex size-9 items-center justify-center rounded-full bg-cream/15">
                 <Leaf className="size-4 text-sage-light" />
               </span>
-              <span className="font-[family-name:var(--font-fraunces)] text-lg font-semibold">
+              <span className="font-display text-lg font-semibold">
                 TreeTots <span className="text-sage-light">DFW</span>
               </span>
             </Link>
@@ -49,13 +52,7 @@ export function SiteFooter() {
               occupational therapy in Dallas–Fort Worth.
             </p>
             <div className="flex gap-3">
-              <a href="#" aria-label="Social media" className="text-cream/50 hover:text-cream">
-                <Globe className="size-5" />
-              </a>
-              <a href="#" aria-label="Share" className="text-cream/50 hover:text-cream">
-                <Share2 className="size-5" />
-              </a>
-              <a href="#" aria-label="Email" className="text-cream/50 hover:text-cream">
+              <a href="mailto:hello@treetotsdfw.com" aria-label="Email TreeTots DFW" className="text-cream/50 hover:text-cream">
                 <Mail className="size-5" />
               </a>
             </div>
@@ -120,23 +117,12 @@ export function SiteFooter() {
                 resources.
               </p>
             </div>
-            <form
-              className="flex gap-2"
-              onSubmit={(e) => e.preventDefault()}
+            <Link
+              href="/waitlist"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-cream px-5 text-sm font-semibold text-forest transition hover:bg-white"
             >
-              <input
-                type="email"
-                placeholder="Your email"
-                aria-label="Email for newsletter"
-                className="min-w-0 flex-1 rounded-full border border-cream/20 bg-cream/10 px-4 py-2.5 text-sm text-cream placeholder:text-cream/40 focus:border-cream/40 focus:outline-none sm:w-56"
-              />
-              <button
-                type="submit"
-                className="rounded-full bg-cream px-5 py-2.5 text-sm font-semibold text-forest transition hover:bg-white"
-              >
-                Subscribe
-              </button>
-            </form>
+              Join the Waitlist
+            </Link>
           </div>
         </div>
 

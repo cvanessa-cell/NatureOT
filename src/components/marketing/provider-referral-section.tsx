@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Check, Heart, FileText, ArrowRight } from "lucide-react";
+import { Check, Heart, FileText, ArrowRight, ShieldCheck } from "lucide-react";
 import { treetotsImages, treetotsImageAlt } from "@/lib/treetots-images";
 
 interface ProviderProps {
@@ -11,19 +11,18 @@ interface ProviderProps {
 }
 
 const defaultBullets = [
-  "Simple, streamlined referral process",
-  "School and clinic partnerships",
-  "Staff development resources",
-  "Parent education workshops",
-  "Community outreach events",
+  "Simple, minimum-necessary referral steps",
+  "School, clinic, homeschool, and community partnerships",
+  "Parent education and printable partner materials",
+  "Clear role boundaries around what outdoor OT may support",
 ];
 
 export function ProviderReferralSection({ data }: { data?: ProviderProps | null }) {
   const heading = data?.heading || "For Providers & Schools";
-  const subheading = data?.subheading || "Partner with us to support more kids in your community.";
+  const subheading = data?.subheading || "A clear, privacy-conscious referral path for DFW professionals and community partners.";
   const body =
     data?.body ||
-    "We collaborate with pediatricians, therapists, schools, ABA clinics, homeschool communities, and other professionals who support children and families across DFW.";
+    "We collaborate with pediatricians, counselors, therapists, schools, homeschool groups, ABA clinics, and community organizations that want a therapist-led outdoor OT option they can explain confidently to families.";
   const bullets = data?.bullets?.length ? data.bullets : defaultBullets;
 
   return (
@@ -32,7 +31,7 @@ export function ProviderReferralSection({ data }: { data?: ProviderProps | null 
         <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center lg:gap-16">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wider text-moss">Referral Partners</p>
-            <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+            <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
               {heading}
             </h2>
             <p className="mt-3 text-lg text-forest/65">{subheading}</p>
@@ -45,15 +44,29 @@ export function ProviderReferralSection({ data }: { data?: ProviderProps | null 
                 </li>
               ))}
             </ul>
+            <div className="mt-6 rounded-[1.5rem] border border-sage/50 bg-white/75 p-4 shadow-sm shadow-forest/5">
+              <div className="flex items-start gap-3">
+                <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-sage/35 text-moss">
+                  <ShieldCheck className="size-5" aria-hidden />
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-forest">Provider-friendly and privacy-aware</p>
+                  <p className="mt-1 text-sm leading-relaxed text-forest/68">
+                    Families get a warm next step, and partners get a simple packet or contact path
+                    without sharing diagnoses, records, or unnecessary child details through the website.
+                  </p>
+                </div>
+              </div>
+            </div>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href="/referral-partners" className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-terracotta px-6 text-sm font-semibold text-white shadow-md shadow-terracotta/20 transition hover:bg-terracotta/90 hover:shadow-lg">
+              <Link href="/provider-referral" className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-terracotta px-6 text-sm font-semibold text-white shadow-md shadow-terracotta/20 transition hover:bg-terracotta/90 hover:shadow-lg">
                 <Heart className="size-4" aria-hidden />
-                Refer a Child
+                Start a Provider Referral
                 <ArrowRight className="size-3.5 transition group-hover:translate-x-0.5" aria-hidden />
               </Link>
-              <Link href="/referral-partners" className="inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-forest/20 bg-white/80 px-6 text-sm font-semibold text-forest transition hover:border-forest/35 hover:bg-white">
+              <Link href="/referral-partners#request-packet" className="inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-forest/20 bg-white/80 px-6 text-sm font-semibold text-forest transition hover:border-forest/35 hover:bg-white">
                 <FileText className="size-4" aria-hidden />
-                Download Referral Sheet
+                Request Partner Packet
               </Link>
             </div>
           </div>

@@ -199,7 +199,7 @@ export default async function AdminWorkshopsPage() {
     <div className="space-y-8">
       <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
-          <h1 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+          <h1 className="font-display text-3xl text-forest">
             Workshops
           </h1>
           <p className="mt-2 max-w-2xl text-sm text-bark/80">
@@ -219,7 +219,7 @@ export default async function AdminWorkshopsPage() {
       <CampaignAuthenticityCompact />
 
       <Card>
-        <h2 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">{rehearsal.title}</h2>
+        <h2 className="font-display text-2xl text-forest">{rehearsal.title}</h2>
         <p className="mt-1 text-sm text-bark/75">{rehearsal.date}</p>
 
         <div className="mt-6 grid gap-4 md:grid-cols-3 xl:grid-cols-5">
@@ -243,7 +243,7 @@ export default async function AdminWorkshopsPage() {
       </Card>
 
       <Card className="border-sand/90">
-        <h2 className="font-[family-name:var(--font-fraunces)] text-xl text-forest">
+        <h2 className="font-display text-xl text-forest">
           Recent registrations (Growth OS)
         </h2>
         <p className="mt-1 text-xs text-bark/70">

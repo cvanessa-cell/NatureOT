@@ -32,7 +32,7 @@ export function AdminMobileNav() {
   return (
     <div className="border-b border-white/10 bg-forest px-4 py-3 md:hidden">
       <div className="flex items-center justify-between gap-3">
-        <Link href="/admin" className="font-[family-name:var(--font-fraunces)] text-lg text-cream">
+        <Link href="/admin" className="font-display text-lg text-cream">
           Admin
         </Link>
         <button

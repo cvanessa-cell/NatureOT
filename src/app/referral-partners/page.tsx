@@ -33,7 +33,7 @@ export default function ReferralPartnersPage() {
           <p className="text-sm font-medium uppercase tracking-wide text-moss">
             Partnerships
           </p>
-          <h1 className="mt-2 font-[family-name:var(--font-fraunces)] text-4xl font-semibold text-forest sm:text-5xl">
+          <h1 className="mt-2 font-display text-4xl font-semibold text-forest sm:text-5xl">
             Partner With a Nature-Based Pediatric OT Program
           </h1>
           <p className="font-lead mx-auto mt-4 max-w-2xl text-lg text-bark/90">
@@ -48,7 +48,7 @@ export default function ReferralPartnersPage() {
         <div className="grid gap-6 md:grid-cols-2">
           <Card className="border-sky/20 bg-gradient-to-br from-sky/10 to-cream/40">
             <Building2 className="size-10 text-sky" aria-hidden />
-            <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+            <h2 className="mt-4 font-display text-2xl text-forest">
               Referral-friendly explanation
             </h2>
             <p className="mt-3 text-bark/90">
@@ -57,7 +57,7 @@ export default function ReferralPartnersPage() {
           </Card>
           <Card>
             <Trees className="size-10 text-moss" aria-hidden />
-            <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+            <h2 className="mt-4 font-display text-2xl text-forest">
               Outdoor strengths
             </h2>
             <p className="mt-3 text-bark/90">
@@ -66,7 +66,7 @@ export default function ReferralPartnersPage() {
           </Card>
           <Card>
             <School className="size-10 text-terracotta" aria-hidden />
-            <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+            <h2 className="mt-4 font-display text-2xl text-forest">
               Schools & homeschool groups
             </h2>
             <p className="mt-3 text-bark/90">
@@ -75,7 +75,7 @@ export default function ReferralPartnersPage() {
           </Card>
           <Card>
             <HeartHandshake className="size-10 text-moss" aria-hidden />
-            <h2 className="mt-4 font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+            <h2 className="mt-4 font-display text-2xl text-forest">
               Therapists & counselors
             </h2>
             <p className="mt-3 text-bark/90">
@@ -87,7 +87,7 @@ export default function ReferralPartnersPage() {
 
       <section className="border-y border-sand/80 bg-white/60 py-14">
         <div className="mx-auto max-w-3xl px-4 text-center">
-          <h2 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+          <h2 className="font-display text-3xl text-forest">
             Who we partner with
           </h2>
           <ul className="mx-auto mt-8 flex flex-wrap justify-center gap-2">
@@ -110,13 +110,17 @@ export default function ReferralPartnersPage() {
 
       <section className="mx-auto max-w-6xl px-4 py-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.05fr]">
-          <div>
-            <h2 className="font-[family-name:var(--font-fraunces)] text-3xl text-forest">
+          <div id="request-packet">
+            <h2 className="font-display text-3xl text-forest">
               Request a referral packet
             </h2>
             <p className="mt-4 text-bark/90">
               Tell us about your organization and how families find you. We&rsquo;ll follow up with printable summaries appropriate for front-desk or community boards.
             </p>
+            <div className="mt-6 rounded-[1.5rem] border border-sage/45 bg-card/80 p-4 text-sm leading-relaxed text-bark/90 shadow-sm">
+              Packet requests are for operational partner materials only. Please avoid sending child names,
+              diagnoses, evaluation details, or chart notes through this form.
+            </div>
             <Link href="/faq" className="mt-8 inline-block text-sm font-semibold text-moss underline">
               Read FAQs
             </Link>

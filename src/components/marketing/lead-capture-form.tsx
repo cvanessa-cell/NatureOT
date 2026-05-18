@@ -38,6 +38,8 @@ export function LeadCaptureForm() {
   const [form, setForm] = useState<FormData>(initial);
   const [errors, setErrors] = useState<Partial<Record<keyof FormData, string>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   function validate(): boolean {
     const e: typeof errors = {};
@@ -50,11 +52,59 @@ export function LeadCaptureForm() {
     return Object.keys(e).length === 0;
   }
 
-  function handleSubmit(ev: FormEvent) {
+  async function handleSubmit(ev: FormEvent) {
     ev.preventDefault();
     if (!validate()) return;
-    console.log("Lead form submission:", form);
-    setSubmitted(true);
+    setSubmitting(true);
+    setSubmitError(null);
+
+    const mainConcern = [
+      form.interest ? `Interested in: ${form.interest}` : null,
+      form.message.trim() ? form.message.trim() : null,
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+
+    const payload = {
+      parentName: form.name.trim(),
+      parentEmail: form.email.trim(),
+      parentPhone: form.phone.trim() || undefined,
+      childAgeRange: form.childAge.trim() || "Not shared",
+      cityOrZip: form.city.trim() || "Not shared",
+      mainConcern: mainConcern || "General TreeTots DFW inquiry",
+      consentMarketing: form.consent,
+      consentPrivacy: form.consent,
+      primaryCategory: "outdoor_confidence",
+      scores: {
+        sensory_regulation: 0,
+        motor_coordination: 0,
+        attention_executive: 0,
+        social_participation: 0,
+        school_readiness: 0,
+        emotional_regulation: 0,
+        outdoor_confidence: 1,
+      },
+      quizAnswers: [],
+    };
+
+    try {
+      const res = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Could not send inquiry");
+      }
+
+      setSubmitted(true);
+      setForm(initial);
+    } catch {
+      setSubmitError("Something went wrong sending your inquiry. Please try again or book a parent call.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   function set<K extends keyof FormData>(key: K, value: FormData[K]) {
@@ -69,7 +119,7 @@ export function LeadCaptureForm() {
           <div className="mx-auto mb-5 flex size-16 items-center justify-center rounded-full bg-moss/20">
             <Send className="size-7 text-moss" />
           </div>
-          <h2 className="font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest">
+          <h2 className="font-display text-3xl font-semibold text-forest">
             Thank You!
           </h2>
           <p className="mt-3 text-forest/65">
@@ -90,7 +140,7 @@ export function LeadCaptureForm() {
       <div className="mx-auto max-w-2xl px-4 lg:px-6">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-moss">Get in Touch</p>
-          <h2 className="mt-3 font-[family-name:var(--font-fraunces)] text-3xl font-semibold text-forest sm:text-4xl">
+          <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
             Start Here
           </h2>
           <p className="mt-3 text-forest/60">
@@ -226,12 +276,18 @@ export function LeadCaptureForm() {
             </label>
           </div>
           {errors.consent && <p className={errorClass}>{errors.consent}</p>}
+          {submitError && (
+            <p className="rounded-2xl border border-terracotta/30 bg-terracotta/10 px-4 py-3 text-sm text-forest">
+              {submitError}
+            </p>
+          )}
 
           <button
             type="submit"
+            disabled={submitting}
             className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-forest px-8 text-base font-semibold text-cream shadow-md shadow-forest/15 transition hover:bg-forest/90 hover:shadow-lg sm:w-auto"
           >
-            Send Inquiry
+            {submitting ? "Sending..." : "Send Inquiry"}
             <ArrowRight className="size-4 transition group-hover:translate-x-0.5" aria-hidden />
           </button>
 

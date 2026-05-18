@@ -60,7 +60,7 @@ export default async function AdminZapierPage() {
   return (
     <div className="space-y-10">
       <div>
-        <h1 className="font-[family-name:var(--font-fraunces)] text-2xl text-forest">
+        <h1 className="font-display text-2xl text-forest">
           Zapier automation bridge
         </h1>
         <p className="mt-2 max-w-3xl text-sm text-bark/80">

@@ -5,12 +5,12 @@ export const treetotsImages = {
   heroCenter: "/images/treetots/03_hero_child_center_crop.png",
   trustBandChildren: "/images/treetots/04_trust_band_children_circle_crop.png",
   servicesCardLeft: "/images/treetots/11_services_ot_swing.png",
-  naturePlayChildOnLog: "/images/treetots/12_nature_play_child_on_log.png",
+  naturePlayChildOnLog: "/images/treetots/12_nature_play_group_outdoors.jpg",
   otGroupHammockPlay: "/images/treetots/13_ot_group_hammock_play.png",
   reflexCoaching: "/images/treetots/03_hero_child_center_crop.png",
   groupTrailHero: "/images/treetots/08_provider_section_crop.png",
   workshopFamilies: "/images/treetots/04_trust_band_children_circle_crop.png",
-  homeschoolNature: "/images/treetots/12_nature_play_child_on_log.png",
+  homeschoolNature: "/images/treetots/12_nature_play_group_outdoors.jpg",
   parentGuideOutdoor: "/images/treetots/02_hero_child_in_nature_crop.png",
   treetotsLogoSource: "/images/treetots/hero_child_in_nature_full.png",
   servicesArea: "/images/treetots/05_services_cards_area_crop.png",
@@ -35,7 +35,7 @@ export const treetotsImageAlt: Record<TreetotsImageKey, string> = {
   servicesCardLeft:
     "Child smiling while playing upside down on a rope swing during outdoor occupational therapy",
   naturePlayChildOnLog:
-    "Child balancing on a fallen log while exploring outdoors during a nature play group",
+    "Children laughing and playing together outdoors in fallen leaves during a nature play group",
   otGroupHammockPlay:
     "Children playing together on an outdoor rope hammock during a nature-based OT group",
   reflexCoaching:

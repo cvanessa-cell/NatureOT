@@ -32,6 +32,23 @@ export default function ServicesPage() {
               Programs are designed to support participation, confidence, regulation, and
               connection.
             </p>
+            <nav
+              className="mx-auto mt-6 flex flex-wrap justify-center gap-2 lg:mx-0 lg:justify-start"
+              aria-label="Jump to programs"
+            >
+              {SERVICES_CATALOG.map((s) => (
+                <a
+                  key={s.key}
+                  href={`#${s.key === "reflex" ? "reflex-intensive" : s.key}`}
+                  className="inline-flex min-h-10 items-center rounded-full border border-sage/50 bg-white/90 px-4 text-sm font-semibold text-forest transition hover:border-moss/40 hover:bg-cream/80"
+                >
+                  {s.name}
+                </a>
+              ))}
+            </nav>
+            <p className="mx-auto mt-4 max-w-lg text-xs text-forest/55 lg:mx-0">
+              Secure checkout powered by Stripe · Enrollment forms collect only booking details
+            </p>
           </div>
           <div className="relative mx-auto aspect-[4/3] w-full max-w-lg overflow-hidden rounded-[1.75rem] border border-sand/70 shadow-lg shadow-forest/10 lg:max-w-none">
             <Image
@@ -64,7 +81,7 @@ export default function ServicesPage() {
               <ServiceCard
                 key={service.key}
                 service={service}
-                id={service.key === "reflex" ? "reflex-intensive" : undefined}
+                id={service.key === "reflex" ? "reflex-intensive" : service.key}
                 imageOnRight={index % 2 === 1}
               />
             ))}

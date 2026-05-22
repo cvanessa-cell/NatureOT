@@ -43,7 +43,9 @@ export async function POST(req: Request) {
       line_items: [{ price: priceId, quantity: 1 }],
       customer_email: email,
       success_url: `${base}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${base}/checkout/cancel`,
+      cancel_url: serviceSlug
+        ? `${base}/checkout/cancel?service=${encodeURIComponent(serviceSlug)}`
+        : `${base}/checkout/cancel`,
       metadata: {
         parent_name: parent.slice(0, 200),
         child_reference: child?.slice(0, 40) ?? "",

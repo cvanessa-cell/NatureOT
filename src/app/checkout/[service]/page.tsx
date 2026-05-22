@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { CheckoutForm } from "@/components/services/checkout-form";
 import { Card } from "@/components/ui/card";
 import { getCheckoutOption, isCheckoutSlug } from "@/lib/services-catalog";
+import { pricePerSessionLabel } from "@/lib/services-pricing";
 import { isStripeConfigured } from "@/lib/stripe";
 
 type PageProps = {
@@ -27,6 +28,11 @@ export default async function CheckoutPage({ params }: PageProps) {
   if (!option) notFound();
 
   const paymentsReady = isStripeConfigured() && Boolean(option.priceId);
+  const perSession = pricePerSessionLabel({
+    label: option.name,
+    amount: option.amount,
+    checkoutSlug: option.slug,
+  });
 
   return (
     <div className="min-h-[70vh] bg-gradient-to-b from-cream to-white/60 px-4 py-12">
@@ -38,7 +44,13 @@ export default async function CheckoutPage({ params }: PageProps) {
         </p>
         <Card className="mt-6 p-6 sm:p-8">
           <h1 className="font-display text-2xl font-semibold text-forest">{option.name}</h1>
-          <p className="mt-2 text-2xl font-semibold text-moss">${option.amount}</p>
+          <div className="mt-2 flex flex-wrap items-baseline gap-2">
+            <p className="text-2xl font-semibold text-moss">${option.amount}</p>
+            {perSession && (
+              <p className="text-sm font-medium text-forest/60">{perSession}</p>
+            )}
+          </div>
+          <p className="mt-1 text-xs text-forest/55">One-time payment · processed securely by Stripe</p>
           <p className="mt-3 text-sm leading-relaxed text-bark/90">{option.description}</p>
 
           <div className="mt-5 rounded-2xl border border-sage/35 bg-cream/50 px-4 py-4">

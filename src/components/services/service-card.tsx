@@ -3,6 +3,11 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/cn";
 import type { CatalogService } from "@/lib/services-catalog";
+import {
+  lowestCheckoutPrice,
+  pricePerSessionLabel,
+  priceSavingsHint,
+} from "@/lib/services-pricing";
 import { treetotsImageAlt, treetotsImages } from "@/lib/treetots-images";
 import { ServiceBadges } from "./service-badges";
 
@@ -28,6 +33,7 @@ export function ServiceCard({
   const imageSrc = service.imageKey ? treetotsImages[service.imageKey] : null;
   const imageAlt = service.imageKey ? treetotsImageAlt[service.imageKey] : "";
   const objectPosition = service.imagePosition ?? "50% 50%";
+  const fromPrice = lowestCheckoutPrice(service);
 
   const media = imageSrc ? (
     <div className="relative min-h-[200px] w-full shrink-0 overflow-hidden sm:min-h-[220px] lg:min-h-0 lg:w-[42%]">
@@ -52,9 +58,16 @@ export function ServiceCard({
         media && "lg:py-7",
       )}
     >
-      <h2 className="font-display text-2xl font-semibold text-forest sm:text-[1.65rem]">
-        {service.name}
-      </h2>
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="font-display text-2xl font-semibold text-forest sm:text-[1.65rem]">
+          {service.name}
+        </h2>
+        {!compact && fromPrice != null && (
+          <p className="text-sm font-medium text-forest/60">
+            From <span className="font-display text-lg font-semibold text-moss">${fromPrice}</span>
+          </p>
+        )}
+      </div>
       <div className="mt-3">
         <ServiceBadges badges={service.badges} />
       </div>
@@ -77,17 +90,43 @@ export function ServiceCard({
         </ul>
       )}
       <div className="mt-5 flex flex-wrap gap-3">
-        {service.prices.map((price) => (
-          <div
-            key={price.label}
-            className="rounded-2xl border border-sage/40 bg-cream/60 px-4 py-2.5"
-          >
-            <p className="text-xs font-medium uppercase tracking-wide text-forest/55">
-              {price.label}
-            </p>
-            <p className="font-display text-xl font-semibold text-moss">${price.amount}</p>
-          </div>
-        ))}
+        {service.prices.map((price) => {
+          const savings = priceSavingsHint(service.key, price);
+          const perSession = pricePerSessionLabel(price);
+          const checkoutHref = price.checkoutSlug
+            ? `/checkout/${price.checkoutSlug}`
+            : null;
+          const tile = (
+            <>
+              <p className="text-xs font-medium uppercase tracking-wide text-forest/55">
+                {price.label}
+              </p>
+              <p className="font-display text-xl font-semibold text-moss">${price.amount}</p>
+              {perSession && (
+                <p className="mt-0.5 text-xs text-forest/55">{perSession}</p>
+              )}
+              {savings && (
+                <p className="mt-1 text-xs font-semibold text-moss/90">{savings}</p>
+              )}
+            </>
+          );
+          return checkoutHref ? (
+            <Link
+              key={price.label}
+              href={checkoutHref}
+              className="rounded-2xl border border-sage/40 bg-cream/60 px-4 py-2.5 transition hover:border-moss/45 hover:bg-cream hover:shadow-sm"
+            >
+              {tile}
+            </Link>
+          ) : (
+            <div
+              key={price.label}
+              className="rounded-2xl border border-sage/40 bg-cream/60 px-4 py-2.5"
+            >
+              {tile}
+            </div>
+          );
+        })}
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
         {service.ctas.map((cta) => (

@@ -89,7 +89,9 @@ export function ServiceCard({
           ))}
         </ul>
       )}
-      <div className="mt-5 flex flex-wrap gap-3">
+      <div className="mt-5">
+        <p className="text-xs font-medium text-forest/55">Select a price to enroll online</p>
+        <div className="mt-2 flex flex-wrap gap-3">
         {service.prices.map((price) => {
           const savings = priceSavingsHint(service.key, price);
           const perSession = pricePerSessionLabel(price);
@@ -114,7 +116,8 @@ export function ServiceCard({
             <Link
               key={price.label}
               href={checkoutHref}
-              className="rounded-2xl border border-sage/40 bg-cream/60 px-4 py-2.5 transition hover:border-moss/45 hover:bg-cream hover:shadow-sm"
+              aria-label={`Enroll in ${service.name}: ${price.label} for $${price.amount}`}
+              className="rounded-2xl border border-sage/40 bg-cream/60 px-4 py-2.5 transition hover:border-moss/45 hover:bg-cream hover:shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-moss/50"
             >
               {tile}
             </Link>
@@ -127,6 +130,7 @@ export function ServiceCard({
             </div>
           );
         })}
+        </div>
       </div>
       <div className="mt-6 flex flex-wrap gap-2">
         {service.ctas.map((cta) => (

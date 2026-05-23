@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { appBaseUrl } from "@/lib/env";
+import { isCheckoutSlug, isPriceIdForCheckoutSlug } from "@/lib/services-catalog";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
 
 const schema = z.object({
@@ -32,6 +33,19 @@ export async function POST(req: Request) {
   const { priceId, parent, email, child, location, service, serviceSlug } = parsed.data;
   if (!location) {
     return NextResponse.json({ error: "Please select a preferred format." }, { status: 400 });
+  }
+
+  const slug = serviceSlug?.trim() ?? "";
+  if (slug) {
+    if (!isCheckoutSlug(slug)) {
+      return NextResponse.json({ error: "Unknown service." }, { status: 400 });
+    }
+    if (!isPriceIdForCheckoutSlug(slug, priceId)) {
+      return NextResponse.json(
+        { error: "Price does not match this program. Refresh the page and try again." },
+        { status: 400 },
+      );
+    }
   }
 
   const base = appBaseUrl();

@@ -254,6 +254,21 @@ export function isCheckoutSlug(slug: string): slug is CheckoutSlug {
   return slug in CHECKOUT_OPTIONS;
 }
 
+/** Validates Stripe price id matches the catalog entry for a checkout slug. */
+export function isPriceIdForCheckoutSlug(slug: CheckoutSlug, priceId: string): boolean {
+  const option = getCheckoutOption(slug);
+  const expected = option?.priceId?.trim();
+  const received = priceId.trim();
+  return Boolean(expected && received && expected === received);
+}
+
+/** Hash anchor on /services for a completed checkout slug. */
+export function servicesPageAnchorForCheckoutSlug(slug: CheckoutSlug): string {
+  if (slug.startsWith("nature-play")) return "nature-play";
+  if (slug.startsWith("ot-group")) return "ot-group";
+  return "reflex-intensive";
+}
+
 export function getCatalogService(key: string): CatalogService | undefined {
   return SERVICES_CATALOG.find((s) => s.key === key);
 }

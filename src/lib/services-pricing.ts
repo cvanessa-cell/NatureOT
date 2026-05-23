@@ -1,4 +1,9 @@
-import type { CatalogService, ServicePrice } from "@/lib/services-catalog";
+import {
+  SERVICES_CATALOG,
+  type CatalogService,
+  type CheckoutSlug,
+  type ServicePrice,
+} from "@/lib/services-catalog";
 
 const SAVINGS_HINT: Partial<Record<string, Partial<Record<string, string>>>> = {
   "nature-play": {
@@ -32,4 +37,16 @@ export function pricePerSessionLabel(price: ServicePrice): string | null {
 export function lowestCheckoutPrice(service: CatalogService): number | null {
   const amounts = service.prices.map((p) => p.amount);
   return amounts.length ? Math.min(...amounts) : null;
+}
+
+/** Savings copy for pass/series options on checkout and service cards. */
+export function checkoutSavingsHint(slug: CheckoutSlug): string | null {
+  for (const service of SERVICES_CATALOG) {
+    for (const price of service.prices) {
+      if (price.checkoutSlug === slug) {
+        return priceSavingsHint(service.key, price);
+      }
+    }
+  }
+  return null;
 }

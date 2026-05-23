@@ -17,9 +17,12 @@ type FormState = {
 export function CheckoutForm({
   option,
   paymentsReady,
+  stripeConfigured = false,
 }: {
   option: CheckoutOption;
   paymentsReady: boolean;
+  /** Secret key present — used for clearer setup messaging when price IDs are missing. */
+  stripeConfigured?: boolean;
 }) {
   const [form, setForm] = useState<FormState>({
     parent: "",
@@ -63,13 +66,25 @@ export function CheckoutForm({
   }
 
   const isVirtualOnly = option.defaultLocation === "virtual";
+  const showSetupHint = process.env.NODE_ENV === "development";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       {!paymentsReady && (
         <ComplianceBanner className="text-left">
           <p>
-            Online payments are not configured yet. You can still{" "}
+            {stripeConfigured && !option.priceId && showSetupHint ? (
+              <>
+                Stripe is connected, but this program&apos;s price ID is missing from
+                env. Run{" "}
+                <code className="rounded bg-cream/80 px-1 py-0.5 text-xs">
+                  node --env-file=.env.local scripts/provision-stripe-catalog.mjs
+                </code>{" "}
+                then restart the dev server. Until then, you can{" "}
+              </>
+            ) : (
+              <>Online payments are not available for this program yet. You can still </>
+            )}
             <a href="/book-call" className="font-semibold text-moss underline">
               book a parent call
             </a>{" "}
@@ -167,9 +182,10 @@ export function CheckoutForm({
       <Button
         type="submit"
         disabled={loading || !form.consent || !paymentsReady}
+        aria-busy={loading}
         className={cn("w-full", !paymentsReady && "opacity-60")}
       >
-        {loading ? "Redirecting…" : "Proceed to payment"}
+        {loading ? "Redirecting to Stripe…" : `Pay $${option.amount} securely`}
       </Button>
 
       <p className="text-center text-xs leading-relaxed text-forest/55">

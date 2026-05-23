@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { CheckoutForm } from "@/components/services/checkout-form";
 import { Card } from "@/components/ui/card";
 import { getCheckoutOption, isCheckoutSlug } from "@/lib/services-catalog";
-import { pricePerSessionLabel } from "@/lib/services-pricing";
+import { checkoutSavingsHint, pricePerSessionLabel } from "@/lib/services-pricing";
 import { isStripeConfigured } from "@/lib/stripe";
 
 type PageProps = {
@@ -33,6 +33,7 @@ export default async function CheckoutPage({ params }: PageProps) {
     amount: option.amount,
     checkoutSlug: option.slug,
   });
+  const savings = checkoutSavingsHint(option.slug);
 
   return (
     <div className="min-h-[70vh] bg-gradient-to-b from-cream to-white/60 px-4 py-12">
@@ -51,6 +52,11 @@ export default async function CheckoutPage({ params }: PageProps) {
             )}
           </div>
           <p className="mt-1 text-xs text-forest/55">One-time payment · processed securely by Stripe</p>
+          {savings && (
+            <p className="mt-2 inline-flex rounded-full bg-moss/10 px-3 py-1 text-xs font-semibold text-moss">
+              {savings}
+            </p>
+          )}
           <p className="mt-3 text-sm leading-relaxed text-bark/90">{option.description}</p>
 
           <div className="mt-5 rounded-2xl border border-sage/35 bg-cream/50 px-4 py-4">
@@ -73,7 +79,11 @@ export default async function CheckoutPage({ params }: PageProps) {
           </p>
 
           <div className="mt-6 border-t border-sand/60 pt-6">
-            <CheckoutForm option={option} paymentsReady={paymentsReady} />
+            <CheckoutForm
+              option={option}
+              paymentsReady={paymentsReady}
+              stripeConfigured={isStripeConfigured()}
+            />
           </div>
         </Card>
       </div>

@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCheckoutSessionSummary } from "@/lib/checkout-session";
+import {
+  isCheckoutSlug,
+  servicesPageAnchorForCheckoutSlug,
+} from "@/lib/services-catalog";
 
 export const metadata: Metadata = {
   title: "Booking confirmed | TreeTots DFW",
@@ -14,6 +18,10 @@ type PageProps = {
 export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
   const { session_id: sessionId } = await searchParams;
   const summary = sessionId ? await getCheckoutSessionSummary(sessionId) : null;
+  const servicesHref =
+    summary?.checkoutSlug && isCheckoutSlug(summary.checkoutSlug)
+      ? `/services#${servicesPageAnchorForCheckoutSlug(summary.checkoutSlug)}`
+      : "/services";
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-gradient-to-b from-cream to-sage/20 px-4 py-16 text-center">
@@ -69,10 +77,10 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
           Back to home
         </Link>
         <Link
-          href="/services"
+          href={servicesHref}
           className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-forest/25 bg-white px-8 text-sm font-semibold text-forest transition hover:bg-cream/60"
         >
-          View all services
+          {summary?.checkoutSlug ? "Back to this program" : "View all services"}
         </Link>
       </div>
     </div>

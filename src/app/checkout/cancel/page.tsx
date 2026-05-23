@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getCheckoutOption, isCheckoutSlug } from "@/lib/services-catalog";
+import {
+  getCheckoutOption,
+  isCheckoutSlug,
+  servicesPageAnchorForCheckoutSlug,
+} from "@/lib/services-catalog";
 
 export const metadata: Metadata = {
   title: "Payment cancelled | TreeTots DFW",
@@ -15,12 +19,24 @@ export default async function CheckoutCancelPage({ searchParams }: PageProps) {
   const { service: serviceParam } = await searchParams;
   const slug = serviceParam?.trim() ?? "";
   const option = slug && isCheckoutSlug(slug) ? getCheckoutOption(slug) : null;
+  const servicesHref =
+    option && isCheckoutSlug(option.slug)
+      ? `/services#${servicesPageAnchorForCheckoutSlug(option.slug)}`
+      : "/services";
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-gradient-to-b from-cream to-amber-50/40 px-4 py-16 text-center">
       <h1 className="font-display text-3xl font-semibold text-forest">Payment cancelled</h1>
       <p className="mt-4 max-w-md text-lg text-bark/90">
-        No charge was made. You can return to checkout anytime or explore other options.
+        {option ? (
+          <>
+            No charge was made for{" "}
+            <span className="font-semibold text-forest">{option.name}</span>. You can resume
+            checkout or compare other programs.
+          </>
+        ) : (
+          <>No charge was made. You can return to checkout anytime or explore other options.</>
+        )}
       </p>
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         {option ? (
@@ -32,10 +48,10 @@ export default async function CheckoutCancelPage({ searchParams }: PageProps) {
           </Link>
         ) : null}
         <Link
-          href="/services"
+          href={servicesHref}
           className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-forest/25 bg-white px-8 text-sm font-semibold text-forest transition hover:bg-cream/60"
         >
-          View all services
+          {option ? "Back to this program" : "View all services"}
         </Link>
         <Link
           href="/book-call"

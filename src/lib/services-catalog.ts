@@ -107,9 +107,9 @@ export const SERVICES_CATALOG: CatalogService[] = [
     key: "reflex",
     name: "Reflex Integration Intensive",
     imageKey: "reflexCoaching",
-    imagePosition: "52% 45%",
+    imagePosition: "50% 40%",
     description:
-      "The Reflex Integration Intensive is a four-week virtual program designed to support children who may have retained primitive reflex patterns impacting regulation, attention, coordination, learning readiness, emotional regulation, or motor development. Families complete guided daily exercises at home using video-based instruction and common household items.",
+      "A 4-week virtual intensive designed to help children build coordination, body awareness, self-regulation, attention, and confidence through guided movement-based activities. Each plan is individualized based on assessment findings and family goals. Families complete short daily video-guided exercises at home, using common household objects, with a 30-minute commitment each day for 4 weeks.",
     details: [
       "Virtual program completed at home",
       "Four-week model",
@@ -225,7 +225,7 @@ const CHECKOUT_OPTIONS: Record<
     defaultLocation: "virtual",
     priceEnvKey: PRICE_ENV.reflex,
     description:
-      "A four-week virtual at-home program with guided daily exercises to support children who may have retained primitive reflex patterns.",
+      "A 4-week virtual intensive designed to help children build coordination, body awareness, self-regulation, attention, and confidence through guided movement-based activities. Each plan is individualized based on assessment findings and family goals. Families complete short daily video-guided exercises at home, using common household objects, with a 30-minute commitment each day for 4 weeks.",
     included: [
       "Four-week virtual intensive with guided video instruction",
       "Approximately 30 minutes of daily home exercises",

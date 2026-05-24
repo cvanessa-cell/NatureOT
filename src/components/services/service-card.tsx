@@ -34,6 +34,8 @@ export function ServiceCard({
   const imageAlt = service.imageKey ? treetotsImageAlt[service.imageKey] : "";
   const objectPosition = service.imagePosition ?? "50% 50%";
   const fromPrice = lowestCheckoutPrice(service);
+  const descriptionParagraphs = service.description.split(/\n\n+/).filter(Boolean);
+  const visibleParagraphs = compact ? descriptionParagraphs.slice(0, 1) : descriptionParagraphs;
 
   const media = imageSrc ? (
     <div className="relative min-h-[200px] w-full shrink-0 overflow-hidden sm:min-h-[220px] lg:min-h-0 lg:w-[42%]">
@@ -71,14 +73,21 @@ export function ServiceCard({
       <div className="mt-3">
         <ServiceBadges badges={service.badges} />
       </div>
-      <p
+      <div
         className={cn(
-          "mt-4 leading-relaxed text-bark/90",
-          compact ? "line-clamp-4 text-sm" : "text-sm sm:text-base",
+          "mt-4 space-y-3 leading-relaxed text-bark/90",
+          compact ? "text-sm" : "text-sm sm:text-base",
         )}
       >
-        {service.description}
-      </p>
+        {visibleParagraphs.map((paragraph) => (
+          <p
+            key={paragraph}
+            className={cn(compact && descriptionParagraphs.length === 1 && "line-clamp-4")}
+          >
+            {paragraph}
+          </p>
+        ))}
+      </div>
       {!compact && (
         <ul className="mt-4 space-y-2 text-sm text-forest/75">
           {service.details.map((detail) => (
@@ -109,6 +118,9 @@ export function ServiceCard({
               )}
               {savings && (
                 <p className="mt-1 text-xs font-semibold text-moss/90">{savings}</p>
+              )}
+              {checkoutHref && (
+                <p className="mt-2 text-xs font-semibold text-moss">Enroll →</p>
               )}
             </>
           );

@@ -7,6 +7,21 @@ import { NatureOtFitSection } from "@/components/marketing/nature-ot-fit-section
 import { SERVICES_CATALOG } from "@/lib/services-catalog";
 import { treetotsImageAlt, treetotsImages } from "@/lib/treetots-images";
 
+const ENROLLMENT_STEPS = [
+  {
+    title: "Choose a program",
+    detail: "Compare options on this page and pick the price tier that fits.",
+  },
+  {
+    title: "Complete checkout",
+    detail: "Add booking details on the next screen—no clinical records.",
+  },
+  {
+    title: "Pay with Stripe",
+    detail: "Secure one-time payment; we email scheduling and next steps.",
+  },
+] as const;
+
 export const metadata: Metadata = {
   title: "What We Offer | TreeTots DFW",
   description:
@@ -75,6 +90,24 @@ export default function ServicesPage() {
               concerns or detailed clinical history.
             </p>
           </ComplianceBanner>
+
+          <ol
+            className="mb-8 grid gap-3 sm:grid-cols-3"
+            aria-label="How online enrollment works"
+          >
+            {ENROLLMENT_STEPS.map((step, index) => (
+              <li
+                key={step.title}
+                className="rounded-2xl border border-sage/40 bg-white/90 px-4 py-4 text-left shadow-sm"
+              >
+                <p className="text-xs font-semibold uppercase tracking-wide text-moss">
+                  Step {index + 1}
+                </p>
+                <p className="mt-1 font-display text-base font-semibold text-forest">{step.title}</p>
+                <p className="mt-1 text-sm leading-relaxed text-forest/65">{step.detail}</p>
+              </li>
+            ))}
+          </ol>
 
           <div className="grid gap-8">
             {SERVICES_CATALOG.map((service, index) => (

@@ -43,6 +43,9 @@ export default async function CheckoutPage({ params }: PageProps) {
             ← All services
           </Link>
         </p>
+        <p className="mt-2 text-center text-xs text-forest/55">
+          Step 2 of 3 · Review details, then pay securely with Stripe
+        </p>
         <Card className="mt-6 p-6 sm:p-8">
           <h1 className="font-display text-2xl font-semibold text-forest">{option.name}</h1>
           <div className="mt-2 flex flex-wrap items-baseline gap-2">

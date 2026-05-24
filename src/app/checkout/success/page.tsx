@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCheckoutSessionSummary } from "@/lib/checkout-session";
+import { checkoutSuccessNextSteps } from "@/lib/checkout-next-steps";
 import {
   isCheckoutSlug,
   servicesPageAnchorForCheckoutSlug,
@@ -22,6 +23,7 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
     summary?.checkoutSlug && isCheckoutSlug(summary.checkoutSlug)
       ? `/services#${servicesPageAnchorForCheckoutSlug(summary.checkoutSlug)}`
       : "/services";
+  const nextSteps = checkoutSuccessNextSteps(summary?.checkoutSlug ?? null);
 
   return (
     <div className="flex min-h-[70vh] flex-col items-center justify-center bg-gradient-to-b from-cream to-sage/20 px-4 py-16 text-center">
@@ -54,10 +56,12 @@ export default async function CheckoutSuccessPage({ searchParams }: PageProps) {
         </p>
       )}
       <ul className="mt-6 max-w-md space-y-2 text-left text-sm text-forest/75">
-        <li className="flex gap-2">
-          <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-moss/70" aria-hidden />
-          <span>Watch for a confirmation email with scheduling details.</span>
-        </li>
+        {nextSteps.map((step) => (
+          <li key={step} className="flex gap-2">
+            <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-moss/70" aria-hidden />
+            <span>{step}</span>
+          </li>
+        ))}
         <li className="flex gap-2">
           <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-moss/70" aria-hidden />
           <span>

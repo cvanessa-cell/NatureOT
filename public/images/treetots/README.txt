@@ -7,7 +7,7 @@ Use these only as visual placeholders or design references while building the pa
 For production, replace them with properly licensed photos, original photography, or approved brand assets.
 
 Licensed stock (Pexels):
-- 12_nature_play_group_outdoors.jpg — Michael Morse, Pexels #1582736 (children playing outdoors)
+- 12_nature_play_group_outdoors.jpg — cottonbro studio, Pexels #9292930 (children on a sunlit forest trail)
 
 Included:
 - full mockup reference

@@ -10,7 +10,6 @@ type FormState = {
   parent: string;
   email: string;
   child: string;
-  location: string;
   consent: boolean;
 };
 
@@ -28,7 +27,6 @@ export function CheckoutForm({
     parent: "",
     email: "",
     child: "",
-    location: option.defaultLocation,
     consent: false,
   });
   const [loading, setLoading] = useState(false);
@@ -49,7 +47,6 @@ export function CheckoutForm({
           parent: form.parent.trim(),
           email: form.email.trim(),
           child: form.child.trim() || undefined,
-          location: form.location,
         }),
       });
       const data = (await res.json().catch(() => ({}))) as { url?: string; error?: string };
@@ -65,7 +62,6 @@ export function CheckoutForm({
     }
   }
 
-  const isVirtualOnly = option.defaultLocation === "virtual";
   const showSetupHint = process.env.NODE_ENV === "development";
 
   return (
@@ -135,27 +131,6 @@ export function CheckoutForm({
           onChange={(e) => setForm((f) => ({ ...f, child: e.target.value }))}
           maxLength={40}
         />
-      </label>
-
-      <label className="block text-left text-sm font-medium text-forest">
-        Preferred format
-        <select
-          required
-          disabled={loading || !paymentsReady}
-          className="mt-1 w-full rounded-xl border border-sand bg-white px-3 py-2.5 text-forest outline-none focus:border-moss/50 focus:ring-2 focus:ring-moss/20"
-          value={form.location}
-          onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
-        >
-          {isVirtualOnly ? (
-            <option value="virtual">Virtual</option>
-          ) : (
-            <>
-              <option value="">Select preferred location</option>
-              <option value="outdoor">Outdoor (DFW area)</option>
-              <option value="virtual">Virtual</option>
-            </>
-          )}
-        </select>
       </label>
 
       <label className="flex items-start gap-3 text-left text-sm text-bark/90">

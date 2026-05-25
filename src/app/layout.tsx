@@ -3,9 +3,14 @@ import { Inter, Lora } from "next/font/google";
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
 import "./globals.css";
+import { AnnouncementBar } from "@/components/marketing/announcement-bar";
+import { StickyCTABar } from "@/components/marketing/sticky-cta-bar";
 import { ConditionalChrome } from "@/components/conditional-chrome";
 import { DisableDraftMode } from "@/components/disable-draft-mode";
 import { MetaPixel } from "@/components/meta-pixel";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { UiCompareScrollBridge } from "@/components/ui-compare-scroll-bridge";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -57,12 +62,24 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${lora.variable}`}>
+    <html
+      lang="en"
+      className={`${inter.variable} ${lora.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body
         className={`${inter.className} min-h-screen flex flex-col antialiased text-[17px] leading-relaxed text-forest`}
       >
         <MetaPixel pixelId={process.env.NEXT_PUBLIC_META_PIXEL_ID} />
-        <ConditionalChrome>{children}</ConditionalChrome>
+        <UiCompareScrollBridge />
+        <ConditionalChrome
+          announcement={<AnnouncementBar />}
+          header={<SiteHeader />}
+          footer={<SiteFooter />}
+          sticky={<StickyCTABar />}
+        >
+          {children}
+        </ConditionalChrome>
         {(await draftMode()).isEnabled && (
           <>
             <VisualEditing />

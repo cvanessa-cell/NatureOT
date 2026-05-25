@@ -19,6 +19,11 @@ const links = [
 export function SiteHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [navReady, setNavReady] = useState(false);
+
+  useEffect(() => {
+    setNavReady(true);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -48,7 +53,7 @@ export function SiteHeader() {
               href={n.href}
               className={cn(
                 "rounded-full px-3 py-2 text-[0.9rem] font-medium text-forest/80 transition hover:bg-sage/40 hover:text-forest",
-                pathname === n.href && "bg-sage/30 text-forest",
+                navReady && pathname === n.href && "bg-sage/30 text-forest",
               )}
             >
               {n.label}

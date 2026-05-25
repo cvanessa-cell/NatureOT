@@ -23,7 +23,7 @@ const services = [
 const action = [
   { href: "/waitlist", label: "Join the Waitlist" },
   { href: "/book-call", label: "Book a Parent Call" },
-  { href: "/referral-partners", label: "Refer a Child" },
+  { href: "/provider-referral", label: "Refer a Child" },
   { href: "/get-started", label: "Contact Us" },
 ];
 
@@ -31,6 +31,9 @@ const legal = [
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },
 ];
+
+/** Stable for SSR; update annually or rely on suppressHydrationWarning on the year node. */
+const COPYRIGHT_YEAR = 2026;
 
 export function SiteFooter() {
   return (
@@ -129,8 +132,9 @@ export function SiteFooter() {
         {/* Legal */}
         <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-cream/10 pt-6">
           <p className="text-xs text-cream/45">
-            &copy; {new Date().getFullYear()} TreeTots DFW. All rights
-            reserved.
+            &copy;{" "}
+            <span suppressHydrationWarning>{COPYRIGHT_YEAR}</span> TreeTots DFW.
+            All rights reserved.
           </p>
           <div className="flex gap-4">
             {legal.map((x) => (

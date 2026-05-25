@@ -2,7 +2,7 @@
 
 You are working in the Nature OT website repository for TreeTots / Nature OT in the Dallas-Fort Worth area.
 
-## Mission
+## Primary goal
 
 Make exactly one focused, production-quality improvement per run that increases at least one of:
 
@@ -16,23 +16,23 @@ Make exactly one focused, production-quality improvement per run that increases 
 
 Keep the change small enough to review in one sitting.
 
+## Project context
+
+This is a nature-based pediatric occupational therapy website. The site should feel warm, professional, calming, trustworthy, modern, and parent-friendly. It should clearly communicate that nature-based OT is therapist-led, goal-directed, play-based occupational therapy delivered in outdoor or natural environments, not generic outdoor play.
+
 ## Brand and UX direction
 
-- Warm, professional, calming, trustworthy, modern, parent-friendly
-- Nature-based pediatric occupational therapy, not generic outdoor play
-- Soft nature palette: warm whites, creams, sage greens, soft browns, muted sky blues
-- Rounded cards, gentle shadows, polished spacing, clear hierarchy
-- Parent-facing language should be emotionally reassuring and easy to understand
-- Avoid harsh clinical language
-- Avoid cluttered dashboards and generic tech-template styling
-
-## Marketing and safety rules
-
-- Do not claim to cure, fix, guarantee, treat, or eliminate challenges
-- Prefer language like `supports`, `helps build`, `encourages`, `provides opportunities for`, and `may help`
-- Do not invent licenses, certifications, addresses, prices, testimonials, provider names, or outcomes
-- Do not collect unnecessary child health information in marketing flows
-- Preserve privacy and parent trust
+- Soft nature-inspired aesthetic
+- Warm whites, creams, sage greens, soft browns, muted sky blues, and gentle organic textures
+- Rounded cards, soft shadows, polished spacing, and clear visual hierarchy
+- Parent-facing language that is clear, emotionally reassuring, and easy to understand
+- No cluttered dashboard feel
+- No harsh clinical feel
+- No generic tech-template look
+- Mobile-first layout quality
+- Strong but gentle calls to action
+- Trust-building sections for parents and providers
+- Clear service explanations for groups, workshops, referrals, waitlist, parent calls, and provider partnerships
 
 ## Repo-specific context
 
@@ -59,7 +59,7 @@ Keep the change small enough to review in one sitting.
   - `src/app/workshops`
   - `src/app/faq`
 
-## Priority areas
+## High-priority improvement areas
 
 1. Homepage hero polish
 2. Service cards
@@ -69,27 +69,36 @@ Keep the change small enough to review in one sitting.
 6. Visual consistency
 7. Functionality fixes
 
-## Operating rules
+## Safety and marketing rules
+
+- Do not claim the program cures, fixes, guarantees, treats, or eliminates a child's challenges
+- Prefer language like `supports`, `helps build`, `encourages`, `provides opportunities for`, and `may help`
+- Do not add medical guarantees
+- Do not invent licenses, certifications, addresses, prices, testimonials, provider names, or clinical outcomes
+- Do not collect or store unnecessary child health information in marketing flows
+- Keep parent trust and privacy at the center of every change
+
+## Operating workflow
 
 1. Inspect the current repository structure first.
-2. Identify the framework, routes, components, styling system, forms, and data sources relevant to today’s change.
+2. Identify the framework, routes, components, styling system, forms, and data sources relevant to today's change.
 3. Run the smallest useful checks first:
    - install dependencies only if needed
    - `npm.cmd run lint`
    - `npm.cmd test` if tests are present and practical for the touched area
    - `npm.cmd run build`
-4. Choose exactly one focused improvement.
-5. Preserve existing functionality unless intentionally improving it.
-6. Avoid broad rewrites unless the existing code blocks the improvement.
-7. Add or update tests only when practical and high-value.
-8. Re-run verification after changes.
-9. Do not merge or deploy automatically.
-10. Prefer a branch or dedicated worktree checkout over the user’s active checkout.
+4. Review the relevant UI files and choose exactly one focused improvement.
+5. Make the improvement with production-quality code.
+6. Preserve existing functionality unless intentionally improving it.
+7. Avoid broad rewrites unless the existing code blocks the improvement.
+8. Add or update tests only when practical and high-value.
+9. Re-run verification after changes.
+10. Do not merge or deploy automatically.
 
-## Worktree preference
+## Worktree mode
 
+- Prefer a dedicated background worktree over the active working directory.
 - If running inside a prepared automation worktree, stay there.
-- If not, attempt to use a dedicated background worktree before editing.
 - Only use the active working directory when worktrees are unavailable.
 
 ## Output format

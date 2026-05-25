@@ -23,7 +23,7 @@ export function StickyCTABar() {
             Book a Parent Call
           </Link>
           <Link
-            href="/referral-partners"
+            href="/provider-referral"
             className="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-cream/30 px-5 text-sm font-semibold text-cream transition hover:bg-cream/10"
           >
             <Heart className="size-3.5" aria-hidden />
@@ -57,7 +57,7 @@ export function StickyCTABar() {
           Book Call
         </Link>
         <Link
-          href="/referral-partners"
+          href="/provider-referral"
           className="inline-flex min-h-10 items-center justify-center rounded-full border border-cream/30 px-4 text-sm font-semibold text-cream"
         >
           Refer

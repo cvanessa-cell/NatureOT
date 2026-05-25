@@ -27,9 +27,15 @@ export function parseEnvFile(text) {
 }
 
 export function loadEnvLocal() {
-  const envPath = path.join(root, ".env.local");
-  if (!fs.existsSync(envPath)) return { envPath, env: {} };
-  return { envPath, env: parseEnvFile(fs.readFileSync(envPath, "utf8")) };
+  let env = {};
+  let envPath = null;
+  for (const name of [".env", ".env.local"]) {
+    const p = path.join(root, name);
+    if (!fs.existsSync(p)) continue;
+    env = { ...env, ...parseEnvFile(fs.readFileSync(p, "utf8")) };
+    envPath = p;
+  }
+  return { envPath, env };
 }
 
 export function loadVercelMeta() {
@@ -78,6 +84,8 @@ export function loadProjectContext() {
   const vercelTeamId = meta?.orgId || "";
   const vercelProjectName = meta?.projectName || "nature-ot-growth-os";
 
+  const vercelTeamSlug = vercelTeamId ? slugFromTeamId(vercelTeamId) : "";
+
   return {
     env,
     meta,
@@ -86,6 +94,7 @@ export function loadProjectContext() {
     appUrl,
     vercelProjectId,
     vercelTeamId,
+    vercelTeamSlug,
     vercelProjectName,
     vercelToken: loadVercelToken(env),
     studioUrl: `${appUrl}/studio`,

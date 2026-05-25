@@ -5,9 +5,9 @@ export const treetotsImages = {
   heroCenter: "/images/treetots/03_hero_child_center_crop.png",
   trustBandChildren: "/images/treetots/04_trust_band_children_circle_crop.png",
   servicesCardLeft: "/images/treetots/11_services_ot_swing.png",
-  naturePlayChildOnLog: "/images/treetots/12_nature_play_group_outdoors.jpg",
+  naturePlayChildOnLog: "/images/treetots/15_nature_play_groups.png",
   otGroupHammockPlay: "/images/treetots/13_ot_group_hammock_play.png",
-  reflexCoaching: "/images/treetots/03_hero_child_center_crop.png",
+  reflexCoaching: "/images/treetots/14_reflex_integration_intensive.png",
   groupTrailHero: "/images/treetots/08_provider_section_crop.png",
   workshopFamilies: "/images/treetots/04_trust_band_children_circle_crop.png",
   homeschoolNature: "/images/treetots/12_nature_play_group_outdoors.jpg",
@@ -35,11 +35,11 @@ export const treetotsImageAlt: Record<TreetotsImageKey, string> = {
   servicesCardLeft:
     "Child smiling while playing upside down on a rope swing during outdoor occupational therapy",
   naturePlayChildOnLog:
-    "Children laughing and playing together outdoors in fallen leaves during a nature play group",
+    "Child smiling on a rope swing outdoors during a nature play group by a sunlit creek",
   otGroupHammockPlay:
     "Children playing together on an outdoor rope hammock during a nature-based OT group",
   reflexCoaching:
-    "Child outdoors in a calm nature setting for parent-supported occupational therapy carryover",
+    "Child practicing balance on movement pods at home while a caregiver supports a reflex integration intensive session",
   groupTrailHero:
     "Children walking together outdoors for a nature-based therapy group",
   workshopFamilies:

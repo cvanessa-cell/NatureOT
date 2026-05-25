@@ -38,7 +38,7 @@ export function ServiceCard({
   const visibleParagraphs = compact ? descriptionParagraphs.slice(0, 1) : descriptionParagraphs;
 
   const media = imageSrc ? (
-    <div className="relative min-h-[200px] w-full shrink-0 overflow-hidden sm:min-h-[220px] lg:min-h-0 lg:w-[42%]">
+    <div className="relative min-h-[300px] w-full shrink-0 overflow-hidden sm:min-h-[320px] lg:min-h-0 lg:w-[42%]">
       <Image
         src={imageSrc}
         alt={imageAlt}
@@ -48,7 +48,7 @@ export function ServiceCard({
         style={{ objectPosition }}
         priority={service.key === "nature-play"}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-forest/20 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-forest/10" />
+      <div className="absolute -left-[3px] -top-[4px] right-0 bottom-0 bg-gradient-to-t from-forest/20 via-transparent to-transparent lg:bg-gradient-to-r lg:from-transparent lg:via-transparent lg:to-forest/10" />
     </div>
   ) : null;
 

@@ -1,15 +1,20 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { AnnouncementBar } from "@/components/marketing/announcement-bar";
-import { StickyCTABar } from "@/components/marketing/sticky-cta-bar";
 
 export function ConditionalChrome({
   children,
+  announcement,
+  header,
+  footer,
+  sticky,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  announcement: ReactNode;
+  header: ReactNode;
+  footer: ReactNode;
+  sticky: ReactNode;
 }) {
   const pathname = usePathname();
   const bare = pathname?.startsWith("/admin") || pathname?.startsWith("/studio");
@@ -20,11 +25,11 @@ export function ConditionalChrome({
 
   return (
     <>
-      <AnnouncementBar />
-      <SiteHeader />
+      {announcement}
+      {header}
       <main className="flex-1 pb-24 md:pb-20">{children}</main>
-      <SiteFooter />
-      <StickyCTABar />
+      {footer}
+      {sticky}
     </>
   );
 }

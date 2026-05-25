@@ -45,7 +45,6 @@ const validBody = {
   serviceSlug: "nature-play-dropin",
   parent: "Alex Parent",
   email: "parent@example.com",
-  location: "outdoor",
 };
 
 describe("POST /api/checkout", () => {
@@ -78,14 +77,6 @@ describe("POST /api/checkout", () => {
     expect(res.status).toBe(400);
     const data = (await res.json()) as { error?: string };
     expect(data.error).toMatch(/price does not match/i);
-  });
-
-  it("requires a preferred format", async () => {
-    stripeMocks.isStripeConfigured.mockReturnValue(true);
-    const res = await postCheckout({ ...validBody, location: "" });
-    expect(res.status).toBe(400);
-    const data = (await res.json()) as { error?: string };
-    expect(data.error).toMatch(/preferred format/i);
   });
 
   it("creates a Stripe Checkout session when configured", async () => {

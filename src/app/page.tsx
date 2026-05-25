@@ -7,7 +7,7 @@ import {
   FAQ_QUERY,
   PROVIDER_SECTION_QUERY,
 } from "@/sanity/lib/queries";
-import { HeroSection } from "@/components/marketing/hero-section";
+import { HeroLead, HeroSection } from "@/components/marketing/hero-section";
 import { TrustBand } from "@/components/marketing/trust-band";
 import { ConcernCards } from "@/components/marketing/concern-cards";
 import { ServicesCatalogSection } from "@/components/marketing/services-catalog-section";
@@ -49,37 +49,41 @@ export default async function HomePage() {
       ? faq.map((f) => ({ id: f._id, q: f.question, a: f.answer }))
       : fallbackFaq;
 
+  const heroData = hp
+    ? {
+        headline: hp.heroHeadline as string,
+        highlight: hp.heroHighlight as string,
+        body: hp.heroBody as string,
+        benefits: hp.heroBenefits as { iconName?: string; label?: string }[],
+        trustText: hp.heroTrustText as string,
+        trustCardItems: hp.heroTrustCardItems as string[],
+        trustSubtext: hp.heroTrustSubtext as string,
+      }
+    : null;
+
   return (
-    <div className="pb-16">
-      <HeroSection
-        data={hp ? {
-          headline: hp.heroHeadline as string,
-          highlight: hp.heroHighlight as string,
-          body: hp.heroBody as string,
-          benefits: hp.heroBenefits as { iconName?: string; label?: string }[],
-          trustText: hp.heroTrustText as string,
-          trustCardItems: hp.heroTrustCardItems as string[],
-          trustSubtext: hp.heroTrustSubtext as string,
-        } : null}
-      />
-      <TrustBand
+    <>
+      <HeroLead data={heroData} />
+      <div className="pb-16">
+        <HeroSection data={heroData} />
+        <TrustBand
         data={hp ? {
           headline: hp.trustHeadline as string,
           body: hp.trustBody as string,
           stats: hp.trustStats as { iconName?: string; value?: string; label?: string }[],
         } : null}
-      />
-      <ConcernCards
+        />
+        <ConcernCards
         data={hp ? {
           headline: hp.concernsHeadline as string,
           items: hp.concernItems as { iconName?: string; label?: string }[],
           supportText: hp.concernsSupportText as string,
         } : null}
-      />
-      <ServicesCatalogSection />
-      <NatureOtFitSection />
+        />
+        <ServicesCatalogSection />
+        <NatureOtFitSection />
 
-      <section className="bg-cream py-16 lg:py-24">
+        <section className="bg-cream py-16 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <div className="mb-10 text-center">
             <p className="text-sm font-semibold uppercase tracking-wider text-moss">Enroll Today</p>
@@ -125,6 +129,7 @@ export default async function HomePage() {
       </section>
 
       <LeadCaptureForm />
-    </div>
+      </div>
+    </>
   );
 }

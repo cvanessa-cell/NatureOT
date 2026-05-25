@@ -53,7 +53,7 @@ export const SERVICES_CATALOG: CatalogService[] = [
     key: "nature-play",
     name: "Nature Play Groups",
     imageKey: "naturePlayChildOnLog",
-    imagePosition: "55% 42%",
+    imagePosition: "50% 45%",
     description:
       "Nature Play Groups are child-led outdoor play sessions designed to support movement, imagination, peer connection, and confidence in a relaxed natural setting. These groups are a great fit for families looking for purposeful outdoor play, social connection, and movement without the formality of therapy. Children explore, create, climb, build, pretend, and connect with peers while developing confidence, curiosity, and independence.",
     details: [

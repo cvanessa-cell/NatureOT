@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { appBaseUrl } from "@/lib/env";
-import { isCheckoutSlug, isPriceIdForCheckoutSlug } from "@/lib/services-catalog";
+import {
+  getCheckoutOption,
+  isCheckoutSlug,
+  isPriceIdForCheckoutSlug,
+} from "@/lib/services-catalog";
 import { getStripe, isStripeConfigured } from "@/lib/stripe";
 
 const schema = z.object({
@@ -11,7 +15,6 @@ const schema = z.object({
   parent: z.string().min(1).max(200),
   email: z.string().email(),
   child: z.string().max(40).optional(),
-  location: z.enum(["outdoor", "virtual", ""]),
 });
 
 export async function POST(req: Request) {
@@ -30,15 +33,18 @@ export async function POST(req: Request) {
     );
   }
 
-  const { priceId, parent, email, child, location, service, serviceSlug } = parsed.data;
-  if (!location) {
-    return NextResponse.json({ error: "Please select a preferred format." }, { status: 400 });
-  }
+  const { priceId, parent, email, child, service, serviceSlug } = parsed.data;
 
   const slug = serviceSlug.trim();
   if (!isCheckoutSlug(slug)) {
     return NextResponse.json({ error: "Unknown service." }, { status: 400 });
   }
+
+  const checkoutOption = getCheckoutOption(slug);
+  if (!checkoutOption) {
+    return NextResponse.json({ error: "Unknown service." }, { status: 400 });
+  }
+  const location = checkoutOption.defaultLocation;
   if (!isPriceIdForCheckoutSlug(slug, priceId)) {
     return NextResponse.json(
       { error: "Price does not match this program. Refresh the page and try again." },

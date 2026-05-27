@@ -8,6 +8,7 @@ import { scoreQuiz } from "@/lib/scoring";
 import { selectableChoiceClass } from "@/lib/selectable-choice";
 
 const STORAGE_KEY = "tnq_quiz_v1";
+const LOCAL_STORAGE_KEY = "tnq_quiz_v1_local";
 
 export function QuizRunner() {
   const router = useRouter();
@@ -39,12 +40,18 @@ export function QuizRunner() {
         primary,
         completedAt: new Date().toISOString(),
       };
+      const json = JSON.stringify(payload);
       try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        sessionStorage.setItem(STORAGE_KEY, json);
       } catch {
-        // ignore
+        /* ignore */
       }
-      router.push("/results");
+      try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, json);
+      } catch {
+        /* ignore */
+      }
+      router.push(`/results?id=${encodeURIComponent(sessionId)}`);
     }
   }
 
@@ -106,7 +113,11 @@ export function QuizRunner() {
           type="button"
           onClick={next}
           disabled={current === undefined}
-          className="min-h-12 min-w-[10rem] rounded-full bg-sage px-6 font-medium text-cream shadow hover:bg-forest disabled:opacity-40"
+          className={`min-h-12 min-w-[10rem] rounded-full px-6 font-medium shadow transition-all duration-300 disabled:opacity-40 ${
+            current !== undefined
+              ? "bg-forest text-cream ring-2 ring-forest/30 ring-offset-2 scale-[1.03] hover:bg-forest/90"
+              : "bg-sage text-cream hover:bg-forest"
+          }`}
         >
           {idx === QUIZ_QUESTIONS.length - 1 ? "See results" : "Continue"}
         </button>

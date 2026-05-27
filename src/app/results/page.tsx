@@ -1,23 +1,29 @@
-import Link from "next/link";
+import { Suspense } from "react";
 import { ResultsContent } from "@/components/results-content";
 import type { Metadata } from "next";
+import { Leaf } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Your guide results | Texas Nature OT",
-  description: "Educational summary based on your parent guide responses.",
+  title: "Your Guide Results | TreeTots DFW",
+  description:
+    "Educational summary based on your parent guide responses. Not a clinical assessment.",
 };
+
+function ResultsLoading() {
+  return (
+    <div className="flex min-h-[40vh] items-center justify-center">
+      <Leaf className="size-8 animate-pulse text-moss" aria-hidden />
+      <span className="sr-only">Loading results</span>
+    </div>
+  );
+}
 
 export default function ResultsPage() {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12">
-      <ResultsContent />
-      <p className="mt-8 text-center text-sm text-bark/80">
-        <Link href="/get-started" className="font-medium text-moss underline">
-          Share your contact information
-        </Link>{" "}
-        to receive a copy by email and optional follow-up (you may unsubscribe
-        anytime).
-      </p>
+    <div className="min-h-screen">
+      <Suspense fallback={<ResultsLoading />}>
+        <ResultsContent />
+      </Suspense>
     </div>
   );
 }

@@ -12,7 +12,6 @@ import {
   Eye,
   Wind,
   Mountain,
-  Puzzle,
   Sparkles,
   HandHeart,
   TreePine,
@@ -25,6 +24,8 @@ import {
   Shield,
   Repeat,
 } from "lucide-react";
+import { ArchIcon } from "@/components/icons/arch-icon";
+import { ShirtIcon } from "@/components/icons/shirt-icon";
 
 const iconLookup: Record<string, LucideIcon> = {
   Leaf,
@@ -39,7 +40,7 @@ const iconLookup: Record<string, LucideIcon> = {
   Eye,
   Wind,
   Mountain,
-  Puzzle,
+  Arch: ArchIcon as unknown as LucideIcon,
   Sparkles,
   HandHeart,
   TreePine,
@@ -51,6 +52,8 @@ const iconLookup: Record<string, LucideIcon> = {
   Shield,
   Repeat,
   ShieldHeart: Shield,
+  Puzzle: ArchIcon as unknown as LucideIcon,
+  Shirt: ShirtIcon as unknown as LucideIcon,
 };
 
 export function resolveIcon(name: string | undefined | null): LucideIcon {

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UI Compare — Split view</title>
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body class="compare-page">
+  <header>
+    <div class="compare-header">
+      <div>
+        <h1>Split-screen comparison</h1>
+        <p class="subtitle" id="compare-subtitle">Loading…</p>
+      </div>
+      <button type="button" class="secondary" id="close-btn">Close comparison</button>
+    </div>
+    <div class="route-tabs" id="route-tabs"></div>
+  </header>
+  <main class="compare-main">
+    <p class="meta compare-hint">Each pane is a live app. Use the <strong>center scrollbar</strong> (or scroll inside either pane) to move both previews together. <strong>Keep</strong> pins a version for the next comparison. <strong>Reject</strong> deletes a branch (or discards uncommitted changes) and clears the pane. <strong>Replace</strong> clears the pane without deleting.</p>
+    <p class="meta" id="mismatch-line"></p>
+    <div class="compare-layout">
+      <div class="compare-panes">
+        <div class="compare-pane-headers">
+          <div class="pane-head" id="left-head">
+            <div class="pane-version" id="left-version"></div>
+            <div class="pane-actions" id="left-actions">
+              <button type="button" class="keep-btn" data-action="keep">Keep</button>
+              <button type="button" class="reject-btn secondary" data-action="reject">Reject</button>
+              <button type="button" class="replace-btn secondary" data-action="replace">Replace</button>
+            </div>
+          </div>
+          <div class="pane-head" id="right-head">
+            <div class="pane-version" id="right-version"></div>
+            <div class="pane-actions" id="right-actions">
+              <button type="button" class="keep-btn" data-action="keep">Keep</button>
+              <button type="button" class="reject-btn secondary" data-action="reject">Reject</button>
+              <button type="button" class="replace-btn secondary" data-action="replace">Replace</button>
+            </div>
+          </div>
+        </div>
+        <div class="compare-panes-row">
+          <div class="live-wrap" id="left-pane" data-side="left">
+            <iframe id="left-frame" title="Left version" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"></iframe>
+            <div class="picker-panel" id="left-picker" hidden>
+              <h3>Choose version to compare</h3>
+              <p class="meta" id="left-picker-hint"></p>
+              <div class="picker-list" id="left-picker-list"></div>
+            </div>
+          </div>
+          <div
+            class="sync-scroll-gutter"
+            id="sync-scroll-gutter"
+            role="scrollbar"
+            aria-label="Scroll both previews together"
+            aria-controls="left-frame right-frame"
+            tabindex="0"
+          >
+            <div class="sync-scroll-spacer" id="sync-scroll-spacer"></div>
+          </div>
+          <div class="live-wrap" id="right-pane" data-side="right">
+            <iframe id="right-frame" title="Right version" sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"></iframe>
+            <div class="picker-panel" id="right-picker" hidden>
+              <h3>Choose version to compare</h3>
+              <p class="meta" id="right-picker-hint"></p>
+              <div class="picker-list" id="right-picker-list"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <aside class="notes">
+        <h2 style="margin-top:0;font-size:1rem;">Difference notes</h2>
+        <ol id="notes-list"></ol>
+      </aside>
+    </div>
+    <p id="route-status" class="status" role="status"></p>
+    <p id="decision-status" class="status" role="status"></p>
+  </main>
+  <script type="module" src="/assets/compare.js"></script>
+</body>
+</html>

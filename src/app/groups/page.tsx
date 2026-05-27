@@ -1,22 +1,59 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, Clock, Sparkles, TreePine, Users, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  Clock,
+  Sparkles,
+  TreePine,
+  Users,
+  CheckCircle2,
+  Leaf,
+  Sun,
+  Heart,
+} from "lucide-react";
 import { SectionHeading } from "@/components/marketing/section-heading";
 import { FaqAccordion, type FaqItem } from "@/components/marketing/faq-accordion";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
 import { PageHero } from "@/components/marketing/page-hero";
 
 export const metadata: Metadata = {
-  title: "Small-Group Nature-Based OT Programs | TreeTots DFW",
+  title: "Nature-Based Groups for Kids in Dallas–Fort Worth | TreeTots DFW",
   description:
-    "Explore age-banded outdoor OT groups in Dallas-Fort Worth: structure, focus areas, and how TreeTots DFW matches families.",
+    "Small outdoor groups designed to support regulation, motor confidence, social participation, and playful connection through therapist-informed nature-based experiences in DFW.",
 };
 
 const trustItems = [
-  { icon: Users, label: "Small groups" },
+  { icon: Users, label: "Small group sizes" },
   { icon: TreePine, label: "Outdoor play-based structure" },
   { icon: Sparkles, label: "Parent-friendly guidance" },
-  { icon: CheckCircle2, label: "Matched by age & developmental fit" },
+  { icon: CheckCircle2, label: "Matched by age and developmental fit" },
+];
+
+const comparisonCards = [
+  {
+    icon: Sun,
+    title: "Nature Play Groups",
+    description:
+      "Best for child-led outdoor play, peer connection, confidence, and exploration. Designed to support social participation and sensory curiosity in a natural setting.",
+    color: "bg-sage/30",
+    iconColor: "text-moss",
+  },
+  {
+    icon: Leaf,
+    title: "Nature-Based OT Groups",
+    description:
+      "Best for therapist-led support with regulation, motor skills, sensory processing, social participation, and transitions. Helps build everyday confidence through structured outdoor activities.",
+    color: "bg-sage/20",
+    iconColor: "text-forest",
+  },
+  {
+    icon: Heart,
+    title: "Homeschool Weekday Groups",
+    description:
+      "Best for families needing daytime rhythm, movement, regulation, and social connection. Supports routine-building and peer interaction during the school week.",
+    color: "bg-cream",
+    iconColor: "text-moss",
+  },
 ];
 
 type Group = {
@@ -27,6 +64,7 @@ type Group = {
   kidsPractice: string[];
   activities: string;
   length: string;
+  groupSize: string;
   ctaLabel: string;
   ctaHref: string;
 };
@@ -39,7 +77,7 @@ const groups: Group[] = [
       "A gentle introduction to outdoor play and sensory exploration for our youngest learners.",
     bestFor: [
       "Children building comfort outdoors",
-      "Early regulation & sensory curiosity",
+      "Early regulation and sensory curiosity",
       "First group experiences",
     ],
     kidsPractice: [
@@ -49,6 +87,7 @@ const groups: Group[] = [
     ],
     activities: "Short hikes, carrying tools, sand/water play, partner games",
     length: "60 min",
+    groupSize: "4–6 kids",
     ctaLabel: "Join Ages 3–5 Interest List",
     ctaHref: "/waitlist?group=ages-3-5",
   },
@@ -59,16 +98,17 @@ const groups: Group[] = [
       "Guided movement challenges that build coordination, transition skills, and peer confidence.",
     bestFor: [
       "Children working on transitions",
-      "Coordination & motor planning",
+      "Coordination and motor planning",
       "Guided peer interaction",
     ],
     kidsPractice: [
-      "Climbing & balancing",
+      "Climbing and balancing",
       "Following multi-step directions",
       "Cooperative movement tasks",
     ],
     activities: "Climbing lines, obstacle paths, cooperative carry tasks",
     length: "75 min",
+    groupSize: "4–6 kids",
     ctaLabel: "Join Ages 5–7 Interest List",
     ctaHref: "/waitlist?group=ages-5-7",
   },
@@ -83,12 +123,13 @@ const groups: Group[] = [
       "Team-based social skills",
     ],
     kidsPractice: [
-      "Orienteering & navigation",
-      "Tool use & risk assessment",
-      "Leading & following in groups",
+      "Orienteering and navigation",
+      "Tool use and risk assessment",
+      "Leading and following in groups",
     ],
     activities: "Orienteering-style games, tool use, team challenges",
     length: "75 min",
+    groupSize: "4–6 kids",
     ctaLabel: "Join Ages 7–10 Interest List",
     ctaHref: "/waitlist?group=ages-7-10",
   },
@@ -100,57 +141,18 @@ const groups: Group[] = [
     bestFor: [
       "Homeschool families seeking structure",
       "Daytime weekday availability",
-      "Regulation & motor blend",
+      "Regulation and motor blend",
     ],
     kidsPractice: [
-      "Trail pacing & rhythm",
-      "Nature journaling & reflection",
+      "Trail pacing and rhythm",
+      "Nature journaling and reflection",
       "Group problem-solving",
     ],
     activities: "Trail pacing, nature journaling breaks, group challenges",
     length: "75 min",
+    groupSize: "4–8 kids",
     ctaLabel: "Join Homeschool Group Interest List",
     ctaHref: "/waitlist?group=homeschool",
-  },
-  {
-    title: "After-School Regulation Group",
-    age: "5–10",
-    summary:
-      "End-of-day decompression and regulation support after the demands of a school day.",
-    bestFor: [
-      "Kids who need post-school wind-down",
-      "Regulation after structured settings",
-      "Peer connection in a calm environment",
-    ],
-    kidsPractice: [
-      "Heavy work sequences",
-      "Cool-down trails & breathing",
-      "Peer reflection & sharing",
-    ],
-    activities: "Heavy work sequences, cool-down trails, peer reflection prompts",
-    length: "60–75 min",
-    ctaLabel: "Join After-School Interest List",
-    ctaHref: "/waitlist?group=after-school",
-  },
-  {
-    title: "Summer Nature OT Camp",
-    age: "Varies",
-    summary:
-      "Thematic weekly sessions that keep movement, play, and outdoor connection central all summer.",
-    bestFor: [
-      "Families looking for summer structure",
-      "Camp-style OT-led experiences",
-      "Continued progress over break",
-    ],
-    kidsPractice: [
-      "Station rotations outdoors",
-      "Camp-style cooperative play",
-      "Sensory & motor challenges",
-    ],
-    activities: "Camp-style rotations with OT-led stations outdoors",
-    length: "Half-day blocks",
-    ctaLabel: "Join Summer Camp Interest List",
-    ctaHref: "/waitlist?group=summer-camp",
   },
 ];
 
@@ -189,8 +191,8 @@ const faq: FaqItem[] = [
 
 function GroupCard({ group }: { group: Group }) {
   return (
-    <article className="group flex flex-col overflow-hidden rounded-[1.75rem] border border-sand/70 bg-white shadow-sm shadow-forest/5 transition hover:shadow-md hover:shadow-forest/8">
-      <div className="flex items-center gap-3 border-b border-sand/50 bg-gradient-to-r from-cream to-sage/15 px-6 py-4">
+    <article className="flex flex-col overflow-hidden rounded-[1.75rem] border border-sand/70 bg-white shadow-sm shadow-forest/5 transition hover:shadow-md hover:shadow-forest/8">
+      <div className="flex flex-wrap items-center gap-3 border-b border-sand/50 bg-gradient-to-r from-cream to-sage/15 px-5 py-3.5 sm:px-6 sm:py-4">
         <span className="inline-flex items-center rounded-full bg-forest px-3 py-1 text-xs font-bold uppercase tracking-wide text-cream">
           Ages {group.age}
         </span>
@@ -198,12 +200,16 @@ function GroupCard({ group }: { group: Group }) {
           <Clock className="size-3.5" aria-hidden />
           {group.length}
         </div>
+        <div className="flex items-center gap-1.5 text-xs text-forest/60">
+          <Users className="size-3.5" aria-hidden />
+          {group.groupSize}
+        </div>
       </div>
 
-      <div className="flex flex-1 flex-col px-6 pb-6 pt-5">
-        <h2 className="font-display text-xl font-semibold text-forest sm:text-[1.4rem]">
+      <div className="flex flex-1 flex-col px-5 pb-5 pt-4 sm:px-6 sm:pb-6 sm:pt-5">
+        <h3 className="font-display text-xl font-semibold text-forest sm:text-[1.35rem]">
           {group.title}
-        </h2>
+        </h3>
         <p className="mt-2 text-sm leading-relaxed text-bark/85">
           {group.summary}
         </p>
@@ -215,8 +221,14 @@ function GroupCard({ group }: { group: Group }) {
             </p>
             <ul className="space-y-1.5">
               {group.bestFor.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-forest/75">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-moss/60" aria-hidden />
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-sm text-forest/75"
+                >
+                  <span
+                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-moss/60"
+                    aria-hidden
+                  />
                   {item}
                 </li>
               ))}
@@ -228,8 +240,14 @@ function GroupCard({ group }: { group: Group }) {
             </p>
             <ul className="space-y-1.5">
               {group.kidsPractice.map((item) => (
-                <li key={item} className="flex items-start gap-2 text-sm text-forest/75">
-                  <span className="mt-1.5 size-1.5 shrink-0 rounded-full bg-sage" aria-hidden />
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-sm text-forest/75"
+                >
+                  <span
+                    className="mt-1.5 size-1.5 shrink-0 rounded-full bg-sage"
+                    aria-hidden
+                  />
                   {item}
                 </li>
               ))}
@@ -242,7 +260,7 @@ function GroupCard({ group }: { group: Group }) {
           {group.activities}
         </p>
 
-        <div className="mt-auto flex flex-wrap items-center gap-3 pt-6">
+        <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row sm:flex-wrap sm:items-center">
           <Link
             href={group.ctaHref}
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-forest px-6 text-sm font-semibold text-cream shadow-sm transition hover:bg-forest/90 hover:shadow-md"
@@ -252,7 +270,7 @@ function GroupCard({ group }: { group: Group }) {
           </Link>
           <Link
             href="/book-call"
-            className="text-sm font-medium text-moss underline underline-offset-4 hover:text-forest"
+            className="text-center text-sm font-medium text-moss underline underline-offset-4 hover:text-forest sm:text-left"
           >
             Ask if this group is a fit
           </Link>
@@ -264,16 +282,21 @@ function GroupCard({ group }: { group: Group }) {
 
 export default function GroupsPage() {
   return (
-    <div className="pb-24 md:pb-20">
+    <>
+      {/* Hero */}
       <PageHero
         eyebrow="Programs"
-        title="Nature-Based Groups That Help Kids Build Confidence, Regulation, and Real-Life Skills"
-        description="Small outdoor groups designed to support movement, sensory regulation, social participation, confidence, and playful connection in a calm natural setting."
+        title="Nature-Based Groups for Kids in Dallas–Fort Worth"
+        description="Small outdoor groups designed to support regulation, motor confidence, social participation, confidence, and playful connection through therapist-informed nature-based experiences."
         imageKey="naturePlayChildOnLog"
         imagePosition="50% 35%"
         actions={[
           { href: "/waitlist", label: "Join the Waitlist" },
-          { href: "/book-call", label: "Book a Parent Call", variant: "secondary" },
+          {
+            href: "/book-call",
+            label: "Book a Parent Call",
+            variant: "secondary",
+          },
         ]}
       />
 
@@ -281,7 +304,10 @@ export default function GroupsPage() {
       <div className="border-b border-sand/70 bg-cream/60">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-8 gap-y-3 px-4 py-4">
           {trustItems.map((item) => (
-            <div key={item.label} className="flex items-center gap-2 text-sm text-forest/70">
+            <div
+              key={item.label}
+              className="flex items-center gap-2 text-sm text-forest/70"
+            >
               <item.icon className="size-4 text-moss" aria-hidden />
               <span className="font-medium">{item.label}</span>
             </div>
@@ -289,13 +315,65 @@ export default function GroupsPage() {
         </div>
       </div>
 
+      {/* Find the Right Group intro */}
+      <section
+        className="bg-ivory py-14 lg:py-20"
+        aria-labelledby="find-right-group-heading"
+      >
+        <div className="mx-auto max-w-6xl px-4 lg:px-6">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-wider text-moss">
+              For Parents
+            </p>
+            <h2
+              id="find-right-group-heading"
+              className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl"
+            >
+              Find the Right Group
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-bark/85">
+              Each group is designed around a different kind of support. Here is
+              a quick overview to help you start thinking about which one may be
+              the best fit for your child.
+            </p>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {comparisonCards.map((card) => (
+              <div
+                key={card.title}
+                className="flex flex-col rounded-[1.75rem] border border-sage/45 bg-white/80 p-6 shadow-sm shadow-forest/5 transition hover:shadow-md"
+              >
+                <span
+                  className={`flex size-11 items-center justify-center rounded-full ${card.color}`}
+                >
+                  <card.icon
+                    className={`size-5 ${card.iconColor}`}
+                    aria-hidden
+                  />
+                </span>
+                <h3 className="mt-4 font-display text-lg font-semibold text-forest">
+                  {card.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-bark/80">
+                  {card.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Group cards */}
-      <section className="mx-auto max-w-6xl px-4 py-14 lg:px-6 lg:py-20">
+      <section
+        className="mx-auto max-w-6xl px-4 py-14 lg:px-6 lg:py-20"
+        aria-labelledby="explore-groups-heading"
+      >
         <SectionHeading
           align="center"
-          eyebrow="Find the Right Fit"
-          title="Explore Our Group Programs"
-          description="Each group is structured around age, developmental focus, and the kind of support your child may benefit from. Browse below to learn more."
+          eyebrow="Explore Our Groups"
+          title="Age-Matched Groups Designed Around Your Child"
+          description="Browse below to learn more about each group, what kids practice, and how to join the interest list."
         />
         <div className="mt-12 grid gap-8 md:grid-cols-2">
           {groups.map((g) => (
@@ -304,16 +382,17 @@ export default function GroupsPage() {
         </div>
       </section>
 
-      {/* Decision support */}
+      {/* Not sure which group fits? */}
       <section className="border-y border-sand/70 bg-gradient-to-b from-cream to-white/60 py-14 lg:py-20">
         <div className="mx-auto max-w-2xl px-4 text-center">
           <h2 className="font-display text-3xl font-semibold text-forest sm:text-4xl">
             Not sure which group is the best fit?
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-bark/85">
-            Every child develops at their own pace. If you are unsure where to start, book a parent
-            call and we can help you decide whether a group, parent-child workshop, or individualized
-            OT support may be the best next step.
+            Every child develops at their own pace. If you are unsure where to
+            start, book a parent call and we can help you decide whether a group,
+            parent-child workshop, or individualized OT support may be the best
+            next step.
           </p>
           <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
@@ -333,38 +412,33 @@ export default function GroupsPage() {
         </div>
       </section>
 
-      {/* Safety & fit note */}
+      {/* Safety and fit note */}
       <section className="mx-auto max-w-3xl px-4 py-10">
         <ComplianceBanner>
           <p>
-            Groups are designed around age, developmental fit, safety, and participation needs.
-            Some children may benefit from an individual evaluation or 1:1 support before
-            joining a group. This information is educational and does not determine eligibility
-            or replace an individualized evaluation.
+            Groups are designed around age, developmental fit, safety, and
+            participation needs. Some children may benefit from an individual
+            evaluation or 1:1 support before joining a group. This information
+            is educational and does not determine eligibility or replace an
+            individualized evaluation.
           </p>
         </ComplianceBanner>
       </section>
 
-      {/* How we match families */}
-      <section className="border-y border-sand/80 bg-white/60 py-14">
+      {/* FAQ */}
+      <section
+        className="border-t border-sand/70 bg-ivory py-14 lg:py-20"
+        aria-labelledby="groups-faq-heading"
+      >
         <div className="mx-auto max-w-3xl px-4">
           <SectionHeading
             align="center"
-            title="How we match families"
-            description="Groups form based on age, developmental needs, schedule, safety, and social fit. We communicate clearly when a different service level — individual OT or community supports — may be a better next step."
+            eyebrow="FAQ"
+            title="Questions families ask before the first visit"
           />
+          <FaqAccordion className="mt-8" items={faq} />
         </div>
       </section>
-
-      {/* FAQ */}
-      <section className="mx-auto max-w-3xl px-4 py-14">
-        <SectionHeading
-          align="center"
-          eyebrow="FAQ"
-          title="Questions families ask before the first visit"
-        />
-        <FaqAccordion className="mt-8" items={faq} />
-      </section>
-    </div>
+    </>
   );
 }

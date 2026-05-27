@@ -14,6 +14,7 @@ const defaultItems = [
   { iconName: "Users", label: "Social Skills & Friendships" },
   { iconName: "Shield", label: "Low Confidence or Avoidance" },
   { iconName: "Repeat", label: "Difficulty with Transitions" },
+  { iconName: "Shirt", label: "Difficulty with Everyday Tasks" },
 ];
 
 export function ConcernCards({ data }: { data?: ConcernProps | null }) {
@@ -28,7 +29,7 @@ export function ConcernCards({ data }: { data?: ConcernProps | null }) {
         <h2 className="mt-3 font-display text-3xl font-semibold text-forest sm:text-4xl">
           {headline}
         </h2>
-        <div className="mt-12 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-6 lg:gap-6">
+        <div className="mt-12 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-7 lg:gap-6">
           {items.map((c) => {
             const Icon = resolveIcon(c.iconName);
             return (

@@ -25,11 +25,11 @@ import {
   Sun,
   Wind,
   Mountain,
-  Puzzle,
   CloudLightning,
   Shield,
   Repeat,
 } from "lucide-react";
+import { ShirtIcon } from "@/components/icons/shirt-icon";
 
 export interface HeroBenefit {
   icon: LucideIcon;
@@ -46,7 +46,6 @@ export const heroBenefits: HeroBenefit[] = [
 export const trustCardItems = [
   "Evidence-Based",
   "Play-Based",
-  "Child-Led",
   "Nature-Focused",
 ];
 
@@ -70,11 +69,12 @@ export interface ConcernItem {
 
 export const concerns: ConcernItem[] = [
   { icon: Sparkles, label: "Sensory Overwhelm" },
-  { icon: Footprints, label: "Poor Coordination or Clumsiness" },
+  { icon: Footprints, label: "Poor Coordination" },
   { icon: CloudLightning, label: "Big Emotions & Meltdowns" },
   { icon: Users, label: "Social Skills & Friendships" },
   { icon: Shield, label: "Low Confidence or Risk-Avoidance" },
   { icon: Repeat, label: "Difficulty with Transitions" },
+  { icon: ShirtIcon as unknown as LucideIcon, label: "Difficulty with Everyday Tasks" },
 ];
 
 export interface ValuePillar {

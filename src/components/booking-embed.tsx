@@ -33,18 +33,47 @@ function parseCalLink(raw: string): string | null {
   }
 }
 
-export function BookingEmbed() {
+export function BookingScheduler() {
   useEffect(() => {
     captureClientAttributionFromUrl();
   }, []);
-  const [email, setEmail] = useState("");
-  const [note, setNote] = useState<string | null>(null);
+
   const rawUrl = process.env.NEXT_PUBLIC_BOOKING_EMBED_URL;
   const calLink = useMemo(() => (rawUrl ? parseCalLink(rawUrl) : null), [rawUrl]);
 
+  if (!calLink) {
+    return (
+      <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-950">
+        <p className="font-medium">Booking embed not configured</p>
+        <p className="mt-2 text-sm">
+          Set <code className="rounded bg-white px-1">NEXT_PUBLIC_BOOKING_EMBED_URL</code>{" "}
+          to your Cal.com or Calendly link.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-sage/20 bg-card/95 shadow-sm">
+      <Cal
+        namespace="book-call"
+        calLink={calLink}
+        config={CAL_THEME as unknown as PrefillAndIframeAttrsConfig}
+        style={{ width: "100%", height: "100%", overflow: "scroll", minHeight: "720px" }}
+      />
+    </div>
+  );
+}
+
+export function BookingReminderForm() {
+  const [email, setEmail] = useState("");
+  const [note, setNote] = useState<string | null>(null);
+  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+
   async function confirmBooking() {
-    if (!email.trim()) {
-      setNote("Add the email you used on the form so we can pause reminders.");
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNote("Please enter a valid email address.");
+      setStatus("error");
       return;
     }
     const metaEventId = createMetaEventId("booking");
@@ -60,58 +89,59 @@ export function BookingEmbed() {
     });
     if (res.ok) {
       trackMetaEvent("Schedule", metaEventId, { content_name: "Parent call" });
-      setNote("Thank you — we will align this with your intake email.");
+      setNote("Done — we will align reminders with your booking email.");
+      setStatus("success");
     } else {
       setNote("We could not match that email yet. You can still email us directly.");
+      setStatus("error");
     }
   }
 
   return (
-    <div className="space-y-6">
-      {calLink ? (
-        <div className="overflow-hidden rounded-2xl border border-sage/20 bg-card/95 shadow-sm">
-          <Cal
-            namespace="book-call"
-            calLink={calLink}
-            config={CAL_THEME as unknown as PrefillAndIframeAttrsConfig}
-            style={{ width: "100%", height: "100%", overflow: "scroll", minHeight: "720px" }}
+    <div className="rounded-2xl border border-sage/20 bg-cream/50 p-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
+        <label className="grid flex-1 gap-2 text-sm font-medium text-forest">
+          Email used to book
+          <input
+            className="min-h-12 rounded-xl border border-sand bg-white px-4 text-forest placeholder:text-bark/50"
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              if (status !== "idle") setStatus("idle");
+              if (note) setNote(null);
+            }}
+            placeholder="parent@email.com"
+            aria-describedby="reminder-status"
           />
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-amber-200 bg-amber-50 p-6 text-amber-950">
-          <p className="font-medium">Booking embed not configured</p>
-          <p className="mt-2 text-sm">
-            Set <code className="rounded bg-white px-1">NEXT_PUBLIC_BOOKING_EMBED_URL</code>{" "}
-            to your Cal.com or Calendly link.
-          </p>
-        </div>
-      )}
-      <div className="rounded-2xl border border-sage/20 bg-cream/50 p-6">
-        <p className="text-sm text-bark">
-          After you book, tell us the email you used for your intake so we can
-          stop automated follow-up reminders for that address.
-        </p>
-        <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-end">
-          <label className="grid flex-1 gap-2 text-sm font-medium text-forest">
-            Email on file
-            <input
-              className="min-h-12 rounded-xl border border-sand bg-white px-4"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="parent@email.com"
-            />
-          </label>
-          <button
-            type="button"
-            onClick={confirmBooking}
-            className="min-h-12 rounded-full bg-sage px-6 font-medium text-cream"
-          >
-            I booked — update my reminders
-          </button>
-        </div>
-        {note && <p className="mt-3 text-sm text-moss">{note}</p>}
+        </label>
+        <button
+          type="button"
+          onClick={confirmBooking}
+          className="min-h-12 rounded-full bg-sage px-6 font-medium text-cream transition hover:bg-sage/90"
+        >
+          Update My Reminders
+        </button>
       </div>
+      {note && (
+        <p
+          id="reminder-status"
+          role="status"
+          className={`mt-3 text-sm ${status === "success" ? "text-moss" : "text-terracotta"}`}
+        >
+          {note}
+        </p>
+      )}
+    </div>
+  );
+}
+
+/** @deprecated Use BookingScheduler and BookingReminderForm separately */
+export function BookingEmbed() {
+  return (
+    <div className="space-y-6">
+      <BookingScheduler />
+      <BookingReminderForm />
     </div>
   );
 }

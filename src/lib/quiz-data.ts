@@ -100,3 +100,54 @@ export const CATEGORY_SUMMARIES: Record<
     ],
   },
 };
+
+export type RecommendedPathway = {
+  name: string;
+  href: string;
+  reason: string;
+};
+
+export const CATEGORY_PATHWAYS: Record<ResultCategory, RecommendedPathway[]> = {
+  sensory_regulation: [
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Therapist-led sessions designed to support sensory regulation through outdoor experiences" },
+    { name: "Nature Play Groups", href: "/groups", reason: "Outdoor play with paced transitions and natural sensory input" },
+    { name: "Parent Workshops", href: "/services", reason: "Practical strategies parents may use at home to support sensory needs" },
+  ],
+  motor_coordination: [
+    { name: "Nature Play Groups", href: "/groups", reason: "Natural playground challenges that may support coordination and balance" },
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Therapist-guided motor activities in motivating outdoor contexts" },
+    { name: "Reflex Integration Intensive", href: "/services", reason: "A focused program that may support foundational movement patterns" },
+  ],
+  attention_executive: [
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Structured outdoor sessions designed to build attention routines within play" },
+    { name: "Homeschool Weekday Groups", href: "/groups", reason: "Weekday programming that may support executive functioning through nature activities" },
+  ],
+  social_participation: [
+    { name: "Nature Play Groups", href: "/groups", reason: "Small-group play designed to support peer connection and collaboration" },
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Facilitated group activities that may build social confidence" },
+  ],
+  school_readiness: [
+    { name: "Homeschool Weekday Groups", href: "/groups", reason: "Programming designed to support readiness skills like fine motor tools and group routines" },
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Therapist-led groups that may support transition and table-work readiness" },
+    { name: "Parent Workshops", href: "/services", reason: "Resources parents may use to support readiness at home" },
+  ],
+  emotional_regulation: [
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Co-regulation strategies and calming outdoor environments" },
+    { name: "Parent Workshops", href: "/services", reason: "Coaching and co-regulation approaches for home and community settings" },
+    { name: "Book a Parent Call", href: "/book-call", reason: "Discuss whether individualized support could be a fit" },
+  ],
+  outdoor_confidence: [
+    { name: "Nature Play Groups", href: "/groups", reason: "Gradual exposure to trails, textures, and outdoor challenges in a supportive setting" },
+    { name: "Nature-Based OT Groups", href: "/services", reason: "Therapist-paced outdoor exploration for children who need extra support" },
+  ],
+};
+
+export const CATEGORY_ICONS: Record<ResultCategory, string> = {
+  sensory_regulation: "Ear",
+  motor_coordination: "Activity",
+  attention_executive: "Focus",
+  social_participation: "Users",
+  school_readiness: "GraduationCap",
+  emotional_regulation: "Heart",
+  outdoor_confidence: "TreePine",
+};

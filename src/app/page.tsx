@@ -56,7 +56,9 @@ export default async function HomePage() {
         body: hp.heroBody as string,
         benefits: hp.heroBenefits as { iconName?: string; label?: string }[],
         trustText: hp.heroTrustText as string,
-        trustCardItems: hp.heroTrustCardItems as string[],
+        trustCardItems: (hp.heroTrustCardItems as string[] | undefined)?.filter(
+          (item) => item.toLowerCase() !== "child-led"
+        ) ?? [],
         trustSubtext: hp.heroTrustSubtext as string,
       }
     : null;

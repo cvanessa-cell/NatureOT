@@ -49,9 +49,16 @@ export default async function MarketingCampaignsPage() {
             Create campaigns from templates, track KPI targets vs actuals, and connect assets, landing pages, and outreach tasks.
           </p>
         </div>
-        <Link href="/admin/marketing/campaigns/new">
-          <Button type="button">New campaign</Button>
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link href="/admin/marketing/campaigns/new">
+            <Button type="button">New campaign</Button>
+          </Link>
+          <Link href="/admin/marketing/link-builder">
+            <Button type="button" variant="outline">
+              UTM link builder
+            </Button>
+          </Link>
+        </div>
       </div>
 
       <Card>

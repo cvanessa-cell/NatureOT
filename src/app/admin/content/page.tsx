@@ -1,35 +1,42 @@
-import { requireStaffPortal } from "@/lib/admin-guard";
+import { requireStaffPortal, getAdminDb } from "@/lib/admin-guard";
 import type { Metadata } from "next";
-import { contentPillars, sampleContentRows } from "@/lib/mock/admin-sample-data";
+import { contentPillars } from "@/lib/mock/admin-sample-data";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { CampaignAuthenticityCompact } from "@/components/admin/campaign-authenticity-rules";
+import {
+  ContentCalendarWorkspace,
+  type ContentCalendarRow,
+} from "@/components/admin/marketing/content-calendar-workspace";
 
 export const metadata: Metadata = {
   title: "Content calendar | Nature OT Growth OS",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminContentPage() {
   await requireStaffPortal();
+  const db = getAdminDb();
+
+  let rows: ContentCalendarRow[] = [];
+  try {
+    const { data } = await db
+      .from("content_calendar_posts")
+      .select("id,title,platform,status,publish_at,target_audience")
+      .order("publish_at", { ascending: true, nullsFirst: false })
+      .limit(100);
+    rows = (data as ContentCalendarRow[] | null) ?? [];
+  } catch {
+    rows = [];
+  }
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h1 className="font-display text-3xl text-forest">
-            Content calendar
-          </h1>
-          <p className="mt-2 max-w-2xl text-sm text-bark/80">
-            Idea → Draft → Needs Review → Approved → Scheduled → Published. Auto-publish is blocked from Draft or Needs Review.
-          </p>
-        </div>
-        <div className="flex gap-2">
-          <Button type="button" variant="outline">
-            Calendar view
-          </Button>
-          <Button type="button">New idea</Button>
-        </div>
+      <div>
+        <h1 className="font-display text-3xl text-forest">Content calendar</h1>
+        <p className="mt-2 max-w-2xl text-sm text-bark/80">
+          Idea → Draft → Approved → Scheduled → Published. Auto-publish is blocked from Draft or Needs Review.
+        </p>
       </div>
 
       <CampaignAuthenticityCompact />
@@ -45,38 +52,7 @@ export default async function AdminContentPage() {
         </ul>
       </Card>
 
-      <div className="overflow-x-auto rounded-2xl border border-sand bg-white shadow-sm">
-        <table className="min-w-[720px] w-full text-left text-sm">
-          <thead className="border-b border-sand bg-cream/60 text-forest">
-            <tr>
-              <th className="px-3 py-3 font-medium">Title</th>
-              <th className="px-3 py-3 font-medium">Pillar</th>
-              <th className="px-3 py-3 font-medium">Status</th>
-              <th className="px-3 py-3 font-medium">Target date</th>
-              <th className="px-3 py-3 font-medium">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sampleContentRows.map((c) => (
-              <tr key={c.id} className="border-t border-sand/70">
-                <td className="px-3 py-3">{c.title}</td>
-                <td className="px-3 py-3">{c.pillar}</td>
-                <td className="px-3 py-3">
-                  <Badge tone={c.status === "Approved" ? "success" : "warning"}>
-                    {c.status}
-                  </Badge>
-                </td>
-                <td className="px-3 py-3 tabular-nums">{c.date}</td>
-                <td className="px-3 py-3">
-                  <Button type="button" variant="outline" className="!min-h-9 !text-xs">
-                    Open workflow
-                  </Button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ContentCalendarWorkspace rows={rows} />
 
       <p className="text-xs text-bark/65">
         Social posts and paid ad launches use explicit approval transitions—never silent Draft→Published jumps.

@@ -1,7 +1,7 @@
 import { requireStaffPortal, getAdminDb } from "@/lib/admin-guard";
 import type { Metadata } from "next";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { ComplianceScanner } from "@/components/admin/marketing/compliance-scanner";
 
 export const metadata: Metadata = {
   title: "Compliance | TreeTots Growth Engine",
@@ -15,16 +15,14 @@ export default async function MarketingCompliancePage() {
 
   const { data } = await db
     .from("compliance_reviews")
-    .select("id,risk_level,created_at")
+    .select("id,risk_level,approved,flagged_terms,created_at")
     .order("created_at", { ascending: false })
     .limit(20);
 
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="font-display text-3xl text-forest">
-          Compliance review
-        </h1>
+        <h1 className="font-display text-3xl text-forest">Compliance review</h1>
         <p className="mt-2 max-w-3xl text-sm text-bark/80">
           Scan content for diagnosis-targeting language, guarantees, and unsafe claims. Store review decisions with notes.
         </p>
@@ -41,34 +39,30 @@ export default async function MarketingCompliancePage() {
       </Card>
 
       <Card>
-        <p className="text-sm font-medium text-forest">Compliance scanner (UI stub)</p>
+        <p className="text-sm font-medium text-forest">Compliance scanner</p>
         <p className="mt-2 text-sm text-bark/80">
-          Next: paste content → scan → flagged phrases + safer alternatives → approve/reject → store decision.
+          Paste copy → scan → review flagged phrases → save an approval decision to Supabase.
         </p>
-        <div className="mt-4 grid gap-2">
-          <textarea
-            className="min-h-[140px] w-full rounded-xl border border-sand bg-white/90 p-3 text-sm"
-            placeholder="Paste a caption, email, ad copy, or landing page section..."
-            defaultValue=""
-          />
-          <div className="flex flex-wrap gap-2">
-            <Button type="button" variant="outline">
-              Scan
-            </Button>
-            <Button type="button" disabled>
-              Save review
-            </Button>
-          </div>
+        <div className="mt-4">
+          <ComplianceScanner />
         </div>
       </Card>
 
       <Card>
         <p className="text-sm font-medium text-forest">Recent reviews</p>
-        <p className="mt-2 text-sm text-bark/80">
-          {data?.length ? `${data.length} stored` : "None yet"}
-        </p>
+        <ul className="mt-3 space-y-2 text-sm text-bark/85">
+          {(data ?? []).length === 0 && <li>No reviews stored yet.</li>}
+          {(data ?? []).map((r) => (
+            <li key={r.id} className="rounded-lg border border-sand/70 bg-white/70 px-3 py-2">
+              <span className="font-medium text-forest">{r.risk_level}</span>
+              {r.approved ? " · approved" : " · needs revision"}
+              {Array.isArray(r.flagged_terms) && r.flagged_terms.length > 0 && (
+                <span className="text-bark/70"> · {r.flagged_terms.join(", ")}</span>
+              )}
+            </li>
+          ))}
+        </ul>
       </Card>
     </div>
   );
 }
-

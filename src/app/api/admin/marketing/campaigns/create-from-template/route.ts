@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getPrivilegedSession } from "@/lib/auth-admin";
 import { createAdminClient } from "@/lib/supabase/admin";
+import { slugifyMarketingCampaign } from "@/lib/marketing/compliance-scan";
 
 const BodySchema = z.object({
   templateKey: z.string().min(1),
@@ -58,6 +59,37 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: insert.error.message }, { status: 400 });
   }
 
-  return NextResponse.json({ ok: true, campaignId: insert.data.id });
+  const slugBase = slugifyMarketingCampaign(name);
+  const slug = `${slugBase}-${insert.data.id.slice(0, 8)}`;
+  await db.from("marketing_campaigns").upsert(
+    {
+      name,
+      slug,
+      status: "active",
+      campaign_type: mapPlannerTypeToMarketingType(type),
+      target_audience: audience,
+      goal: typeof cfg.goal === "string" ? cfg.goal : null,
+      notes: `Linked to planner campaign ${insert.data.id}`,
+    },
+    { onConflict: "slug" }
+  );
+
+  return NextResponse.json({ ok: true, campaignId: insert.data.id, marketingSlug: slug });
+}
+
+function mapPlannerTypeToMarketingType(type: string): string {
+  const map: Record<string, string> = {
+    provider_referral: "referral_partner",
+    homeschool_enrollment: "waitlist",
+    workshop_registration: "workshop",
+    lead_magnet: "parent_guide",
+    paid_search: "other",
+    social_awareness: "social",
+    local_seo: "local_seo",
+    seasonal_launch: "other",
+    community_event: "community_event",
+    reviews: "other",
+  };
+  return map[type] ?? "other";
 }
 

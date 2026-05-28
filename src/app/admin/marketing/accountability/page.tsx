@@ -97,9 +97,11 @@ export default async function MarketingAccountabilityPage() {
                   <Badge tone={t.status === "missed" ? "danger" : "sage"}>{t.status}</Badge>
                 </td>
                 <td className="px-3 py-3">
-                  <Button type="button" variant="outline" className="!min-h-9 !px-3 !py-1 !text-xs">
-                    Open
-                  </Button>
+                  <Link href={`/admin/marketing/accountability/${t.id}`}>
+                    <Button type="button" variant="outline" className="!min-h-9 !px-3 !py-1 !text-xs">
+                      Open
+                    </Button>
+                  </Link>
                 </td>
               </tr>
             ))}

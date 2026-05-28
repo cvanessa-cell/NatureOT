@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ContentAssetActions } from "@/components/admin/marketing/content-asset-actions";
 
 export const metadata: Metadata = {
   title: "Content asset | TreeTots Growth Engine",
@@ -91,10 +92,8 @@ export default async function ContentAssetDetailPage({
               Run compliance check
             </Button>
           </Link>
-          <Button type="button" disabled>
-            Approve & schedule (next)
-          </Button>
         </div>
+        <ContentAssetActions assetId={a.id} complianceStatus={a.compliance_status} />
       </Card>
 
       <Link href="/admin/marketing/content" className="inline-flex">

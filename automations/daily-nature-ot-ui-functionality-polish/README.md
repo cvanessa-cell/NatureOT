@@ -10,9 +10,8 @@ Use either Cursor in-app Automations or the Windows scheduled task below, not bo
 
 ## Run mode
 
-- Prefer the dedicated worktree at `C:\Users\cvane\.cursor\projects\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\texas-nature-ot-leads--polish-ui`
-- Branch: `automation/polish-ui`
-- Fall back to the active working directory only if worktrees are unavailable
+- Use the active working directory at `C:\Users\cvane\.cursor\projects\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\texas-nature-ot-leads`
+- Branch: `main`
 
 ## Files
 
@@ -22,7 +21,6 @@ Use either Cursor in-app Automations or the Windows scheduled task below, not bo
 | `automation.toml` | Standalone automation config |
 | `automation.manifest.json` | Machine-readable registration metadata |
 | `logs/` | Local run logs |
-| `../scripts/prepare-polish-ui-worktree.ps1` | Create or reuse the dedicated worktree |
 | `../scripts/run-daily-polish-ui-automation.ps1` | Daily runner |
 | `../scripts/register-daily-polish-ui-scheduled-task.ps1` | Windows Task Scheduler registration |
 
@@ -39,8 +37,8 @@ Recommended values:
 |------|-------|
 | Name | `Daily Nature OT UI + Functionality Polish` |
 | Schedule | Daily at `6:00 AM` Pacific |
-| Working directory | `C:\Users\cvane\.cursor\projects\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\texas-nature-ot-leads--polish-ui` |
-| Run mode | Dedicated background worktree |
+| Working directory | `C:\Users\cvane\.cursor\projects\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\texas-nature-ot-leads` |
+| Run mode | Active working directory on `main` |
 | Instructions | Full contents of `PROMPT.md` |
 
 ## Windows fallback
@@ -71,7 +69,7 @@ The full headless agent path uses `@cursor/sdk` and requires `CURSOR_API_KEY`.
 
 If `CURSOR_API_KEY` is missing, the runner now degrades to a safe local fallback instead of skipping the day entirely. The fallback:
 
-- prepares or reuses the same polish worktree
+- stays in the active working directory
 - records git status
 - records the available npm scripts
 - runs `npm.cmd run lint` when `node_modules` is available

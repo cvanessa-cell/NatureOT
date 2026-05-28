@@ -97,6 +97,9 @@ const airtableCreds = Boolean(
 
 const zapEnabled = isTrue("ZAPIER_ENABLED");
 const zapDry = isTrue("ZAPIER_DRY_RUN");
+const slackEnabled = isTrue("SLACK_ENABLED");
+const slackDry = isTrue("SLACK_DRY_RUN");
+const slackWebhookOk = Boolean(process.env.SLACK_WEBHOOK_URL?.trim());
 
 const bookingOk = Boolean(
   (process.env.NEXT_PUBLIC_BOOKING_EMBED_URL ?? process.env.NEXT_PUBLIC_BOOKING_URL)?.trim()
@@ -162,6 +165,17 @@ const rows = [
       : zapDry
         ? "ZAPIER_DRY_RUN=true — set false for live POSTs"
         : "Live relays",
+  },
+  {
+    name: "Slack new-lead alerts",
+    ok: slackEnabled && !slackDry && slackWebhookOk,
+    hint: !slackEnabled
+      ? "SLACK_ENABLED=false — set true for direct Slack (no Zapier fee)"
+      : slackDry
+        ? "SLACK_DRY_RUN=true — set false for live Slack POSTs"
+        : !slackWebhookOk
+          ? "Set SLACK_WEBHOOK_URL from Slack Incoming Webhooks"
+          : "Live Slack alerts",
   },
   {
     name: "Booking URL",
@@ -230,6 +244,8 @@ for (const key of [
   "NEXT_PUBLIC_SANITY_PROJECT_ID",
   "SANITY_API_READ_TOKEN",
   "ZAPIER_ENABLED",
+  "SLACK_ENABLED",
+  "SLACK_DRY_RUN",
 ]) {
   console.log(`  ${key}=${mask(key, process.env[key])}`);
 }

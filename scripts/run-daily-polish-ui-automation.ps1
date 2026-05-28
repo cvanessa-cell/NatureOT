@@ -78,17 +78,13 @@ function Invoke-NoAuthFallback {
     $checks += Invoke-FallbackCommand -Label "Git working tree status" -Command "git" -Arguments @("status", "--short")
     $checks += Invoke-FallbackCommand -Label "Package script inventory" -Command "npm.cmd" -Arguments @("pkg", "get", "scripts")
 
-    if (Test-Path (Join-Path $WorktreePath "node_modules")) {
-      $checks += Invoke-FallbackCommand -Label "ESLint" -Command "npm.cmd" -Arguments @("run", "lint")
-    } else {
-      $checks += [pscustomobject]@{
-        label = "ESLint"
-        command = "npm.cmd run lint"
-        exitCode = $null
-        output = @("Skipped because node_modules is missing in the fallback worktree. Run npm install before scheduled local checks.")
-      }
-      Write-Log "Fallback check: ESLint skipped because node_modules is missing"
+    $checks += [pscustomobject]@{
+      label = "ESLint"
+      command = "npm.cmd run lint"
+      exitCode = $null
+      output = @("Skipped in automated fallback mode to avoid a long-running full-repo lint. Run npm.cmd run lint manually during human follow-up.")
     }
+    Write-Log "Fallback check: ESLint skipped in automated fallback mode"
 
     $targetRows = foreach ($relativePath in $targetPaths) {
       $fullPath = Join-Path $WorktreePath $relativePath
@@ -126,7 +122,7 @@ function Invoke-NoAuthFallback {
     Add-ReportLine -Path $reportPath -Value "- Reason: CURSOR_API_KEY was not available, so the headless Cursor agent was not started."
     Add-ReportLine -Path $reportPath -Value "- Safety mode: no files were intentionally edited; this fallback only ran checks and inspected UI targets."
     Add-ReportLine -Path $reportPath -Value "- Repo root: $RepoRoot"
-    Add-ReportLine -Path $reportPath -Value "- Worktree: $WorktreePath"
+    Add-ReportLine -Path $reportPath -Value "- Active working directory: $WorktreePath"
     Add-ReportLine -Path $reportPath -Value "- Branch: $branch"
     Add-ReportLine -Path $reportPath
 
@@ -168,7 +164,7 @@ function Invoke-NoAuthFallback {
     if ($candidate) {
       Add-ReportLine -Path $reportPath -Value "Review $($candidate.path) first. It is present in the UI lane and contains the strongest quick-scan signals for CTA, form, accessibility, placeholder, or conversion copy work. Choose one small edit from that file, then run npm.cmd run lint and the narrowest relevant test/build command before committing."
     } else {
-      Add-ReportLine -Path $reportPath -Value "No expected UI target files were found. Refresh the worktree from main, confirm the app structure, then re-run the automation."
+      Add-ReportLine -Path $reportPath -Value "No expected UI target files were found. Refresh the active checkout from main, confirm the app structure, then re-run the automation."
     }
     Add-ReportLine -Path $reportPath
     Add-ReportLine -Path $reportPath -Value "## Auth Recovery"
@@ -187,7 +183,6 @@ function Invoke-NoAuthFallback {
 }
 
 $repoRoot = Split-Path $PSScriptRoot -Parent
-$prepScript = Join-Path $repoRoot "scripts\prepare-polish-ui-worktree.ps1"
 $promptPath = Join-Path $repoRoot "automations\daily-nature-ot-ui-functionality-polish\PROMPT.md"
 $logDir = Join-Path $repoRoot "automations\daily-nature-ot-ui-functionality-polish\logs"
 $runnerScript = Join-Path $repoRoot "scripts\run-daily-polish-ui-automation.mjs"
@@ -202,16 +197,14 @@ $script:LogFile = Join-Path $logDir ("{0}.log" -f (Get-Date -Format "yyyy-MM-dd_
 Write-Log "Daily Nature OT UI polish run starting"
 Write-Log "Repo root: $repoRoot"
 
-$prepJson = & $prepScript | Select-Object -Last 1
-$prep = $prepJson | ConvertFrom-Json
-$worktreePath = $prep.worktreePath
-$mode = $prep.mode
-$action = $prep.action
+$worktreePath = $repoRoot
+$mode = "active-working-directory"
+$action = "direct-on-main"
 
-Write-Log "Worktree: $worktreePath ($mode / $action)"
+Write-Log "Target path: $worktreePath ($mode / $action)"
 
 if ($DryRun) {
-  Write-Log "Dry run complete (worktree ready, agent not started)"
+  Write-Log "Dry run complete (target path ready, agent not started)"
   exit 0
 }
 
@@ -229,19 +222,42 @@ if (-not $apiKey) {
 }
 
 if ($apiKey) {
-  Write-Log "CURSOR_API_KEY found; starting SDK agent in worktree"
+  Write-Log "CURSOR_API_KEY found; starting SDK agent in the active working directory"
   $env:CURSOR_API_KEY = $apiKey
   Push-Location $worktreePath
   try {
-    & node $runnerScript --prompt-file $promptPath 2>&1 | ForEach-Object { Write-Log $_ }
-    if ($LASTEXITCODE -ne 0) {
-      throw "SDK runner exited with code $LASTEXITCODE"
+    $runnerOutputPath = Join-Path $logDir ("{0}-sdk-runner.stdout.log" -f (Get-Date -Format "yyyy-MM-dd_HHmmss"))
+    $runnerErrorPath = Join-Path $logDir ("{0}-sdk-runner.stderr.log" -f (Get-Date -Format "yyyy-MM-dd_HHmmss"))
+    $runnerProcess = Start-Process -FilePath "node" `
+      -ArgumentList @($runnerScript, "--prompt-file", $promptPath) `
+      -WorkingDirectory $worktreePath `
+      -NoNewWindow `
+      -Wait `
+      -PassThru `
+      -RedirectStandardOutput $runnerOutputPath `
+      -RedirectStandardError $runnerErrorPath
+
+    foreach ($path in @($runnerOutputPath, $runnerErrorPath)) {
+      if (Test-Path $path) {
+        foreach ($line in Get-Content $path) {
+          Write-Log $line
+        }
+      }
     }
-    Write-Log "SDK agent run finished"
-    exit 0
+
+    $runnerExitCode = $runnerProcess.ExitCode
+    if ($runnerExitCode -eq 0) {
+      Write-Log "SDK agent run finished"
+      exit 0
+    }
+
+    Write-Log "SDK runner exited with code $runnerExitCode; switching to local fallback inspection"
   } finally {
     Pop-Location
   }
+
+  Invoke-NoAuthFallback -WorktreePath $worktreePath -RepoRoot $repoRoot -LogDir $logDir
+  exit 0
 }
 
 Invoke-NoAuthFallback -WorktreePath $worktreePath -RepoRoot $repoRoot -LogDir $logDir

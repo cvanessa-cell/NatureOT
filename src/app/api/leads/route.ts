@@ -16,6 +16,7 @@ import { enqueueAirtablePush } from "@/lib/airtable/airtable-sync-queue";
 import { parseParentName } from "@/lib/leads/lead-normalizer";
 import { mapLeadCreatedPayload } from "@/lib/zapier/zapier-payload-mapper";
 import { queueZapierOutbound } from "@/lib/zapier/outbound-webhooks";
+import { queueSlackNewLeadAlert } from "@/lib/slack/slack-webhook";
 import { attachAttributionToLead } from "@/lib/marketing/attribution";
 import { recordLifecycleEvent } from "@/lib/marketing/lifecycle";
 import { enrollLeadInSequence } from "@/lib/marketing/sequences";
@@ -236,6 +237,18 @@ export async function POST(req: Request) {
     phiRiskLevel: mappedLead.phiRiskSuggestion,
     approvalRequired: false,
     approvalStatus: "not_required",
+  });
+
+  queueSlackNewLeadAlert({
+    lead_id: leadId,
+    parent_name: body.parentName,
+    parent_email: body.parentEmail,
+    parent_phone: body.parentPhone,
+    child_age_range: body.childAgeRange,
+    city_or_zip: body.cityOrZip,
+    primary_result_category: primary,
+    lead_source: "lead_form",
+    consent_marketing: body.consentMarketing,
   });
 
   await attachAttributionToLead({

@@ -95,11 +95,11 @@ This is a nature-based pediatric occupational therapy website. The site should f
 9. Re-run verification after changes.
 10. Do not merge or deploy automatically.
 
-## Worktree mode
+## Active working directory mode
 
-- Prefer a dedicated background worktree over the active working directory.
-- If running inside a prepared automation worktree, stay there.
-- Only use the active working directory when worktrees are unavailable.
+- Work directly in the active working directory.
+- Use the `main` branch by default.
+- Do not create or switch to a separate automation branch or worktree unless the user explicitly asks for one.
 
 ## Output format
 

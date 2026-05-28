@@ -31,6 +31,9 @@ export function getOperationalReadinessSections(): Record<string, ReadinessRow[]
 
   const zapEnabled = env.ZAPIER_ENABLED === "true";
   const zapDry = env.ZAPIER_DRY_RUN === "true";
+  const slackEnabled = env.SLACK_ENABLED === "true";
+  const slackDry = env.SLACK_DRY_RUN === "true";
+  const slackWebhook = Boolean(env.SLACK_WEBHOOK_URL?.trim());
 
   const bookingConfigured = Boolean(
     env.NEXT_PUBLIC_BOOKING_EMBED_URL ?? env.NEXT_PUBLIC_BOOKING_URL
@@ -141,6 +144,24 @@ export function getOperationalReadinessSections(): Record<string, ReadinessRow[]
         : zapDry
           ? "ZAPIER_DRY_RUN=true — payloads log only."
           : "Live Zapier relays enabled.",
+    },
+    {
+      id: "slack",
+      label: "Slack new-lead alerts (direct webhook)",
+      tone: slackEnabled
+        ? slackDry
+          ? "dry_run_only"
+          : slackWebhook
+            ? "complete"
+            : "needs_setup"
+        : "dry_run_only",
+      detail: !slackEnabled
+        ? "SLACK_ENABLED=false — use direct Slack instead of paid Zapier Catch Hook."
+        : slackDry
+          ? "SLACK_DRY_RUN=true — messages log only."
+          : slackWebhook
+            ? "Live Slack alerts on new quiz leads."
+            : "Set SLACK_WEBHOOK_URL from Slack Incoming Webhooks.",
     },
     {
       id: "bookingUrl",

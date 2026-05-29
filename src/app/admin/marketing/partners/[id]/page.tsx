@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { PartnerOutreachActions } from "@/components/admin/marketing/partner-outreach-actions";
 
 export const metadata: Metadata = {
   title: "Partner | TreeTots Growth Engine",
@@ -23,6 +24,16 @@ type OrganizationDetail = {
   next_follow_up_at: string | null;
 };
 
+type OutreachTaskRow = {
+  id: string;
+  task_type: string;
+  channel: string | null;
+  subject: string | null;
+  status: string;
+  due_date: string | null;
+  created_at: string;
+};
+
 export default async function PartnerDetailPage({
   params,
 }: {
@@ -39,6 +50,17 @@ export default async function PartnerDetailPage({
     .maybeSingle();
 
   const org = (data as unknown as OrganizationDetail | null) ?? null;
+
+  const { data: taskRows } = org
+    ? await db
+        .from("outreach_tasks")
+        .select("id,task_type,channel,subject,status,due_date,created_at")
+        .eq("organization_id", id)
+        .order("created_at", { ascending: false })
+        .limit(20)
+    : { data: null };
+
+  const tasks = (taskRows as OutreachTaskRow[] | null) ?? [];
 
   if (!org) {
     return (
@@ -87,16 +109,35 @@ export default async function PartnerDetailPage({
         <Card>
           <p className="text-sm font-medium text-forest">Notes</p>
           <p className="mt-2 whitespace-pre-wrap text-sm text-bark/85">{org.notes ?? "—"}</p>
-          <div className="mt-6 flex flex-wrap gap-2">
-            <Button type="button" variant="outline">
-              Create outreach task (next)
-            </Button>
-            <Button type="button" variant="ghost">
-              Draft intro email (next)
-            </Button>
-          </div>
+          <PartnerOutreachActions organizationId={org.id} organizationName={org.name} />
         </Card>
       </div>
+
+      <Card>
+        <p className="text-sm font-medium text-forest">Outreach tasks</p>
+        <p className="mt-1 text-xs text-bark/70">
+          Tasks require manual approval before any external message is sent.
+        </p>
+        {tasks.length === 0 ? (
+          <p className="mt-4 text-sm text-bark/70">No outreach tasks yet. Use the buttons above to create one.</p>
+        ) : (
+          <ul className="mt-4 divide-y divide-sand/70">
+            {tasks.map((task) => (
+              <li key={task.id} className="flex flex-wrap items-start justify-between gap-3 py-3 text-sm">
+                <div>
+                  <p className="font-medium text-forest">{task.subject ?? task.task_type}</p>
+                  <p className="mt-1 text-xs text-bark/70">
+                    {task.task_type}
+                    {task.channel ? ` · ${task.channel}` : ""}
+                    {task.due_date ? ` · due ${new Date(task.due_date).toLocaleDateString()}` : ""}
+                  </p>
+                </div>
+                <Badge tone={task.status === "complete" ? "success" : "sage"}>{task.status}</Badge>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Card>
 
       <Link href="/admin/marketing/partners" className="inline-flex">
         <Button type="button" variant="outline">

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ServiceCard } from "@/components/services/service-card";
 import { ComplianceBanner } from "@/components/marketing/compliance-banner";
+import { MembershipPromoSection } from "@/components/membership/membership-promo-section";
 import { NatureOtFitSection } from "@/components/marketing/nature-ot-fit-section";
 import { SERVICES_CATALOG } from "@/lib/services-catalog";
 import { treetotsImageAlt, treetotsImages } from "@/lib/treetots-images";
@@ -119,6 +120,8 @@ export default function ServicesPage() {
               />
             ))}
           </div>
+
+          <MembershipPromoSection />
 
           <div className="mt-10 space-y-4 rounded-[1.75rem] border border-sage/45 bg-white/80 px-5 py-6 text-center shadow-sm sm:px-8">
             <p className="text-sm leading-relaxed text-forest/70">

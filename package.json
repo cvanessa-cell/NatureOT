@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
+    "e2e:cta-routes": "node scripts/e2e-cta-routes.mjs",
+    "e2e:checkout": "node scripts/e2e-checkout-flow.mjs",
     "compare:ui": "node scripts/compare-ui-branches.mjs",
     "ui-compare": "node tools/ui-compare/server.mjs",
     "env:check": "node scripts/check-env.mjs",

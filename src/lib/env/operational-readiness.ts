@@ -2,6 +2,10 @@ import {
   SUPPORTED_AIRTABLE_MAPPING_TARGETS,
 } from "@/lib/airtable/airtable-field-mappers";
 import { getEnv, getSupabaseUrl } from "@/lib/env";
+import {
+  CORE_CTA_MANUAL_QA_PAGES,
+  LAUNCH_CONTENT_MANUAL_QA_PAGES,
+} from "@/lib/marketing/core-cta-routes";
 
 export type ReadinessTone =
   | "complete"
@@ -235,16 +239,16 @@ export function getOperationalReadinessSections(): Record<string, ReadinessRow[]
   ];
 
   const launchContent: ReadinessRow[] = [
-    ...[
-      ["home", "/", "Homepage"],
-      ["groups", "/groups", "Groups page"],
-      ["waitlist", "/waitlist", "Waitlist form"],
-      ["guidePage", "/parent-guide", "Parent guide marketing page"],
-      ["workshops", "/workshops", "Workshops page"],
-      ["referrals", "/referral-partners", "Referral partners page"],
-    ].map(([id, path, title]) => ({
-      id: id as string,
-      label: `${title as string} (${path as string}) manual QA`,
+    ...CORE_CTA_MANUAL_QA_PAGES.map(({ id, path, title }) => ({
+      id,
+      label: `${title} (${path}) manual QA`,
+      tone: "warning" as ReadinessTone,
+      detail:
+        "Run npm run e2e:cta-routes with dev server, then mobile click-through (hero + sticky bar + forms).",
+    })),
+    ...LAUNCH_CONTENT_MANUAL_QA_PAGES.map(({ id, path, title }) => ({
+      id,
+      label: `${title} (${path}) manual QA`,
       tone: "warning" as ReadinessTone,
       detail: "Schedule a scripted click-through ahead of regional promos.",
     })),

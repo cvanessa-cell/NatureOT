@@ -42,6 +42,22 @@ describe("airtable-field-mappers", () => {
     expect(mapped.fields["General Interest Areas"]).toBe("Sensory regulation, Motor confidence");
   });
 
+  it("maps parent_name to Parent First Name for stripe-style leads", () => {
+    const mapped = mapInternalPayloadToAirtableFields("leads", {
+      lead_id: "c0843402-47b1-4b8c-8603-53e1bcf98acc",
+      parent_name: "Parent",
+      parent_email: "parent@example.com",
+      lead_source: "stripe_checkout",
+    });
+    expect(mapped.ok).toBe(true);
+    if (!mapped.ok) throw new Error("expected ok");
+    expect(mapped.fields["Parent First Name"]).toBe("Parent");
+    expect(mapped.fields["Growth OS Lead ID"]).toBe("c0843402-47b1-4b8c-8603-53e1bcf98acc");
+    expect(mapped.fields.Email).toBe("parent@example.com");
+    expect(mapped.fields["Lead Source"]).toBe("stripe_checkout");
+    expect((mapped.fields as Record<string, unknown>)["Parent Name"]).toBeUndefined();
+  });
+
   it("drops unknown internal keys instead of leaking snake_case titles", () => {
     const mapped = mapInternalPayloadToAirtableFields("leads", {
       parent_email: "p@example.com",

@@ -2,6 +2,7 @@ import {
   BLOCKED_KEY_REGEX,
   BLOCKED_OUTBOUND_PAYLOAD_KEYS,
 } from "@/lib/safety/blocked-fields";
+import { mapWaitlistStatusToAirtable } from "@/lib/airtable/mappers/waitlist";
 
 /** Normalized targets aligned with enqueue labels + resolve-airtable-table-id. */
 export const SUPPORTED_AIRTABLE_MAPPING_TARGETS = [
@@ -47,8 +48,18 @@ function isBlockedOutboundKey(key: string): boolean {
   );
 }
 
-function coerceMappedValue(raw: unknown): unknown | undefined {
+function coerceMappedValue(
+  raw: unknown,
+  ctx?: { normalizedTarget?: string | null; internalKey?: string }
+): unknown | undefined {
   if (raw === null || raw === undefined) return undefined;
+  if (
+    ctx?.normalizedTarget === "waitlist" &&
+    ctx.internalKey === "status" &&
+    typeof raw === "string"
+  ) {
+    return mapWaitlistStatusToAirtable(raw);
+  }
   if (typeof raw === "boolean" || typeof raw === "number") return raw;
   if (typeof raw === "string") return raw;
   if (raw instanceof Date) return raw.toISOString();
@@ -82,13 +93,12 @@ const LEADS_MAP: InternalFieldMap = {
   guide_lead_id: "Guide Lead ID",
   parent_email: "Email",
   email: "Email",
-  parent_name: "Parent Name",
+  parent_name: "Parent First Name",
   parent_first_name: "Parent First Name",
   city: "City",
-  city_or_zip: "City / ZIP",
+  city_or_zip: "City",
   zip: "ZIP",
   child_age_range: "Child Age Range",
-  primary_result_category: "Primary Result Category",
   general_interest_areas: "General Interest Areas",
   interest_areas: "Interest Areas",
   source: "Lead Source",
@@ -96,24 +106,24 @@ const LEADS_MAP: InternalFieldMap = {
   guide_name: "Guide Name",
   phone: "Phone",
   parent_phone: "Phone",
-  consent_marketing: "Consent Marketing",
-  created_at: "Created At",
 };
 
 const WAITLIST_MAP: InternalFieldMap = {
-  waitlist_entry_id: "Waitlist Entry ID",
-  id: "Waitlist Entry ID",
-  parent_name: "Parent Name",
-  parent_email: "Email",
-  parent_phone: "Phone",
+  parent_name: "Parent First Name",
+  parent_first_name: "Parent First Name",
+  parent_email: "Parent Email",
+  parent_phone: "Parent Phone",
   child_age_range: "Child Age Range",
-  city_or_zip: "City / ZIP",
-  preferred_schedule: "Preferred Schedule",
-  interest_areas: "Interest Areas",
-  consent_marketing: "Consent Marketing",
-  consent_waitlist: "Consent Waitlist",
+  city: "City",
+  city_or_zip: "City",
+  zip: "ZIP",
+  preferred_schedule: "Preferred Days",
+  preferred_days: "Preferred Days",
+  preferred_times: "Preferred Times",
+  interest_areas: "General Interest Areas",
+  consent_marketing: "Consent Logged",
+  consent_waitlist: "Consent Logged",
   status: "Status",
-  created_at: "Created At",
 };
 
 const WORKSHOP_REGS_MAP: InternalFieldMap = {
@@ -139,42 +149,43 @@ const REFERRAL_INQUIRIES_MAP: InternalFieldMap = {
 };
 
 const REFERRAL_PARTNERS_MAP: InternalFieldMap = {
-  partner_id: "Partner ID",
   organization_name: "Organization Name",
-  primary_contact_email: "Primary Email",
-  primary_contact_name: "Primary Contact Name",
+  primary_contact_email: "Email",
+  contact_email: "Email",
+  primary_contact_name: "Contact Name",
+  contact_name: "Contact Name",
   partner_type: "Partner Type",
   city: "City",
-  referral_code: "Referral Code",
   status: "Status",
 };
 
 const CONTENT_CALENDAR_MAP: InternalFieldMap = {
-  draft_id: "Draft ID",
-  title: "Title",
-  channel: "Channel",
-  scheduled_at: "Scheduled At",
+  title: "Post Title",
+  post_title: "Post Title",
+  channel: "Platform",
+  platform: "Platform",
+  scheduled_at: "Scheduled Date",
+  scheduled_date: "Scheduled Date",
   status: "Status",
-  content_type: "Content Type",
-  slug: "Slug",
 };
 
 const LOCAL_SEO_MAP: InternalFieldMap = {
-  slug: "Page Slug",
-  city_name: "City Name",
-  state_code: "State Code",
-  page_url: "Page URL",
-  focus_keyword: "Focus Keyword",
-  published: "Published",
+  city_name: "City",
+  city: "City",
+  page_url: "Published URL",
+  published_url: "Published URL",
+  focus_keyword: "Primary Keyword",
+  primary_keyword: "Primary Keyword",
+  status: "Status",
 };
 
 const TESTIMONIALS_MAP: InternalFieldMap = {
-  testimonial_id: "Testimonial ID",
-  author_display_name: "Author Display",
-  quote_excerpt: "Quote Excerpt",
-  authorized: "Authorized",
-  publish_status: "Publish Status",
-  source: "Source",
+  author_display_name: "Parent First Name",
+  parent_first_name: "Parent First Name",
+  quote_excerpt: "Testimonial Text",
+  testimonial_text: "Testimonial Text",
+  authorized: "Approved For Public Use",
+  publish_status: "Admin Approval Status",
 };
 
 const TABLE_MAPS: Record<SupportedAirtableMappingTarget, InternalFieldMap> = {
@@ -235,7 +246,10 @@ export function mapInternalPayloadToAirtableFields(
       continue;
     }
 
-    const coerced = coerceMappedValue(value);
+    const coerced = coerceMappedValue(value, {
+      normalizedTarget: normalizedTargetKey,
+      internalKey,
+    });
     if (coerced === undefined) continue;
     fields[airtableField] = coerced;
   }

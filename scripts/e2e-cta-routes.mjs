@@ -83,9 +83,25 @@ async function postJson(path, payload) {
   return { status: res.status, data };
 }
 
+const TREETOTS_HOME_FINGERPRINTS = ["TreeTots", "Join the Waitlist", "Pediatric Nature-Based OT"];
+
+async function assertTreeTotsApp() {
+  const probe = await get("/");
+  assert(probe.status === 200, `GET / returned ${probe.status} at ${BASE}`);
+  const looksLikeTreeTots = TREETOTS_HOME_FINGERPRINTS.some((s) => probe.body.includes(s));
+  assert(
+    looksLikeTreeTots,
+    `${BASE} does not look like TreeTots (another dev server may be on that port). ` +
+      "Start this repo with npm run dev and set E2E_BASE_URL (e.g. http://127.0.0.1:3010).",
+  );
+}
+
 const results = [];
 
 try {
+  await assertTreeTotsApp();
+  results.push(`✓ ${BASE} — TreeTots app fingerprint`);
+
   for (const route of ROUTES) {
     const desktop = await get(route.path);
     assert(desktop.status === 200, `${route.label} returned ${desktop.status}`);

@@ -244,7 +244,7 @@ export function getOperationalReadinessSections(): Record<string, ReadinessRow[]
       label: `${title} (${path}) manual QA`,
       tone: "warning" as ReadinessTone,
       detail:
-        "Run npm run e2e:cta-routes with dev server, then mobile click-through (hero + sticky bar + forms).",
+        "Run npm run dev (set E2E_BASE_URL if port 3000 is another app), then npm run e2e:cta-routes; mobile click-through (hero + sticky bar + forms).",
     })),
     ...LAUNCH_CONTENT_MANUAL_QA_PAGES.map(({ id, path, title }) => ({
       id,

@@ -93,13 +93,14 @@ This is a nature-based pediatric occupational therapy website. The site should f
 7. Avoid broad rewrites unless the existing code blocks the improvement.
 8. Add or update tests only when practical and high-value.
 9. Re-run verification after changes.
-10. Do not merge or deploy automatically.
+10. Leave Git publishing to the automation runner. The runner will review/debug, commit, debug/test again, merge to `main`, push `main`, and delete the temporary review branch after a successful push.
 
-## Active working directory mode
+## Review branch mode
 
-- Work directly in the active working directory.
-- Use the `main` branch by default.
-- Do not create or switch to a separate automation branch or worktree unless the user explicitly asks for one.
+- Work in the review worktree provided by the automation runner.
+- Do not switch branches manually.
+- Do not merge, push, or delete branches yourself; the runner performs those steps after verification.
+- If you cannot make a safe production-quality change, leave the worktree unchanged and explain the blocker in the report.
 
 ## Output format
 

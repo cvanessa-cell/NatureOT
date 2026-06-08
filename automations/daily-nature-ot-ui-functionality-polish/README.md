@@ -11,7 +11,8 @@ Use either Cursor in-app Automations or the Windows scheduled task below, not bo
 ## Run mode
 
 - Use the active working directory at `C:\Users\cvane\.cursor\projects\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\texas-nature-ot-leads`
-- Branch: `main`
+- The runner creates a temporary review worktree and branch from `main`
+- After a successful edit it runs debug/test checks, commits, reruns checks, merges to `main`, pushes `main`, then deletes the temporary review branch and worktree
 
 ## Files
 
@@ -38,7 +39,7 @@ Recommended values:
 | Name | `Daily Nature OT UI + Functionality Polish` |
 | Schedule | Daily at `6:00 AM` Pacific |
 | Working directory | `C:\Users\cvane\.cursor\projects\C-Users-cvane-AppData-Local-Temp-ef3e6400-05b7-41f9-8006-7a0f2b30cb22\texas-nature-ot-leads` |
-| Run mode | Active working directory on `main` |
+| Run mode | Runner-managed review branch, merge to `main`, push, then branch cleanup |
 | Instructions | Full contents of `PROMPT.md` |
 
 ## Windows fallback
@@ -69,19 +70,32 @@ The full headless agent path uses `@cursor/sdk` and requires `CURSOR_API_KEY`.
 
 If `CURSOR_API_KEY` is missing, the runner now degrades to a safe local fallback instead of skipping the day entirely. The fallback:
 
-- stays in the active working directory
+- runs in the temporary review worktree
 - records git status
 - records the available npm scripts
-- runs `npm.cmd run lint` when `node_modules` is available
 - inspects likely UI targets for CTA, form, accessibility, placeholder, and conversion-copy signals
 - writes a Markdown fallback report in `automations/daily-nature-ot-ui-functionality-polish/logs/`
 - exits successfully because missing headless-agent auth is an expected degraded mode, not a repo failure
 
-The fallback does not edit files, commit, merge, deploy, or attempt to replace the full agent workflow.
+The fallback does not intentionally edit files. Because no review changes are committed, the runner removes the empty temporary branch/worktree and does not merge or push.
+
+## Publish flow
+
+For a successful headless edit, the runner performs this sequence:
+
+1. Create a temporary review branch and worktree from `main`.
+2. Run the headless Cursor agent against that worktree.
+3. Run `npm.cmd run lint`, `npm.cmd test`, and `npm.cmd run build`.
+4. Commit meaningful worktree changes, excluding SDK state and local automation logs.
+5. Run the same checks again after the commit.
+6. Confirm the base `main` checkout has no meaningful uncommitted user changes.
+7. Fast-forward `main` from the remote, merge the review branch, rerun checks on `main`, push `main`, then delete the temporary branch/worktree.
+
+If merge, push, or verification fails, the runner preserves the review branch and worktree for debugging.
 
 ## Scope rules
 
 - Make exactly one focused improvement per run.
 - Keep changes reviewable in one sitting.
-- Do not merge or deploy automatically.
+- Merge and push only through the runner-managed publish flow.
 - Preserve parent trust, privacy, and safe marketing language.
